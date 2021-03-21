@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Token } from 'src/database/mongo/entities';
 import { User } from 'src/database/mysql/entities';
 import { BcryptHelper } from 'src/helpers';
-import { TokenHelper } from './utils/token.helper';
-import { TokenRepository } from './utils/token.repository';
+import { TokenHelper } from './others/token.helper';
+import { TokenRepository } from './others/token.repository';
 
 @Injectable()
 export class TokenService {

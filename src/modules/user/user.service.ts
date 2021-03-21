@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/database/mysql/entities/classes/user.entity';
-import { UserRepository } from './utils/user.repository';
+import { UserRepository } from './others/user.repository';
 import { CreateUserOutput } from '../../types/modules/types/user.types';
-import { createUserValidation } from './utils/user.yup';
+import { createUserValidation } from './others/user.yup';
 import { YupHelper } from 'src/helpers';
 import { userMessages } from 'src/messages';
 

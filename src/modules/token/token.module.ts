@@ -4,10 +4,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from 'src/modules/database/database.module';
 import { BcryptHelper, ErrorHelper } from 'src/helpers';
 import { TokenService } from './token.service';
-import { TokenHelper } from './utils/token.helper';
-import { TokenRepository } from './utils/token.repository';
-import { TokenStrategy } from './utils/token.strategy';
-import { tokenProvider } from './utils/tokens.provider';
+import { TokenHelper } from './others/token.helper';
+import { TokenRepository } from './others/token.repository';
+import { TokenStrategy } from './others/token.strategy';
+import { tokenProvider } from './others/tokens.provider';
 
 @Module({
     imports: [
