@@ -11,6 +11,8 @@
 		"start:debug": "nest start --debug --watch",
 		"start:prod": "node dist/main",
 		"typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+		"scripts:new:dml": "ts-node -r tsconfig-paths/register ./src/scripts/new_dml.script.ts",
+		"scripts:run:dml": "ts-node -r tsconfig-paths/register ./src/scripts/run_dml.script.ts",
 		"ormconfig:generate": "(rm -rf ormconfig.json) && ts-node -r tsconfig-paths/register ./src/scripts/ormconfig.script.ts",
 		"build": "nest build",
 		"dev": "nest start --watch",
