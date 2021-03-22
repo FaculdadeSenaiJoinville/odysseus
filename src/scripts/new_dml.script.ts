@@ -33,12 +33,12 @@ createConnection(${databaseSystem}Config)
         // Processos a serem executados
         // ...
 
+        connection.close();
         process.exit();
     })
     .catch(error => {
 
         console.error(error);
-
         process.exit();
     });
     `;
