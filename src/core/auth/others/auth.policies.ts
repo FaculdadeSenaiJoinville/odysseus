@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { User } from "src/database/mysql/entities";
+import { User } from "src/core/database/mysql/entities";
 import { BcryptHelper } from "src/helpers";
-import { authMessages } from "src/messages";
+import { authMessages } from "src/core/messages";
 
 @Injectable()
 export class AuthPolicies {

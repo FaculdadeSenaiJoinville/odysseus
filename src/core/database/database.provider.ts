@@ -1,5 +1,5 @@
 import { createConnection } from 'typeorm';
-import { mysqlConfig, mongoConfig } from 'src/database';
+import { mysqlConfig, mongoConfig } from 'src/core/database';
 
 export const databaseProvider = [
 	{

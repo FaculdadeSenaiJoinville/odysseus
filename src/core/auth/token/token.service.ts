@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Token } from 'src/database/mongo/entities';
-import { User } from 'src/database/mysql/entities';
+import { Token } from 'src/core/database/mongo/entities';
+import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/helpers';
 import { TokenHelper } from './others/token.helper';
 import { TokenRepository } from './others/token.repository';

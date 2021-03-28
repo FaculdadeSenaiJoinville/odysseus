@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { User } from "src/database/mysql/entities";
-import { BcryptHelper, ErrorHelper } from "src/helpers";
+import { User } from "src/core/database/mysql/entities";
+import { ErrorService } from "src/core/error/error.service";
+import { BcryptHelper } from "src/helpers";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -10,7 +11,7 @@ export class UserRepository {
         @Inject('USER_REPOSITORY')
 		private readonly repository: Repository<User>,
         private readonly bcryptHelper: BcryptHelper,
-        private readonly errorHelper: ErrorHelper
+        private readonly errorService: ErrorService
     ) {}
 
     public findByEmail(email: string): Promise<User> {
@@ -29,7 +30,7 @@ export class UserRepository {
 
         return await this.repository.save(user)
             .then(response => response)
-			.catch(this.errorHelper.throwMySQLError);
+			.catch(this.errorService.throwMySQLError);
     }
 
 }

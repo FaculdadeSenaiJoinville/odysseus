@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from '../user/others/user.repository';
-import { TokenService } from '../token/token.service';
+import { UserRepository } from '../../modules/user/others/user.repository';
+import { TokenService } from './token/token.service';
 import { AuthPolicies } from './others/auth.policies';
 import { loginValidation } from './others/auth.yup';
 import { YupHelper } from 'src/helpers';
-import { LoginInput, LoginOutput, LogoutOutput } from 'src/types/modules';
-import { authMessages } from 'src/messages';
+import { authMessages } from 'src/core/messages';
+import { LoginInput, LoginOutput, LogoutOutput } from './others/auth.types';
 
 @Injectable()
 export class AuthService {

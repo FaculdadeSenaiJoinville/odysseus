@@ -1,4 +1,4 @@
-import { User } from 'src/database/mysql/entities';
+import { User } from 'src/core/database/mysql/entities';
 import { Connection } from 'typeorm';
 
 export const userProvider = [

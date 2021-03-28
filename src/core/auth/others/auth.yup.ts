@@ -1,4 +1,4 @@
-import { miscMessages, userMessages } from 'src/messages';
+import { miscMessages, userMessages } from 'src/core/messages';
 import * as Yup from 'yup';
 
 export const loginValidation = Yup.object().shape({

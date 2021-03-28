@@ -1,4 +1,4 @@
-import { ConnectionCli } from "../utils/misc.types";
+import { ConnectionCli } from "./misc.types";
 
 export type MySQLError = {
     code: string;

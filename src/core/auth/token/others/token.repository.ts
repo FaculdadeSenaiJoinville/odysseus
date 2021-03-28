@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Token } from "src/database/mongo/entities";
-import { BcryptHelper, ErrorHelper } from "src/helpers";
+import { ErrorService } from "src/core/error/error.service";
+import { Token } from "src/core/database/mongo/entities";
+import { BcryptHelper } from "src/helpers";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -10,7 +11,7 @@ export class TokenRepository {
         @Inject('TOKEN_REPOSITORY')
 		private readonly repository: Repository<Token>,
         private readonly bcryptHelper: BcryptHelper,
-        private readonly errorHelper: ErrorHelper
+        private readonly errorService: ErrorService
     ) {}
 
     public async findByUserId(user_id: number): Promise<Token> {
@@ -24,7 +25,7 @@ export class TokenRepository {
 
         this.repository.save(tokenBody)
             .then(response => response)
-			.catch(this.errorHelper.throwMongoError);
+			.catch(this.errorService.throwMongoError);
     }
 
     public async deleteByUserId(user_id: number): Promise<void> {

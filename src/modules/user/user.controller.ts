@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from 'src/database/mysql/entities';
-import { CreateUserOutput } from 'src/types/modules';
-import { AuthGuard } from '../auth';
+import { User } from 'src/core/database/mysql/entities';
+import { AuthGuard } from '../../core/auth';
+import { CreateUserOutput } from './others/user.types';
 
 @Controller('users')
 export class UserController {

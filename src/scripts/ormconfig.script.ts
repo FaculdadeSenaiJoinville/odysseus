@@ -1,21 +1,21 @@
-import { mysql, mongo } from '../database/orm.config';
+import { mysql, mongo } from '../core/database/orm.config';
 import * as fs from 'fs';
 
 const mysqlConfig = { ...mysql };
 const mongoConfig = { ...mongo };
 
-mysqlConfig.entities = ['./src/database/mysql/entities/classes/*.entity.{ts,js}'];
-mysqlConfig.migrations = ['./src/database/mysql/migrations/*.ts'];
+mysqlConfig.entities = ['./src/core/database/mysql/entities/classes/*.entity.{ts,js}'];
+mysqlConfig.migrations = ['./src/core/database/mysql/migrations/*.ts'];
 mysqlConfig.cli = { 
-  entitiesDir: './src/database/mysql/entities/classes',
-  migrationsDir: './src/database/mysql/migrations'
+  entitiesDir: './src/core/database/mysql/entities/classes',
+  migrationsDir: './src/core/database/mysql/migrations'
 };
 
-mongoConfig.entities = ['./src/database/mongo/entities/classes/*.entity.{ts,js}'];
-mongoConfig.migrations = ['./src/database/mongo/migrations/*.ts'];
+mongoConfig.entities = ['./src/core/database/mongo/entities/classes/*.entity.{ts,js}'];
+mongoConfig.migrations = ['./src/core/database/mongo/migrations/*.ts'];
 mongoConfig.cli = { 
-  entitiesDir: './src/database/mongo/entities/classes',
-  migrationsDir: './src/database/mongo/migrations'
+  entitiesDir: './src/core/database/mongo/entities/classes',
+  migrationsDir: './src/core/database/mongo/migrations'
 };
 
 fs.writeFileSync(

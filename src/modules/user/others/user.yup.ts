@@ -1,5 +1,4 @@
-
-import { userMessages } from 'src/messages';
+import { userMessages } from 'src/core/messages';
 import * as Yup from 'yup';
 
 export const createUserValidation = Yup.object().shape({

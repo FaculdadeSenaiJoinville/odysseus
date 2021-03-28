@@ -3,12 +3,14 @@ import { UserController } from './user.controller';
 import { UserRepository } from './others/user.repository';
 import { UserService } from './user.service';
 import { userProvider } from './others/users.provider';
-import { DatabaseModule } from 'src/modules/database/database.module';
-import { BcryptHelper, ErrorHelper, YupHelper } from 'src/helpers';
+import { DatabaseModule } from 'src/core/database/database.module';
+import { BcryptHelper, YupHelper } from 'src/helpers';
+import { ErrorModule } from 'src/core/error/error.module';
 
 @Module({
 	imports: [
-		DatabaseModule
+		DatabaseModule,
+		ErrorModule
 	],
 	controllers: [
 		UserController
@@ -18,7 +20,6 @@ import { BcryptHelper, ErrorHelper, YupHelper } from 'src/helpers';
 		UserRepository,
 		UserService,
 		BcryptHelper,
-		ErrorHelper,
 		YupHelper
 	],
 	exports: [

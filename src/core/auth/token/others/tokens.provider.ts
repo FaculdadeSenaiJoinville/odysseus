@@ -1,4 +1,4 @@
-import { Token } from 'src/database/mongo/entities';
+import { Token } from 'src/core/database/mongo/entities';
 import { Connection } from 'typeorm';
 
 export const tokenProvider = [
