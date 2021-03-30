@@ -6,6 +6,7 @@
 		"dist",
 		"**/*spec.ts",
 		"scripts",
-		"**/*script.ts"
+		"**/scripts",
+		"**/migrations"
 	]
 }
