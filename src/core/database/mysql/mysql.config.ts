@@ -11,7 +11,7 @@ export const mysqlConfig = {
 	username: process.env.MYSQL_USER,
 	password: process.env.MYSQL_PASSWORD,
 	database: process.env.MYSQL_DATABASE,
-	entities: [join(__dirname, 'entities', 'classes', '*.entity.{ts,js}')],
+	entities: [join(__dirname, 'entities', '*.entity.{ts,js}')],
 	migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
 	cli: {
 		entitiesDir: join(__dirname, 'entities'),

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/core/database/mysql/entities/classes/user.entity';
 import { UserRepository } from './others/user.repository';
 import { CreateUserOutput } from './others/user.types';
 import { createUserValidation } from './others/user.yup';
 import { YupHelper } from 'src/helpers';
 import { userMessages } from 'src/core/messages';
+import { User } from 'src/core/database/mysql/entities';
 
 @Injectable()
 export class UserService {

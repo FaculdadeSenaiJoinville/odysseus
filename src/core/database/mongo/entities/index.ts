@@ -1,1 +1,1 @@
-export * from './classes/token.entity';
+export * from './token.entity';
