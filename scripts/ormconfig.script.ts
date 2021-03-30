@@ -1,8 +1,6 @@
-import { mysql, mongo } from '../core/database/orm.config';
-import * as fs from 'fs';
 
-const mysqlConfig = { ...mysql };
-const mongoConfig = { ...mongo };
+import * as fs from 'fs';
+import { mongoConfig, mysqlConfig } from 'src/core/database';
 
 mysqlConfig.entities = ['./src/core/database/mysql/entities/classes/*.entity.{ts,js}'];
 mysqlConfig.migrations = ['./src/core/database/mysql/migrations/*.ts'];

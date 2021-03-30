@@ -14,7 +14,7 @@ function getFileDir(scriptName: string, databaseSystem: string): string {
     const date = new Date().toISOString();
     const scriptID = date.split('.')[0].replace(/-/g, '').replace(/:/g, '').replace('T', '');
     
-    return `src/database/${databaseSystem}/scripts/${scriptID}_${scriptName}.script.ts`;
+    return `src/core/database/${databaseSystem}/scripts/${scriptID}_${scriptName}.script.ts`;
 }
 
 function getFileContent(databaseSystem: string): string {
@@ -22,7 +22,7 @@ function getFileContent(databaseSystem: string): string {
     databaseSystem = databaseSystem.toLocaleLowerCase();
 
     return `
-import { ${databaseSystem}Config } from "src/database";
+import { ${databaseSystem}Config } from "src/core/database";
 import { createConnection } from "typeorm";
 
 createConnection(${databaseSystem}Config)
@@ -46,7 +46,7 @@ createConnection(${databaseSystem}Config)
 
 rl.question("Nome do script: ", scriptName => {
     
-    rl.question("Nome da base: ", databaseSystem => {
+    rl.question("Nome da base (mongo | mysql): ", databaseSystem => {
 
         const fileDir = getFileDir(scriptName, databaseSystem);
         const fileContent = getFileContent(databaseSystem);
