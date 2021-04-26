@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ErrorService } from "src/core/error/error.service";
 import { Token } from "src/core/database/mongo/entities";
-import { BcryptHelper } from "src/helpers";
+import { BcryptHelper } from "src/common/helpers";
 import { Repository } from "typeorm";
 
 @Injectable()

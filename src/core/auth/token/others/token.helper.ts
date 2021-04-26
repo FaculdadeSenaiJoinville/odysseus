@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "src/core/database/mysql/entities";
-import { TokenPayload } from "./token.types";
+import { TokenPayload } from "./token.type";
 
 @Injectable()
 export class TokenHelper {

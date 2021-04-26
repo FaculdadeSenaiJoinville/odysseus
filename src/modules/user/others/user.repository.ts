@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { User } from "src/core/database/mysql/entities";
 import { ErrorService } from "src/core/error/error.service";
-import { BcryptHelper } from "src/helpers";
+import { BcryptHelper } from "src/common/helpers";
 import { Repository } from "typeorm";
 
 @Injectable()
