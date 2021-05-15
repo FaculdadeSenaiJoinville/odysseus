@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from '../../modules/user/others/user.repository';
+import { UserRepository } from '../user/others/user.repository';
 import { TokenService } from './token/token.service';
 import { AuthPolicies } from './others/auth.policies';
 import { authMessages } from 'src/core/messages';
-import { LoginInput, LoginOutput, LogoutOutput } from './others/auth.type';
+import { LoginOutput, LogoutOutput } from './others/auth.type';
+import { LoginDTO } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
 		private readonly authPolicies: AuthPolicies
 	) {}
 
-	public async login({ email, password, expiresIn }: LoginInput): Promise<LoginOutput> {
+	public async login({ email, password, expiresIn }: LoginDTO): Promise<LoginOutput> {
 
 		const databaseUser = await this.userRepository.findByEmail(email);
 

@@ -1,13 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { MySqlCoreEntity } from 'src/modules/entities';
+import { Entity, Column } from 'typeorm';
 
 @Entity('users')
-export class User {
-
-	@PrimaryGeneratedColumn()
-	id: number;
-
-	@Column({ length: 100 })
-	name: string;
+export class User extends MySqlCoreEntity {
 
 	@Column({ length: 100 })
 	email: string;
@@ -17,11 +12,5 @@ export class User {
 
 	@Column()
 	active: boolean;
-
-	@CreateDateColumn()
-	created_at: Date;
-
-	@UpdateDateColumn()
-	updated_at: Date;
 
 }
