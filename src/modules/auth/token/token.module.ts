@@ -8,7 +8,7 @@ import { TokenHelper } from './others/token.helper';
 import { TokenRepository } from './others/token.repository';
 import { TokenStrategy } from './others/token.strategy';
 import { tokenProvider } from './others/tokens.provider';
-import { ErrorModule } from '../../error/error.module';
+import { ErrorModule } from '../../../core/error/error.module';
 
 @Module({
     imports: [

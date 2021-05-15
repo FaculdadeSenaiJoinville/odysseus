@@ -3,6 +3,7 @@ import { User } from "src/core/database/mysql/entities";
 import { ErrorService } from "src/core/error/error.service";
 import { BcryptHelper } from "src/common/helpers";
 import { Repository } from "typeorm";
+import { CreateUserDTO } from "../dtos/create-user.dto";
 
 @Injectable()
 export class UserRepository {
@@ -24,7 +25,7 @@ export class UserRepository {
         return this.repository.findOne(id);
     }
 
-    public async create(user: User): Promise<User> {
+    public async create(user: CreateUserDTO): Promise<User> {
 
         user.password = await this.bcryptHelper.hashString(user.password);
 
