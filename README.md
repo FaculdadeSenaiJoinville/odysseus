@@ -4,6 +4,7 @@
 
 ## Description
 Projeto back-end, construído com [Nest](https://nestjs.com/).
+[Wiki do Projeto](https://github.com/FaculdadeSenaiJoinville/pes-back/wiki)
 
 ## Installation
 Criar um arquivo .env seguindo o modelo .env.example e preencher com os valores necessários.
