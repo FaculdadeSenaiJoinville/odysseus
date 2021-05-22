@@ -26,6 +26,8 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
+        npm run ormconfig:generate
+        npm run typeorm migration:run -c mysqlConnection
         npm run build --if-present
         npm run test --if-present
 
