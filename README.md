@@ -14,11 +14,5 @@ Configurar bancos MySQL e MongoDB.
 Recomendável usar MySQL Server e MongoDB Atlas.
 
 ```bash
-$ yarn install
-$ yarn mysql:migration:run
-```
-
-## Running the app
-```bash
-$ yarn dev
+git clone https://github.com/FaculdadeSenaiJoinville/pes-back.git
 ```
