@@ -1,6 +1,6 @@
 import { Body, Delete, Headers, Post } from '@nestjs/common';
-import { YupValidationPipe } from 'src/common/pipes';
-import { ApiController } from '../../core/decorators';
+import { ValidateBodyPipe } from 'src/common/pipes';
+import { ApiController } from '../../common/decorators';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dtos/login.dto';
 import { LoginOutput, LogoutOutput } from './others/auth.type';
@@ -12,7 +12,7 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('login')
-	public async login(@Body(new YupValidationPipe(LOGIN_VALIDATION)) loginInput: LoginDTO): Promise<LoginOutput> {
+	public async login(@Body(new ValidateBodyPipe(LOGIN_VALIDATION)) loginInput: LoginDTO): Promise<LoginOutput> {
 
 		return this.authService.login(loginInput);
 	}

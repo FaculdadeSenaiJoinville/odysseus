@@ -2,21 +2,25 @@
 import * as fs from 'fs';
 import { mongoConfig, mysqlConfig } from 'src/core/database';
 
-mysqlConfig.entities = ['./src/core/database/mysql/entities/*.entity.{ts,js}'];
-mysqlConfig.migrations = ['./src/core/database/mysql/migrations/*.ts'];
-mysqlConfig.cli = { 
-  entitiesDir: './src/core/database/mysql/entities',
-  migrationsDir: './src/core/database/mysql/migrations'
+const mongo = {
+	...mongoConfig,
+	entities: ['./src/core/database/mongo/entities/*.entity.{ts,js}'],
+	cli: { 
+		entitiesDir: './src/core/database/mongo/entities'
+	}
 };
 
-mongoConfig.entities = ['./src/core/database/mongo/entities/*.entity.{ts,js}'];
-mongoConfig.migrations = ['./src/core/database/mongo/migrations/*.ts'];
-mongoConfig.cli = { 
-  entitiesDir: './src/core/database/mongo/entities',
-  migrationsDir: './src/core/database/mongo/migrations'
+const mysql = {
+	...mysqlConfig,
+	entities: ['./src/core/database/mysql/entities/*.entity.{ts,js}'],
+	migrations: ['./src/core/database/mysql/migrations/*.ts'],
+	cli: { 
+		entitiesDir: './src/core/database/mysql/entities',
+		migrationsDir: './src/core/database/mysql/migrations'
+	}
 };
 
 fs.writeFileSync(
-  'ormconfig.json',
-  `[${JSON.stringify(mysqlConfig, null, 2)},${JSON.stringify(mongoConfig, null, 2)}]`
+	'ormconfig.json',
+	`[${JSON.stringify(mongo, null, 2)},${JSON.stringify(mysql, null, 2)}]`
 );

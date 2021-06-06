@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import * as Yup from 'yup';
 
 @Injectable()
-export class YupValidationPipe implements PipeTransform {
+export class ValidateBodyPipe implements PipeTransform {
 
 	constructor(private yupSchema: Yup.ObjectSchema<any>) {}
 

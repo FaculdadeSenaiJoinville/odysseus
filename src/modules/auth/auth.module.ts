@@ -4,10 +4,12 @@ import { AuthService } from './auth.service';
 import { TokenModule } from './token/token.module';
 import { AuthPolicies } from './others/auth.policies';
 import { BcryptHelper } from 'src/common/helpers';
+import { RepositoryModule } from 'src/core/repository/repository.module';
 
 @Module({
 	imports: [
-		TokenModule,
+		RepositoryModule,
+		TokenModule
 	],
 	controllers: [
 		AuthController

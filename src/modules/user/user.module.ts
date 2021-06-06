@@ -3,9 +3,11 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { BcryptHelper } from 'src/common/helpers';
 import { ErrorModule } from 'src/core/error/error.module';
+import { RepositoryModule } from 'src/core/repository/repository.module';
 
 @Module({
 	imports: [
+		RepositoryModule,
 		ErrorModule
 	],
 	controllers: [

@@ -1,1 +1,1 @@
-export * from './yup-validation.pipe';
+export * from './validate-body.pipe';

@@ -14,10 +14,12 @@
 		"dev": "nest start --watch",
 		"typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
 		"ormconfig:generate": "(rm -rf ormconfig.json) && ts-node -r tsconfig-paths/register ./scripts/ormconfig.script.ts",
-		"scripts:new:dml": "ts-node -r tsconfig-paths/register ./scripts/new_dml.script.ts",
-		"scripts:run:dml": "ts-node -r tsconfig-paths/register ./scripts/run_dml.script.ts",
-		"migration:create": "yarn typeorm migration:create -c mysqlConnection -n",
-		"migration:run": "yarn typeorm migration:run -c mysqlConnection",
+		"mongo:script:new": "ts-node -r tsconfig-paths/register ./scripts/dml/new_mongo_dml.script.ts",
+		"mongo:script:run": "ts-node -r tsconfig-paths/register ./scripts/dml/run_mongo_dml.script.ts",
+		"mysql:script:new": "ts-node -r tsconfig-paths/register ./scripts/dml/new_mysql_dml.script.ts",
+		"mysql:script:run": "ts-node -r tsconfig-paths/register ./scripts/dml/run_mysql_dml.script.ts",
+		"mysql:migration:new": "yarn typeorm migration:create -c mysqlConnection -n",
+		"mysql:migration:run": "yarn typeorm migration:run -c mysqlConnection",
 		"db:magic": "yarn ormconfig:generate && yarn migration:run"
 	},
 	"dependencies": {

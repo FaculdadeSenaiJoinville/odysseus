@@ -1,22 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { mongoConfig, mysqlConfig } from './core/database';
-import { AuthModule } from './modules/auth/auth.module';
-import { UserModule } from './modules/user/user.module';
-
-const databaseConnections = [
-	TypeOrmModule.forRoot(mysqlConfig),
-	TypeOrmModule.forRoot(mongoConfig)
-];
-
-const modules = [
-	AuthModule,
-	UserModule
-];
+import { modules } from './modules';
 
 @Module({
 	imports: [
-		...databaseConnections,
+		TypeOrmModule.forRoot(mysqlConfig),
+		TypeOrmModule.forRoot(mongoConfig),
 		...modules
 	]
 })
