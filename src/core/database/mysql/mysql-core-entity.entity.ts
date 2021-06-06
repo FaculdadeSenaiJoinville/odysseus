@@ -3,7 +3,7 @@ import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Bef
 export class MySqlCoreEntity {
 
     @PrimaryGeneratedColumn()
-	id: number;
+	id: string;
 
 	@Column({ length: 100 })
 	name: string;
@@ -13,6 +13,12 @@ export class MySqlCoreEntity {
 
 	@UpdateDateColumn()
 	updated_at: Date;
+
+	@Column()
+	created_by: string;
+
+	@Column()
+	updated_by: string;
 
 	@BeforeUpdate()
 	protected setUpdatedProperties() {

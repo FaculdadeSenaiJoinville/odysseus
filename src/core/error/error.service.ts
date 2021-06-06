@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { miscMessages } from 'src/core/messages';
-import { MySQLError } from '../database/types';
+import { MySQLError } from '../database';
 import { ErrorHelper } from './others/error.helper';
 
 @Injectable()

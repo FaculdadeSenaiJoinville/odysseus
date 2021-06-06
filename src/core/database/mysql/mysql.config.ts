@@ -1,9 +1,10 @@
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { join } from 'path';
 
 dotenv.config();
 
-export const mysqlConfig = {
+export const mysqlConfig: TypeOrmModuleOptions = {
 	name: 'mysqlConnection',
 	type: 'mysql',
 	host: process.env.MYSQL_HOST,

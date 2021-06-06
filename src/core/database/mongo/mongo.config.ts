@@ -1,18 +1,22 @@
 import { join } from 'path';
 import * as dotenv from 'dotenv';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 dotenv.config();
 
-export const mongoConfig = {
+export const mongoConfig: TypeOrmModuleOptions  = {
 	name: 'mongoConnection',
 	type: 'mongodb',
-	url: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.${process.env.MONGO_URL_CONFIG}.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`,
-	useNewUrlParser: true,
+	host: process.env.MONGO_HOST,
+	port: parseInt(process.env.MONGO_PORT),
+	username: process.env.MONGO_USER,
+	password: process.env.MONGO_PASSWORD,
+	database: process.env.MONGO_DATABASE,
 	useUnifiedTopology: true,
-	entities: [join(__dirname, 'entities', '*.entity.{ts,js}')],
-	migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
+	entities: [
+		join(__dirname, 'entities', '*.entity.{ts,js}')
+	],
 	cli: {
 		entitiesDir: join(__dirname, 'entities'),
-		migrationsDir: join(__dirname, 'migrations')
 	}
 };

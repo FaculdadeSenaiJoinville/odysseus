@@ -1,13 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { TokenRepository } from "./token.repository";
+import { Token } from "src/core/database/mongo/entities";
+import { getConnectionManager, getRepository } from "typeorm";
 import { TokenPayload } from "./token.type";
 
 @Injectable()
 export class TokenStrategy extends PassportStrategy(Strategy) {
 
-    constructor(private readonly tokenRepository: TokenRepository) {
+    constructor() {
 
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -18,7 +19,7 @@ export class TokenStrategy extends PassportStrategy(Strategy) {
 
     public async validate({ id }: TokenPayload) {
 
-        const databaseToken = await this.tokenRepository.findByUserId(id);
+        const databaseToken = await getConnectionManager().get('mongoConnection').getRepository(Token).findOneOrFail({ user_id: id });
 
         if (!databaseToken) {
 

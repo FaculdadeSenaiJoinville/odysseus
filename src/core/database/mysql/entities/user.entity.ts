@@ -1,4 +1,4 @@
-import { MySqlCoreEntity } from 'src/modules/entities';
+import { MySqlCoreEntity } from 'src/core/database';
 import { Entity, Column } from 'typeorm';
 
 @Entity('users')
@@ -7,7 +7,7 @@ export class User extends MySqlCoreEntity {
 	@Column({ length: 100 })
 	email: string;
 
-	@Column({ length: 255 })
+	@Column()
 	password: string;
 
 	@Column()

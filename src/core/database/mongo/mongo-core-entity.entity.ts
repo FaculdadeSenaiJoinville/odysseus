@@ -1,4 +1,4 @@
-import { CreateDateColumn, UpdateDateColumn, BeforeUpdate, ObjectIdColumn, ObjectID } from 'typeorm';
+import { CreateDateColumn, UpdateDateColumn, BeforeUpdate, ObjectIdColumn, ObjectID, Column } from 'typeorm';
 
 export class MongoCoreEntity {
 
@@ -10,6 +10,12 @@ export class MongoCoreEntity {
 
 	@UpdateDateColumn()
 	updated_at: Date;
+
+	@Column()
+	created_by: string;
+
+	@Column()
+	updated_by: string;
 
 	@BeforeUpdate()
 	protected setUpdatedProperties() {

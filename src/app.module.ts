@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './modules/auth/auth.module';
-import { UserModule } from './modules/user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { mongoConfig, mysqlConfig } from './core/database';
+import { modules } from './modules';
 
 @Module({
 	imports: [
-		AuthModule,
-		UserModule
+		TypeOrmModule.forRoot(mysqlConfig),
+		TypeOrmModule.forRoot(mongoConfig),
+		...modules
 	]
 })
 export class AppModule {}
