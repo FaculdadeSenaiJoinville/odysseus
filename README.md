@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./odysseus_penelope.png" width="320" alt="Odysseus and Penelope Logo" />
+  <img src="./" width="320" alt="Odysseus and Penelope Logo" />
 </p>
 
 ## Descrição
