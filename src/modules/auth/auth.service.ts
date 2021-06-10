@@ -4,7 +4,6 @@ import { AuthPolicies } from './others/auth.policies';
 import { authMessages } from 'src/core/messages';
 import { LoginOutput, LogoutOutput } from './others/auth.type';
 import { LoginDTO } from './dtos/login.dto';
-import { getConnectionManager, getRepository } from 'typeorm';
 import { User } from 'src/core/database/mysql/entities';
 import { RepositoryService } from 'src/core/repository/repository.service';
 
