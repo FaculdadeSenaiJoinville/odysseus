@@ -11,5 +11,5 @@ Odysseus é o backend do projeto Odyssey, da Escola Sistêmica. Construído com 
 [Wiki do Projeto](https://github.com/FaculdadeSenaiJoinville/pes-back/wiki)
 
 ```bash
-git clone https://github.com/FaculdadeSenaiJoinville/pes-back.git
+git clone https://github.com/FaculdadeSenaiJoinville/odysseus.git
 ```
