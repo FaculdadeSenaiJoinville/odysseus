@@ -1,5 +1,6 @@
 <p align="center">
   <img src="./" width="320" alt="Odysseus and Penelope Logo" />
+  <img src="https://img.shields.io/badge/node-12.18.2-green.svg">
 </p>
 
 ## Descrição
