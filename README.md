@@ -1,7 +1,9 @@
-<p align="center">
-  <img src="./" width="320" alt="Odysseus and Penelope Logo" />
-  <img src="https://img.shields.io/badge/node-12.18.2-green.svg">
-</p>
+<div align="center">
+    <h1>
+      <img src="./" width="320" alt="Odyssey Logo" />
+    </h1>
+    <img src="https://img.shields.io/badge/node-12.18.0-green.svg">
+</div>
 
 ## Descrição
 Odysseus é o backend do projeto Odyssey, da Escola Sistêmica. Construído com [Nest](https://nestjs.com/), possuí uma forte padronização e uso de tecnologias modernas.
