@@ -7,6 +7,9 @@
 	"license": "UNLICENSED",
 	"scripts": {
 		"test": "jest",
+		"win:cov": "start ./coverage/lcov-report/index.html",
+		"lin:cov": "xdg-open ./coverage/lcov-report/index.html",
+		"mac:cov": "open ./coverage/lcov-report/index.html",
 		"prebuild": "rimraf dist",
 		"start": "nest start",
 		"start:debug": "nest start --debug --watch",

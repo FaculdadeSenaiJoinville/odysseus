@@ -15,7 +15,8 @@ const userController = new UserController(userService);
 
 describe('Users', () => {
 
-	describe('create', () => {
+	describe('Create', () => {
+
 		it('should receive an input and return a new user', async () => {
 			
 			const input = {
@@ -29,8 +30,6 @@ describe('Users', () => {
 			repositoryService.mysql().create.mockResolvedValue(new User());
 
 			await expect(userController.create(input)).resolves.toEqual(expected);
-
-			expect(repositoryService.mysql().create).toHaveBeenCalledWith(input);
 		});
 	});
 });

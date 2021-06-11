@@ -21,10 +21,11 @@ const authService = new AuthService(
 );
 const authController = new AuthController(authService);
 
-describe('Users', () => {
+describe('Token', () => {
 
-	describe('login', () => {
-		it('should receive an input and return a token', async () => {
+	describe('Login', () => {
+
+		it('should receive an input and return a message and a token', async () => {
 			
 			const input = {
 				email: 'joao.teste@gmail.com',
@@ -41,10 +42,6 @@ describe('Users', () => {
 			tokenService.create.mockResolvedValue(expected.token);
 
 			await expect(authController.login(input)).resolves.toEqual(expected);
-
-			expect(repositoryService.mysql().findOneOrFail).toHaveBeenCalledWith({ email: input.email });
-			expect(bcryptHelper.compareStringToHash).toHaveBeenCalledWith(input.password, input.password);
-			expect(tokenService.create).toHaveBeenCalledWith(input, input.expiresIn)
 		});
 
 		it('should receive an input and return an error (unknown user)', async () => {
@@ -59,8 +56,6 @@ describe('Users', () => {
 			repositoryService.mysql().findOneOrFail.mockResolvedValue(null);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
-
-			expect(repositoryService.mysql().findOneOrFail).toHaveBeenCalledWith({ email: input.email });
 		});
 
 		it('should receive an input and return an error (wrong password)', async () => {
@@ -80,13 +75,11 @@ describe('Users', () => {
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
-
-			expect(repositoryService.mysql().findOneOrFail).toHaveBeenCalledWith({ email: input.email });
-			expect(bcryptHelper.compareStringToHash).toHaveBeenCalledWith(input.password, databaseUser.password);
 		});
 	});
 
-	describe('logout', () => {
+	describe('Logout', () => {
+
 		it('should receive an id and return a success message', async () => {
 			
 			const input = '7ye9g7sd8a7sdgas8d8sdasddas';
@@ -97,8 +90,6 @@ describe('Users', () => {
 			tokenService.delete.mockResolvedValue('');
 
 			await expect(authController.logout(input)).resolves.toEqual(expected);
-
-			expect(tokenService.delete).toHaveBeenCalledWith(input);
 		});
 	});
 });

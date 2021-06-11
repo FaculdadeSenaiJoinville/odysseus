@@ -16,14 +16,7 @@ export function generateRepositoryService() {
 	};
 
 	return {
-		mongo() {
-			
-			return repository;
-		},
-
-		mysql() {
-
-			return repository;
-		}
+		mongo: () => repository,
+		mysql: () => repository
 	}
 }

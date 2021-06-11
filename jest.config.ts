@@ -28,6 +28,8 @@ const config: Config.InitialOptions = {
 	],
 	coveragePathIgnorePatterns: [
 		"index.ts",
+		"src/core/repository",
+		"./*.strategy.ts",
 		"src/main.ts",
 		"./*.module.ts",
 		"/node_modules/",
