@@ -13,7 +13,7 @@ export class UserService {
 	) {}
 
 	public async create(user: CreateUserDTO): Promise<User> {
-		
+
 		user.password = await this.bcryptHelper.hashString(user.password);
 
 		return this.repositoryService.mysql(User).create(user);
