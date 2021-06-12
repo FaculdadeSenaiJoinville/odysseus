@@ -7,7 +7,7 @@ describe('Validate Body Pipe', () => {
 
 	const validateBodyPipe = new ValidateBodyPipe(CREATE_USER_VALIDATION);
 
-	it('should an user payload and return an instance of it', () => {
+	it('should receive an user payload and return an instance of it', () => {
 
 		const input = {
 			name: 'Maria'
