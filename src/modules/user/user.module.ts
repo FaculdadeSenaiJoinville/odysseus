@@ -8,6 +8,7 @@ import { RepositoryModule } from 'src/core/repository/repository.module';
 @Module({
 	imports: [
 		RepositoryModule,
+		BcryptHelper,
 		ErrorModule
 	],
 	controllers: [

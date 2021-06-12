@@ -6,12 +6,12 @@ export class RepositoryService {
 
 	public mongo<Entity>(target: EntityTarget<Entity>) {
 
-        return getConnectionManager().get('mongoConnection').getRepository(target);
-    }
+		return getConnectionManager().get('mongoConnection').getRepository(target);
+	}
 
-    public mysql<Entity>(target: EntityTarget<Entity>) {
+	public mysql<Entity>(target: EntityTarget<Entity>) {
 
-        return getConnectionManager().get('mysqlConnection').getRepository(target);
-    }
+		return getConnectionManager().get('mysqlConnection').getRepository(target);
+	}
 
 }

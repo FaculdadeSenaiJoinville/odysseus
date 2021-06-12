@@ -1,9 +1,9 @@
 import { Body, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ValidateBodyPipe } from 'src/common/pipes';
 import { CREATE_USER_VALIDATION } from './others/user.validation';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { User } from 'src/core/database/mysql/entities';
+import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 
 @ApiController('users')
