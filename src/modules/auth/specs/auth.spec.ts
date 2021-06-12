@@ -33,7 +33,7 @@ describe('Token', () => {
 				expiresIn: 84000
 			};
 			const expected = {
-				message: authMessages.send('login_successful'),
+				message: authMessages.send('successfully_logged_in'),
 				token: '7ye9g7sd8a7sdgas8d8sdasddas'
 			};
 
@@ -84,7 +84,7 @@ describe('Token', () => {
 			
 			const input = '7ye9g7sd8a7sdgas8d8sdasddas';
 			const expected = {
-				message: authMessages.send('logout_successful')
+				message: authMessages.send('successfully_logged_out')
 			};
 
 			tokenService.delete.mockResolvedValue('');

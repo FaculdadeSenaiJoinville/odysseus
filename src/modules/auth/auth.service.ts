@@ -27,7 +27,7 @@ export class AuthService {
 		const token = await this.tokenService.create(databaseUser, expiresIn);
 
 		return {
-			message: authMessages.send('login_successful'),
+			message: authMessages.send('successfully_logged_in'),
 			token
 		};
 	}
@@ -37,7 +37,7 @@ export class AuthService {
 		await this.tokenService.delete(token);
 
 		return {
-			message: authMessages.send('logout_successful')
+			message: authMessages.send('successfully_logged_out')
 		};
 	}
 
