@@ -6,6 +6,7 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
+		"refresh:project": "yarn cache clean && rm -rf node_modules && yarn install",
 		"test": "jest",
 		"win:cov": "start ./coverage/lcov-report/index.html",
 		"lin:cov": "xdg-open ./coverage/lcov-report/index.html",
