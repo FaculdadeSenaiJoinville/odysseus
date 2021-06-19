@@ -27,7 +27,8 @@
 		"dml:script:run": "ts-node -r tsconfig-paths/register",
 		"mysql:migration:new": "yarn typeorm migration:create -c mysqlConnection -n",
 		"mysql:migration:run": "yarn typeorm migration:run -c mysqlConnection",
-		"db:magic": "yarn ormconfig:generate && yarn migration:run"
+		"db:magic": "yarn ormconfig:generate && yarn migration:run",
+		"create:module": "ts-node -r tsconfig-paths/register ./scripts/create_module.script.ts"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.6.13",
