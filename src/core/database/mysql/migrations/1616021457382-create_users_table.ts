@@ -54,13 +54,11 @@ export class createUsersTable1612143421629 implements MigrationInterface {
                 name: 'created_by',
                 type: 'varchar',
                 length: '64',
-                isNullable: false
             },
             {
                 name: 'updated_by',
                 type: 'varchar',
                 length: '64',
-                isNullable: false
             }
         ]
     });

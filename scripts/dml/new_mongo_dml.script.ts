@@ -16,9 +16,7 @@ function getFileDir(scriptName: string): string {
     return `src/core/database/mongo/scripts/${scriptID}_${scriptName}.script.ts`;
 }
 
-function getFileContent(): string {
-
-    return `
+const fileContent = `
 import { createConnection } from "typeorm";
 import { Entity } from "../entities";
 
@@ -39,12 +37,10 @@ createConnection('mongoConnection')
         process.exit();
     });
 `;
-}
 
 rl.question("Nome do script: ", scriptName => {
     
     const fileDir = getFileDir(scriptName);
-    const fileContent = getFileContent();
 
     fs.writeFileSync(fileDir, fileContent);
 
