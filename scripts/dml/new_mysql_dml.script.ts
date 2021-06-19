@@ -43,8 +43,14 @@ createConnection('mysqlConnection')
 
 rl.question("Nome do script: ", scriptName => {
     
+	const scriptsDir = 'src/core/database/mysql/scripts';
     const fileDir = getFileDir(scriptName);
     const fileContent = getFileContent();
+
+	if (!fs.existsSync(scriptsDir)) {
+		
+		fs.mkdirSync(scriptsDir);
+	}
 
     fs.writeFileSync(fileDir, fileContent);
 

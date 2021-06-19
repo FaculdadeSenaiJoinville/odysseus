@@ -106,7 +106,7 @@ rl.question("Nome do modulo: ", async moduleName => {
 	}
 	else {
 		
-		fs.mkdirSync(fileDir, null);
+		fs.mkdirSync(fileDir);
 	
 		createFiles(fileDir, moduleName);
 	}
