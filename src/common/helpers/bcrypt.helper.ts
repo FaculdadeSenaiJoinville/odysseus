@@ -9,14 +9,14 @@ export class BcryptHelper {
 
 		return await bcrypt.hash(value, 10)
 			.then(hash => hash)
-			.catch(() => { throw new InternalServerErrorException(Dictionary.systemError.getMessage('internal_server_error')) });
+			.catch(() => { throw new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error')) });
 	}
 
 	public async compareStringToHash(normalValue: string, encryptedValue: string): Promise<boolean> {
 
 		return await bcrypt.compare(normalValue, encryptedValue)
 			.then(response => response)
-			.catch(() => { throw new InternalServerErrorException(Dictionary.systemError.getMessage('internal_server_error')) });
+			.catch(() => { throw new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error')) });
 	}
 
 }

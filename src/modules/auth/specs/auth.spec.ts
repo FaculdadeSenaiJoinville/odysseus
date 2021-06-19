@@ -1,5 +1,5 @@
 import { UnauthorizedException } from "@nestjs/common";
-import { authMessages } from "src/core/messages";
+import { Dictionary } from "odyssey-dictionary";
 import { generateRepositoryService } from "src/tests/generate-repository-service";
 import { AuthController } from "../auth.controller";
 import { AuthService } from "../auth.service";
@@ -33,7 +33,7 @@ describe('Token', () => {
 				expiresIn: 84000
 			};
 			const expected = {
-				message: authMessages.send('successfully_logged_in'),
+				message: Dictionary.auth.getMessage('successfully_logged_in'),
 				token: '7ye9g7sd8a7sdgas8d8sdasddas'
 			};
 
@@ -51,7 +51,7 @@ describe('Token', () => {
 				password: 'João@123',
 				expiresIn: 84000
 			};
-			const expected = new UnauthorizedException(authMessages.send('user_not_found'));
+			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
 			repositoryService.mysql().findOneOrFail.mockResolvedValue(null);
 
@@ -69,7 +69,7 @@ describe('Token', () => {
 				email: 'joao.teste@gmail.com',
 				password: 'João@123',
 			};
-			const expected = new UnauthorizedException(authMessages.send('user_not_found'));
+			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
 			repositoryService.mysql().findOneOrFail.mockResolvedValue(databaseUser);
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
@@ -84,7 +84,7 @@ describe('Token', () => {
 			
 			const input = '7ye9g7sd8a7sdgas8d8sdasddas';
 			const expected = {
-				message: authMessages.send('successfully_logged_out')
+				message: Dictionary.auth.getMessage('successfully_logged_out')
 			};
 
 			tokenService.delete.mockResolvedValue('');

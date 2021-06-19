@@ -10,7 +10,7 @@ export class ErrorService {
 
 	public throwInternalServerError = (): never => {
 
-        throw new InternalServerErrorException(Dictionary.systemError.getMessage('internal_server_error'));
+        throw new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error'));
     }
 
     public throwMySQLError(error: MySQLError): never {
