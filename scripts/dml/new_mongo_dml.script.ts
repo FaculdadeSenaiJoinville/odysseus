@@ -40,7 +40,13 @@ createConnection('mongoConnection')
 
 rl.question("Nome do script: ", scriptName => {
     
+	const scriptsDir = 'src/core/database/mongo/scripts';
     const fileDir = getFileDir(scriptName);
+
+	if (!fs.existsSync(scriptsDir)) {
+		
+		fs.mkdirSync(scriptsDir);
+	}
 
     fs.writeFileSync(fileDir, fileContent);
 
