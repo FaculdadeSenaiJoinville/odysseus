@@ -5,8 +5,8 @@ import { modules } from './modules';
 
 @Module({
 	imports: [
-		TypeOrmModule.forRoot(mysqlConfig),
 		TypeOrmModule.forRoot(mongoConfig),
+		TypeOrmModule.forRoot(mysqlConfig),
 		...modules
 	]
 })

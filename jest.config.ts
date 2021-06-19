@@ -36,7 +36,6 @@ const config: Config.InitialOptions = {
 		"/dist/",
 		"/src/common/decorators",
 		"/src/core/database",
-		"/src/core/messages",
 		"/src/core/error",
 	],
 	coverageThreshold: {

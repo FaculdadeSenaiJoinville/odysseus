@@ -1,8 +1,9 @@
-import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeUpdate } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeUpdate, Index, BeforeInsert } from 'typeorm';
 
 export class MySqlCoreEntity {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
+	@Index()
 	id: string;
 
 	@Column({ length: 100 })
@@ -19,6 +20,12 @@ export class MySqlCoreEntity {
 
 	@Column()
 	updated_by: string;
+
+	@BeforeInsert()
+	protected setInsertProperties() {
+
+		this.created_by = this.id;
+	}
 
 	@BeforeUpdate()
 	protected setUpdatedProperties() {

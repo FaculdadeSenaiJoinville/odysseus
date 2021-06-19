@@ -1,5 +1,5 @@
 import { MongoCoreEntity } from 'src/core/database';
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, Index } from 'typeorm';
 
 @Entity('tokens')
 export class Token extends MongoCoreEntity {
@@ -8,6 +8,7 @@ export class Token extends MongoCoreEntity {
 	token: string;
 
 	@Column()
+	@Index()
 	user_id: string;
 
 	constructor(token: string, user_id: string) {

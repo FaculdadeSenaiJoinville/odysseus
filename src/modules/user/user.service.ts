@@ -16,7 +16,7 @@ export class UserService {
 
 		user.password = await this.bcryptHelper.hashString(user.password);
 
-		return this.repositoryService.mysql(User).create(user);
+		return this.repositoryService.mysql(User).save(user);
 	}
 
 }

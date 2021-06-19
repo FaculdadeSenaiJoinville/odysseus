@@ -1,8 +1,9 @@
-import { CreateDateColumn, UpdateDateColumn, BeforeUpdate, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { CreateDateColumn, UpdateDateColumn, BeforeUpdate, ObjectIdColumn, ObjectID, Column, Index } from 'typeorm';
 
 export class MongoCoreEntity {
 
     @ObjectIdColumn()
+	@Index()
 	_id: ObjectID;
 
 	@CreateDateColumn()

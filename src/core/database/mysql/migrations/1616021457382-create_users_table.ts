@@ -42,13 +42,13 @@ export class createUsersTable1612143421629 implements MigrationInterface {
                 name: 'created_at',
                 type: 'timestamp',
                 isNullable: false,
-                default: 'now()',
+                default: 'NOW()',
             },
             {
                 name: 'updated_at',
                 type: 'timestamp',
                 isNullable: false,
-                default: 'now()',
+                default: 'NOW()',
             },
             {
                 name: 'created_by',
