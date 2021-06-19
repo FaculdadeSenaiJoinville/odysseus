@@ -7,6 +7,7 @@
 	"license": "MIT",
 	"scripts": {
 		"refresh:project": "yarn cache clean && rm -rf node_modules && yarn install",
+		"update:dictionary": "yarn remove odyssey-dictionary && yarn add odyssey-dictionary",
 		"test": "jest",
 		"win:cov": "start ./coverage/lcov-report/index.html",
 		"lin:cov": "xdg-open ./coverage/lcov-report/index.html",
@@ -43,6 +44,7 @@
 		"express": "^4.17.1",
 		"mongodb": "^3.6.4",
 		"mysql2": "^2.2.5",
+		"odyssey-dictionary": "1.2.0",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"reflect-metadata": "^0.1.13",

@@ -27,7 +27,7 @@ describe('Users', () => {
 			const expected = new User();
 
 			bcryptHelper.hashString.mockResolvedValue('$dsjsdjkjaksasbbc2424');
-			repositoryService.mysql().create.mockResolvedValue(new User());
+			repositoryService.mysql().save.mockResolvedValue(new User());
 
 			await expect(userController.create(input)).resolves.toEqual(expected);
 		});

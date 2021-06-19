@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { User } from "src/core/database/mysql/entities";
 import { BcryptHelper } from "src/common/helpers";
-import { authMessages } from "src/core/messages";
+import { Dictionary } from "odyssey-dictionary";
 
 @Injectable()
 export class AuthPolicies {
@@ -12,7 +12,7 @@ export class AuthPolicies {
 
         if (!user) {
 
-            throw new UnauthorizedException(authMessages.send('user_not_found'));
+            throw new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
         }
     }
 
@@ -22,7 +22,7 @@ export class AuthPolicies {
 
         if (!samePassword) {
 
-            throw new UnauthorizedException(authMessages.send('user_not_found'));
+            throw new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
         }
     }
 

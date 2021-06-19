@@ -13,4 +13,5 @@ export class ValidateBodyPipe implements PipeTransform {
             throw new BadRequestException(response.errors.join('; '))
         });
 	}
+
 }

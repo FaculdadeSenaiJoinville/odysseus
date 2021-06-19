@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
-import { miscMessages } from 'src/core/messages';
+import { Dictionary } from 'odyssey-dictionary';
 import { MySQLError } from '../database';
 import { ErrorHelper } from './others/error.helper';
 
@@ -10,7 +10,7 @@ export class ErrorService {
 
 	public throwInternalServerError = (): never => {
 
-        throw new InternalServerErrorException(miscMessages.send('internal_server_error'));
+        throw new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error'));
     }
 
     public throwMySQLError(error: MySQLError): never {

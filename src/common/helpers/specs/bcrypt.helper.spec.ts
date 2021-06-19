@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { BcryptHelper } from "..";
-import { miscMessages } from "src/core/messages";
 import { InternalServerErrorException } from "@nestjs/common";
+import { Dictionary } from 'odyssey-dictionary';
 
 const bcryptHelper = new BcryptHelper();
 
@@ -19,7 +19,7 @@ describe('Bcrypt Helper', () => {
 		it('should receive an object and throw error', async () => {
 			
 			const input = { senha: 'senha@teste' };
-			const expected = new InternalServerErrorException(miscMessages.send('internal_server_error'));
+			const expected = new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error'));
 
 			await expect(bcryptHelper.hashString(input as any)).rejects.toEqual(expected);
 		});
@@ -39,7 +39,7 @@ describe('Bcrypt Helper', () => {
 			
 			const input = { senha: 'senha@teste'};
 			const hashedString = await bcrypt.hash('teste@diferente', 10);
-			const expected = new InternalServerErrorException(miscMessages.send('internal_server_error'));
+			const expected = new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error'));
 
 			await expect(bcryptHelper.compareStringToHash(input as any, hashedString)).rejects.toEqual(expected);
 		});

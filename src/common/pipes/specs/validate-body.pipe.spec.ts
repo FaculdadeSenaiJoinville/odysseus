@@ -1,4 +1,3 @@
-
 import { User } from 'src/core/database/mysql/entities';
 import { CREATE_USER_VALIDATION } from 'src/modules/user/others/user.validation';
 import { ValidateBodyPipe } from '../validate-body.pipe';
