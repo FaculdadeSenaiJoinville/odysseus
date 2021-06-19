@@ -24,6 +24,7 @@
 		"mongo:script:run": "ts-node -r tsconfig-paths/register ./scripts/dml/run_mongo_dml.script.ts",
 		"mysql:script:new": "ts-node -r tsconfig-paths/register ./scripts/dml/new_mysql_dml.script.ts",
 		"mysql:script:run": "ts-node -r tsconfig-paths/register ./scripts/dml/run_mysql_dml.script.ts",
+		"dml:script:run": "ts-node -r tsconfig-paths/register",
 		"mysql:migration:new": "yarn typeorm migration:create -c mysqlConnection -n",
 		"mysql:migration:run": "yarn typeorm migration:run -c mysqlConnection",
 		"db:magic": "yarn ormconfig:generate && yarn migration:run"

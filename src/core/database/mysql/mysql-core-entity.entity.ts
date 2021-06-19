@@ -4,22 +4,22 @@ export class MySqlCoreEntity {
 
     @PrimaryGeneratedColumn('uuid')
 	@Index()
-	id: string;
+	public id: string;
 
 	@Column({ length: 100 })
-	name: string;
+	public name: string;
 
 	@CreateDateColumn()
-	created_at: Date;
+	public created_at: Date;
 
 	@UpdateDateColumn()
-	updated_at: Date;
+	public updated_at: Date;
 
 	@Column()
-	created_by: string;
+	public created_by: string;
 
 	@Column()
-	updated_by: string;
+	public updated_by: string;
 
 	@BeforeInsert()
 	protected setInsertProperties() {

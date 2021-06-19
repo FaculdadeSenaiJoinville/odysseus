@@ -6,12 +6,12 @@ export class User extends MySqlCoreEntity {
 
 	@Column({ length: 100 })
 	@Index()
-	email: string;
+	public email: string;
 
 	@Column()
-	password: string;
+	public password: string;
 
 	@Column()
-	active: boolean;
+	public active: boolean;
 
 }

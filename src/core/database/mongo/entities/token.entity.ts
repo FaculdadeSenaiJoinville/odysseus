@@ -5,11 +5,11 @@ import { Entity, Column, Index } from 'typeorm';
 export class Token extends MongoCoreEntity {
 
 	@Column()
-	token: string;
+	public token: string;
 
 	@Column()
 	@Index()
-	user_id: string;
+	public user_id: string;
 
 	constructor(token: string, user_id: string) {
 
