@@ -10,8 +10,8 @@ export class ValidateBodyPipe implements PipeTransform {
         
 		return this.yupSchema.validate(body).catch(response => {
 
-            throw new BadRequestException(response.errors.join('; '))
-        });
+			throw new BadRequestException(response.errors.join('; '))
+		});
 	}
 
 }

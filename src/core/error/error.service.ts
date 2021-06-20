@@ -6,21 +6,21 @@ import { ErrorHelper } from './others/error.helper';
 @Injectable()
 export class ErrorService {
 
-    constructor(private readonly errorHelper: ErrorHelper) {}
+	constructor(private readonly errorHelper: ErrorHelper) {}
 
 	public throwInternalServerError = (): never => {
 
-        throw new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error'));
-    }
+		throw new InternalServerErrorException(Dictionary.errors.getMessage('internal_server_error'));
+	}
 
-    public throwMySQLError(error: MySQLError): never {
+	public throwMySQLError(error: MySQLError): never {
+		
+		throw new BadRequestException('MySQL Error');
+	}
 
-        throw new BadRequestException('MySQL Error');
-    }
-
-    public throwMongoError(error: MySQLError): never {
-
-        throw new BadRequestException('MongoDB Error');
-    }
+	public throwMongoError(error: MySQLError): never {
+		
+		throw new BadRequestException('MongoDB Error');
+	}
 
 }

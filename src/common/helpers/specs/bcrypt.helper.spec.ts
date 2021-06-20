@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
-import { BcryptHelper } from "..";
-import { InternalServerErrorException } from "@nestjs/common";
+import { BcryptHelper } from '..';
+import { InternalServerErrorException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 
 const bcryptHelper = new BcryptHelper();

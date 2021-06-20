@@ -3,7 +3,6 @@ import { Token } from 'src/core/database/mongo/entities';
 import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { TokenHelper } from './others/token.helper';
-import { getConnectionManager, getRepository } from 'typeorm';
 import { RepositoryService } from 'src/core/repository/repository.service';
 
 @Injectable()
@@ -21,9 +20,9 @@ export class TokenService {
 
 		await this.repositoryService.mongo(Token).delete({ user_id: user.id });
 
-        const encryptedToken = await this.bcryptHelper.hashString(token);
+		const encryptedToken = await this.bcryptHelper.hashString(token);
 
-        await this.repositoryService.mongo(Token).save(new Token(encryptedToken, user.id));
+		await this.repositoryService.mongo(Token).save(new Token(encryptedToken, user.id));
 
 		return `Bearer ${token}`;
 	}

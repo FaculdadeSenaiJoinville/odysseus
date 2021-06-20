@@ -4,11 +4,11 @@ import { ErrorHelper } from './others/error.helper';
 
 @Module({
 	providers: [
-        ErrorService,
-        ErrorHelper
+		ErrorService,
+		ErrorHelper
 	],
-    exports: [
-        ErrorService
-    ]
+	exports: [
+		ErrorService
+	]
 })
 export class ErrorModule {}

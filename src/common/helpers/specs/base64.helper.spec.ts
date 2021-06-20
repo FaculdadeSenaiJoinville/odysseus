@@ -1,4 +1,4 @@
-import { Base64Helper } from "..";
+import { Base64Helper } from '..';
 
 const base64Helper = new Base64Helper();
 

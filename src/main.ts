@@ -8,7 +8,7 @@ async function bootstrap() {
 	
 	const config = new DocumentBuilder()
 		.setTitle('PES API')
-		.setDescription("API's da escola sistêmica.")
+		.setDescription(`API's da escola sistêmica.`)
 		.setVersion('1.0')
 		.build();
 	const document = SwaggerModule.createDocument(app, config);

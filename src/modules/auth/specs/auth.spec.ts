@@ -1,9 +1,9 @@
-import { UnauthorizedException } from "@nestjs/common";
-import { Dictionary } from "odyssey-dictionary";
-import { generateRepositoryService } from "src/tests/generate-repository-service";
-import { AuthController } from "../auth.controller";
-import { AuthService } from "../auth.service";
-import { AuthPolicies } from "../others/auth.policies";
+import { UnauthorizedException } from '@nestjs/common';
+import { Dictionary } from 'odyssey-dictionary';
+import { generateRepositoryService } from 'src/tests/generate-repository-service';
+import { AuthController } from '../auth.controller';
+import { AuthService } from '../auth.service';
+import { AuthPolicies } from '../others/auth.policies';
 
 const repositoryService = generateRepositoryService();
 const tokenService = {
