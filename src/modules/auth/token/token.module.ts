@@ -11,21 +11,21 @@ import { RepositoryModule } from 'src/core/repository/repository.module';
 dotenv.config();
 
 @Module({
-    imports: [
-        RepositoryModule,
-        ErrorModule,
-        JwtModule.register({
-            secret: process.env.JWT_KEY
-        })
-    ],
+	imports: [
+		RepositoryModule,
+		ErrorModule,
+		JwtModule.register({
+			secret: process.env.JWT_KEY
+		})
+	],
 	providers: [
-        TokenService,
-        TokenStrategy,
-        TokenHelper,
-        BcryptHelper
-    ],
-    exports: [
-        TokenService
-    ]
+		TokenService,
+		TokenStrategy,
+		TokenHelper,
+		BcryptHelper
+	],
+	exports: [
+		TokenService
+	]
 })
 export class TokenModule {}

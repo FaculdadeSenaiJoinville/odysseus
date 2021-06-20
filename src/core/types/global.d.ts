@@ -1,4 +1,4 @@
-import { User } from "../database/mysql/entities";
+import { User } from '../database/mysql/entities';
 
 declare global {
 

@@ -1,7 +1,7 @@
-import { User } from "src/core/database/mysql/entities";
-import { generateRepositoryService } from "src/tests/generate-repository-service";
-import { UserController } from "../user.controller";
-import { UserService } from "../user.service";
+import { User } from 'src/core/database/mysql/entities';
+import { generateRepositoryService } from 'src/tests/generate-repository-service';
+import { UserController } from '../user.controller';
+import { UserService } from '../user.service';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {

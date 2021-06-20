@@ -1,6 +1,6 @@
-import { User } from "src/core/database/mysql/entities";
-import { generateRepositoryService } from "src/tests/generate-repository-service";
-import { TokenService } from "../token.service";
+import { User } from 'src/core/database/mysql/entities';
+import { generateRepositoryService } from 'src/tests/generate-repository-service';
+import { TokenService } from '../token.service';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {
