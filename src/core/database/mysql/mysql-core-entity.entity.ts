@@ -16,10 +16,10 @@ export class MySqlCoreEntity {
 	public updated_at: Date;
 
 	@Column()
-	public created_by: string;
+	public created_by?: string;
 
 	@Column()
-	public updated_by: string;
+	public updated_by?: string;
 
 	@BeforeInsert()
 	protected setInsertProperties() {
