@@ -67,7 +67,7 @@ describe('Token', () => {
 			};
 			const databaseUser = {
 				email: 'joao.teste@gmail.com',
-				password: 'João@123',
+				password: 'João@123'
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 

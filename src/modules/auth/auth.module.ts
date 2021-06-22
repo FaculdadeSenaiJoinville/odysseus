@@ -4,11 +4,11 @@ import { AuthService } from './auth.service';
 import { TokenModule } from './token/token.module';
 import { AuthPolicies } from './others/auth.policies';
 import { BcryptHelper } from 'src/common/helpers';
-import { RepositoryModule } from 'src/core/repository/repository.module';
+import { MySQLRepositoryModule } from 'src/core/repositories';
 
 @Module({
 	imports: [
-		RepositoryModule,
+		MySQLRepositoryModule,
 		TokenModule
 	],
 	controllers: [
@@ -18,6 +18,6 @@ import { RepositoryModule } from 'src/core/repository/repository.module';
 		AuthService,
 		AuthPolicies,
 		BcryptHelper
-	],
+	]
 })
 export class AuthModule {}

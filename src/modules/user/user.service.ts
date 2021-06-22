@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { User } from 'src/core/database/mysql/entities';
-import { RepositoryService } from 'src/core/repository/repository.service';
 import { BcryptHelper } from 'src/common/helpers';
+import { MySQLRepositoryService } from 'src/core/repositories';
 
 @Injectable()
 export class UserService {
 
 	constructor(
-		private readonly repositoryService: RepositoryService,
+		private readonly mysqlRepository: MySQLRepositoryService,
 		private readonly bcryptHelper: BcryptHelper
 	) {}
 
@@ -16,7 +16,9 @@ export class UserService {
 
 		user.password = await this.bcryptHelper.hashString(user.password);
 
-		return this.repositoryService.mysql(User).save(user);
+		const newUser = this.mysqlRepository.get(User).create(user);
+		
+		return this.mysqlRepository.get(User).save(newUser);
 	}
 
 }

@@ -1,3 +1,4 @@
+import { session } from 'src/core/session';
 import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeUpdate, Index, BeforeInsert } from 'typeorm';
 
 export class MySqlCoreEntity {
@@ -24,13 +25,15 @@ export class MySqlCoreEntity {
 	@BeforeInsert()
 	protected setInsertProperties() {
 
-		this.created_by = this.id;
+		this.created_by = session.getUser().id;
+		this.updated_by = session.getUser().id;
 	}
 
 	@BeforeUpdate()
 	protected setUpdatedProperties() {
 
 		this.updated_at = new Date();
+		this.updated_by = session.getUser().id;
 	}
 
 }

@@ -4,21 +4,21 @@ import { AuthPolicies } from './others/auth.policies';
 import { LoginOutput, LogoutOutput } from './others/auth.type';
 import { LoginDTO } from './dtos/login.dto';
 import { User } from 'src/core/database/mysql/entities';
-import { RepositoryService } from 'src/core/repository/repository.service';
 import { Dictionary } from 'odyssey-dictionary';
+import { MySQLRepositoryService } from 'src/core/repositories';
 
 @Injectable()
 export class AuthService {
 
 	constructor(
-		private readonly repositoryService: RepositoryService,
+		private readonly mysqlRepository: MySQLRepositoryService,
 		private readonly tokenService: TokenService,
 		private readonly authPolicies: AuthPolicies
 	) {}
 
 	public async login({ email, password, expiresIn }: LoginDTO): Promise<LoginOutput> {
 
-		const databaseUser = await this.repositoryService.mysql(User).findOneOrFail({ email });
+		const databaseUser = await this.mysqlRepository.get(User).findOneOrFail({ email });
 
 		this.authPolicies.mustHaveThisUserInDatabase(databaseUser);
 

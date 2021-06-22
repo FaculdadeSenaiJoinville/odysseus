@@ -6,13 +6,13 @@ import { TokenHelper } from './others/token.helper';
 import { TokenStrategy } from './others/token.strategy';
 import { ErrorModule } from '../../../core/error/error.module';
 import * as dotenv from 'dotenv';
-import { RepositoryModule } from 'src/core/repository/repository.module';
+import { MongoRepositoryModule } from 'src/core/repositories';
 
 dotenv.config();
 
 @Module({
 	imports: [
-		RepositoryModule,
+		MongoRepositoryModule,
 		ErrorModule,
 		JwtModule.register({
 			secret: process.env.JWT_KEY

@@ -1,9 +1,18 @@
 import { User } from './database/mysql/entities';
 
-export const session = {
+class Session {
 
-	getUser(): User {
+	private user: User;
 
-		return global.app_session.user;
+	public getUser(): User {
+
+		return this.user;
 	}
-};
+
+	public setUser(user: User) {
+
+		this.user = user;
+	}
+}
+
+export const session = new Session();

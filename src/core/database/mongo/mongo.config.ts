@@ -17,6 +17,6 @@ export const mongoConfig: TypeOrmModuleOptions  = {
 		join(__dirname, 'entities', '*.entity.{ts,js}')
 	],
 	cli: {
-		entitiesDir: join(__dirname, 'entities'),
+		entitiesDir: join(__dirname, 'entities')
 	}
 };

@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Token } from 'src/core/database/mongo/entities';
 import { User } from 'src/core/database/mysql/entities';
+import { session } from 'src/core/session';
 import { getConnectionManager } from 'typeorm';
 import { TokenPayload } from './token.type';
 
@@ -27,7 +28,7 @@ export class TokenStrategy extends PassportStrategy(Strategy) {
 			return false;
 		}
 
-		global.app_session.user = payload as User;
+		session.setUser(payload as User);
 
 		return { id: payload.id };
 	}
