@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserType } from '../enums/user.types';
 
 export class CreateUserDTO {
 
@@ -11,4 +12,6 @@ export class CreateUserDTO {
     @ApiProperty({ example: 'Teste@123', description: 'Senha do usuário.' })
 	password: string;
 
+    @ApiProperty({ example: 'ADMIN', description: 'tipo de usuário.' })
+	type: UserType;
 }

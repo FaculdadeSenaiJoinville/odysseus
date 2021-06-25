@@ -6,6 +6,8 @@ async function bootstrap() {
 	
 	const app = await NestFactory.create(AppModule);
 	
+	app.enableCors();
+	
 	const config = new DocumentBuilder()
 		.setTitle('PES API')
 		.setDescription(`API's da escola sistêmica.`)

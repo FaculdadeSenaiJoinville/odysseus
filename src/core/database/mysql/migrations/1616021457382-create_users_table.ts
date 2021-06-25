@@ -33,6 +33,12 @@ export class createUsersTable1612143421629 implements MigrationInterface {
 				isNullable: false
 			},
 			{
+				name: 'type',
+				type: 'varchar',
+				length: '15',
+				isNullable: false
+			},
+			{
 				name: 'active',
 				type: 'boolean',
 				isNullable: false,
