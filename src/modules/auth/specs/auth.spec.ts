@@ -5,7 +5,7 @@ import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 import { AuthPolicies } from '../others/auth.policies';
 
-const repositoryService = generateRepositoryService();
+const mysqlRepositoryService = generateRepositoryService();
 const tokenService = {
 	create: jest.fn(),
 	delete: jest.fn()
@@ -15,7 +15,7 @@ const bcryptHelper = {
 };
 const authPolicies = new AuthPolicies(bcryptHelper as any);
 const authService = new AuthService(
-	repositoryService as any,
+	mysqlRepositoryService as any,
 	tokenService as any,
 	authPolicies as any
 );
@@ -37,7 +37,7 @@ describe('Token', () => {
 				token: '7ye9g7sd8a7sdgas8d8sdasddas'
 			};
 
-			repositoryService.mysql().findOneOrFail.mockResolvedValue(input);
+			mysqlRepositoryService.get().findOneOrFail.mockResolvedValue(input);
 			bcryptHelper.compareStringToHash.mockResolvedValue(true);
 			tokenService.create.mockResolvedValue(expected.token);
 
@@ -53,7 +53,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			repositoryService.mysql().findOneOrFail.mockResolvedValue(null);
+			mysqlRepositoryService.get().findOneOrFail.mockResolvedValue(null);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
 		});
@@ -71,7 +71,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			repositoryService.mysql().findOneOrFail.mockResolvedValue(databaseUser);
+			mysqlRepositoryService.get().findOneOrFail.mockResolvedValue(databaseUser);
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);

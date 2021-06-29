@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongoRepositoryService } from './repository.service';
+import { MongoRepositoryService } from './mongo-repository.service';
 
 @Module({
 	providers: [

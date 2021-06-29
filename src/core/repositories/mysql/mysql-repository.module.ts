@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MySQLRepositoryService } from './repository.service';
+import { MySQLRepositoryService } from './mysql-repository.service';
 
 @Module({
 	providers: [
