@@ -1,4 +1,4 @@
-name: CI
+name: Code Review Trigger
 
 on:
   pull_request:
@@ -11,9 +11,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Failure notification
+    
+    - name: Pull Request URL
+      uses: kceb/pull-request-url-action@v2
+      id: pr-url
+    
+    - name: CR notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_CR_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: '(ODYSSEUS) Novo PR pronto pra receber CR! :technologist:'
+        args: 'Tem [Pull Request](${{ steps.pr-url.outputs.url }}) novo aguardando pra receber CR! :technologist:'
