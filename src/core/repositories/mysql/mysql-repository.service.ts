@@ -11,9 +11,14 @@ export class MySQLRepositoryService {
 
 	public save<Entity>(target: EntityTarget<Entity>, value: Entity) {
 
-		const payload = this.get(target).create(value)
+		const payload = this.get(target).create(value);
 
 		return this.get(target).save(payload);
+	}
+
+	public delete<Entity>(target: EntityTarget<Entity>, id: string) {
+
+		return this.get(target).delete(id);
 	}
 
 }
