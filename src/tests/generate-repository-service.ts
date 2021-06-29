@@ -10,8 +10,8 @@ export function generateRepositoryService() {
 		remove: jest.fn(),
 		save: jest.fn(),
 		update: jest.fn(),
-		createQueryBuilder: jest.fn(),
 		create: jest.fn(),
+		createQueryBuilder: jest.fn(),
 		count: jest.fn()
 	};
 
