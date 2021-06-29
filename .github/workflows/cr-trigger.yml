@@ -21,4 +21,4 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_CR_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: 'Tem [Pull Request](${{ steps.pr-url.outputs.url }}) novo aguardando pra receber CR! :technologist:'
+        args: 'Tem [Pull Request](https://www.google.com.br) novo aguardando pra receber CR! :technologist:'
