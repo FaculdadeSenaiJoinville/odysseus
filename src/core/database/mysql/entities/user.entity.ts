@@ -1,6 +1,6 @@
 import { MySqlCoreEntity } from 'src/core/database';
 import { Entity, Column, Index } from 'typeorm';
-import { UserType } from 'src/modules/user/enums/user.types';
+import { UserType } from 'src/modules/user/others/user.type';
 
 @Entity('users')
 export class User extends MySqlCoreEntity {

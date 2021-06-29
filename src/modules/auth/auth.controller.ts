@@ -15,7 +15,7 @@ export class AuthController {
 
 	@Get('me')
 	@AuthProtection()
-	public async me(): Promise<User> {
+	public me(): User {
 	
 		return session.getUser();
 	}

@@ -1,4 +1,4 @@
-import { UserType } from 'src/modules/user/enums/user.types';
+import { UserType } from 'src/modules/user/others/user.type';
 
 export type TokenPayload = {
     id: string;
