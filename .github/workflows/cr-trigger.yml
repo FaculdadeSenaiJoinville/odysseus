@@ -21,4 +21,4 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_CR_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-        args: 'Tem [Pull Request](https://www.google.com.br) novo aguardando pra receber CR! :technologist:'
+        args: 'Tem [PR](https://github.com/FaculdadeSenaiJoinville/odysseus/pulls?q=is%3Aopen+is%3Apr+label%3A%22code+review%22) novo aguardando pra receber CR! :technologist:'
