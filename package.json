@@ -5,6 +5,11 @@
 	"author": "Faculdade Senai Joinville",
 	"private": true,
 	"license": "MIT",
+	"engines" : {
+		"node": ">=14.17.3",
+		"npm": ">=6.14.13",
+		"yarn": ">=1.22.5"
+	},
 	"scripts": {
 		"refresh:project": "yarn cache clean && rm -rf node_modules && yarn install",
 		"update:dictionary": "yarn remove odyssey-dictionary && yarn add odyssey-dictionary",
