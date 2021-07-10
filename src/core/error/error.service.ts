@@ -15,10 +15,14 @@ export class ErrorService {
 
 	public throwMySQLError(error: MySQLError): never {
 		
+		console.error(error);
+
 		throw new BadRequestException('MySQL Error');
 	}
 
 	public throwMongoError(error: MySQLError): never {
+
+		console.error(error);
 		
 		throw new BadRequestException('MongoDB Error');
 	}
