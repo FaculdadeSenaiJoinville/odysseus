@@ -8,7 +8,7 @@ export class TokenHelper {
 
 	constructor(private readonly jwtService: JwtService) {}
 
-	public generateToken({ id, name, email, created_at, active }: User, expiresIn: number): Promise<string> {
+	public generateToken({ id, name, email, created_at, active, type }: User, expiresIn: number): Promise<string> {
 
 		const secret = process.env.JWT_KEY;
 
@@ -17,7 +17,8 @@ export class TokenHelper {
 			name,
 			email,
 			created_at,
-			active
+			active,
+			type
 		};
 
 		return this.jwtService.signAsync(payload, { secret, expiresIn });
@@ -33,6 +34,7 @@ export class TokenHelper {
 			user.email = data.email;
 			user.active = data.active;
 			user.created_at = data.created_at;
+			user.type = data.type;
 
 			return user;
 		});

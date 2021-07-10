@@ -2,6 +2,7 @@ import { User } from 'src/core/database/mysql/entities';
 import { generateRepositoryService } from 'src/tests/generate-repository-service';
 import { UserController } from '../user.controller';
 import { UserService } from '../user.service';
+import { UserType } from '../others/user.type';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {
@@ -22,7 +23,8 @@ describe('Users', () => {
 			const input = {
 				name: 'João da Silva Teste',
 				email: 'joao.teste@gmail.com',
-				password: 'João@123'
+				password: 'João@123',
+				type: UserType.ADMIN
 			};
 			const expected = new User();
 

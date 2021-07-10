@@ -4,6 +4,8 @@ import { generateRepositoryService } from 'src/tests/generate-repository-service
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 import { AuthPolicies } from '../others/auth.policies';
+import { User } from 'src/core/database/mysql/entities';
+import { session } from 'src/core/session';
 
 const mysqlRepositoryService = generateRepositoryService();
 const tokenService = {
@@ -90,6 +92,18 @@ describe('Token', () => {
 			tokenService.delete.mockResolvedValue('');
 
 			await expect(authController.logout(input)).resolves.toEqual(expected);
+		});
+	});
+
+	describe('Me', () => {
+
+		it('should return user info', async () => {
+
+			session.setUser(new User());
+
+			const expected = session.getUser();
+
+			await expect(authController.me()).toEqual(expected);
 		});
 	});
 });
