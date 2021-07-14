@@ -1,22 +1,15 @@
-import { Dictionary } from 'odyssey-dictionary';
-import * as Yup from 'yup';
+import * as Joi from 'joi';
+import buildValidation from '../../../common/helpers/validation.helper';
 
-export const CREATE_USER_VALIDATION = Yup.object().shape({
-	name: Yup
-		.string()
-		.typeError(Dictionary.users.getMessage('invalid_type', { field: 'name', type: 'string' }))
-		.required(Dictionary.users.getMessage('required_field', { field: 'name' })),
-	email: Yup
-		.string()
-		.email(Dictionary.users.getMessage('invalid_email'))
-		.required(Dictionary.users.getMessage('required_field', { field: 'email' })),
-	password: Yup
-		.string()
-		.typeError(Dictionary.users.getMessage('invalid_type', { field: 'password', type: 'string' }))
-		.min(8, Dictionary.users.getMessage('characters_min', { field: 'password', value: 8 }))
-		.required(Dictionary.users.getMessage('required_field', { field: 'password' })),
-	type: Yup
-		.string()
-		.typeError(Dictionary.users.getMessage('invalid_type', { field: 'type' }))
-		.required(Dictionary.users.getMessage('required_field', { field: 'type' }))
+
+export const CREATE_USER_VALIDATION = buildValidation('users', {
+	name: Joi.string().required(),
+	email: Joi.string().email().required(),
+	password: Joi.string().min(8).required(),
+	type: Joi.string().required()
+});
+
+export const UPDATE_PASSWORD_VALIDATION = buildValidation('users', {
+	password: Joi.string().min(8).required(),
+	confirm_password: Joi.string().min(8).required()
 });

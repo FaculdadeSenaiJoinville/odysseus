@@ -27,6 +27,7 @@ export class AuthController {
 	}
 
 	@Delete('logout')
+	@AuthProtection()
 	public async logout(@Headers('Authorization') token: string): Promise<LogoutOutput> {
 
 		return this.authService.logout(token);

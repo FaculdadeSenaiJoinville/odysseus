@@ -28,5 +28,5 @@ module.exports = {
 		'indent': ['error', 'tab'],
 		'comma-dangle': ['error', 'never'],
 		'@hapi/hapi/scope-start': ['error']
-	},
+	}
 };
