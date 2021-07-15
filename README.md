@@ -9,6 +9,7 @@
 Odysseus é o backend do projeto Odyssey, da Escola Sistêmica. Construído com [Nest](https://nestjs.com/), possuí uma forte padronização e uso de tecnologias modernas.
 
 [Discord](https://discord.gg/vk9jFUFh)
+
 [Wiki do Projeto](https://github.com/FaculdadeSenaiJoinville/pes-back/wiki)
 
 ```bash
