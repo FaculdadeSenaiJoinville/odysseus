@@ -6,6 +6,7 @@ export const CREATE_USER_VALIDATION = buildValidation('users', {
 	name: Joi.string().required(),
 	email: Joi.string().email().required(),
 	password: Joi.string().min(8).required(),
+	confirm_password: Joi.string().min(8).required(),
 	type: Joi.string().required()
 });
 
