@@ -12,6 +12,9 @@ export class CreateUserDTO {
 	@ApiProperty({ example: 'Teste@123', description: 'Senha do usuário.' })
 	password: string;
 
+	@ApiProperty({ example: 'Teste@123', description: 'Confirmação da senha do usuário.' })
+	confirm_password: string;
+
 	@ApiProperty({ example: 'ADMIN', description: 'Tipo do usuário.' })
 	type: UserType;
 }

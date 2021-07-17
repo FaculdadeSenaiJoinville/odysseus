@@ -17,10 +17,12 @@ export class UsersService {
 
 	public async create(user: CreateUserDTO): Promise<User> {
 
+		this.usersPolicies.passwordsMustBeTheSame(user.password, user.confirm_password);
+
 		user.password = await this.bcryptHelper.hashString(user.password);
 
 		const newUser = this.mysqlRepository.get(User).create(user);
-		
+
 		return this.mysqlRepository.save(User, newUser);
 	}
 

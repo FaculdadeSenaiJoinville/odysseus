@@ -29,6 +29,7 @@ describe('Users', () => {
 				name: 'João da Silva Teste',
 				email: 'joao.teste@gmail.com',
 				password: 'João@123',
+				confirm_password: 'João@123',
 				type: UserType.ADMIN
 			};
 			const expected = new User();
@@ -37,6 +38,20 @@ describe('Users', () => {
 			repositoryService.save.mockResolvedValue(new User());
 
 			await expect(userController.create(input)).resolves.toEqual(expected);
+		});
+
+		it('should receive an invalid input and return an error', async () => {
+			
+			const input = {
+				name: 'João da Silva Teste',
+				email: 'joao.teste@gmail.com',
+				password: 'João@123',
+				confirm_password: 'João@12345',
+				type: UserType.ADMIN
+			};
+			const expected = new BadRequestException(Dictionary.users.getMessage('password_not_equal'));
+
+			await expect(userController.create(input)).rejects.toEqual(expected);
 		});
 	});
 
