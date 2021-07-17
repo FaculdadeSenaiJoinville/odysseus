@@ -15,14 +15,14 @@ export class ValidateBodyPipe implements PipeTransform {
 
 	public async transform(body: any) {
 
-		const { error }  = Joi.compile(this.validationSchema.keys).validate(body);
+		const { error, value }  = Joi.compile(this.validationSchema.keys).validate(body);
 
 		if (error) {
 
 			throw new BadRequestException(error.details.map(detail => JoiMessages.translate(this.validationSchema.module, detail as JoiDetail)).join('; '));
 		}
 
-		return true;
+		return value;
 	}
 
 }

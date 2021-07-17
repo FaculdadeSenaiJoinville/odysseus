@@ -16,7 +16,7 @@ describe('Validate Body Pipe', () => {
 			type: 'STUDENT'
 		};
 
-		expect(validateBodyPipe.transform(input)).resolves.toEqual(true);
+		expect(validateBodyPipe.transform(input)).resolves.toEqual(input);
 	});
 
 	it('should receive an invalid user payload and return an error message', () => {
