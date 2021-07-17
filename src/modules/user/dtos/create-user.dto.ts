@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserType } from '../others/user.type';
+import { UserType } from '../others/users.type';
 
 export class CreateUserDTO {
 

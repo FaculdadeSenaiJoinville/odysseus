@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { Dictionary } from 'odyssey-dictionary';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Token } from 'src/core/database/mongo/entities';
 import { User } from 'src/core/database/mysql/entities';
@@ -25,7 +26,7 @@ export class TokenStrategy extends PassportStrategy(Strategy) {
 
 		if (!databaseToken) {
 
-			return false;
+			throw new UnauthorizedException(Dictionary.auth.getMessage('unauthorized'));
 		}
 
 		session.setUser(payload as User);

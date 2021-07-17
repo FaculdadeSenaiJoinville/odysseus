@@ -1,16 +1,15 @@
 import { Body, Param, Post, Put } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION } from './others/user.validation';
+import { UsersService } from './users.service';
+import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION } from './others/users.validation';
 import { User } from 'src/core/database/mysql/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO } from './dtos';
-import { SuccessMessageDTO } from '../../common/dtos/success-message.dto';
 
 @ApiController('users')
-export class UserController {
+export class UsersController {
 
-	constructor(private readonly userService: UserService) {}
+	constructor(private readonly userService: UsersService) {}
 
 	@Post('create')
 	@AuthProtection()
@@ -20,8 +19,9 @@ export class UserController {
 	}
 
 	@Put('update-password/:id')
-	public async updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<SuccessMessageDTO> {
-		
+	@AuthProtection()
+	public async updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<User> {
+
 		return this.userService.updatePassword(id, password_payload);
 	}
 

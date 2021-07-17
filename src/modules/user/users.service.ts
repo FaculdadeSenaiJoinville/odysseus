@@ -4,14 +4,15 @@ import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { MySQLRepositoryService } from 'src/core/repositories';
 import { UpdatePasswordDTO } from './dtos';
-import { SuccessMessageDTO } from '../../common/dtos/success-message.dto';
+import { UsersPolicies } from './others/users.policies';
 
 @Injectable()
-export class UserService {
+export class UsersService {
 
 	constructor(
 		private readonly mysqlRepository: MySQLRepositoryService,
-		private readonly bcryptHelper: BcryptHelper
+		private readonly bcryptHelper: BcryptHelper,
+		private readonly usersPolicies: UsersPolicies
 	) {}
 
 	public async create(user: CreateUserDTO): Promise<User> {
@@ -20,16 +21,19 @@ export class UserService {
 
 		const newUser = this.mysqlRepository.get(User).create(user);
 		
-		return this.mysqlRepository.get(User).save(newUser);
+		return this.mysqlRepository.save(User, newUser);
 	}
 
-	public async updatePassword(id: string, password_payload: UpdatePasswordDTO): Promise<SuccessMessageDTO> {
+	public async updatePassword(id: string, password_payload: UpdatePasswordDTO): Promise<User> {
 
 		const user = await this.mysqlRepository.findOne(User, id);
+		const { password, confirm_password } = password_payload;
 
-		return {
-			message: 'Usuário atualizado com sucesso!'
-		};
+		this.usersPolicies.passwordsMustBeTheSame(password, confirm_password);
+
+		user.password = await this.bcryptHelper.hashString(password);
+
+		return this.mysqlRepository.save(User, user);
 	}
 
 }

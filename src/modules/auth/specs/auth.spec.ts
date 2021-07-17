@@ -39,7 +39,7 @@ describe('Token', () => {
 				token: '7ye9g7sd8a7sdgas8d8sdasddas'
 			};
 
-			mysqlRepositoryService.get().findOneOrFail.mockResolvedValue(input);
+			mysqlRepositoryService.findOne.mockResolvedValue(input);
 			bcryptHelper.compareStringToHash.mockResolvedValue(true);
 			tokenService.create.mockResolvedValue(expected.token);
 
@@ -55,7 +55,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.get().findOneOrFail.mockResolvedValue(null);
+			mysqlRepositoryService.findOne.mockResolvedValue(null);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
 		});
@@ -73,7 +73,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.get().findOneOrFail.mockResolvedValue(databaseUser);
+			mysqlRepositoryService.findOne.mockResolvedValue(databaseUser);
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
