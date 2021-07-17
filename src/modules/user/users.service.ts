@@ -24,12 +24,11 @@ export class UsersService {
 		return this.mysqlRepository.save(User, newUser);
 	}
 
-	public async updatePassword(id: string, password_payload: UpdatePasswordDTO): Promise<User> {
-
-		const user = await this.mysqlRepository.findOne(User, id);
-		const { password, confirm_password } = password_payload;
+	public async updatePassword(id: string, { password, confirm_password }: UpdatePasswordDTO): Promise<User> {
 
 		this.usersPolicies.passwordsMustBeTheSame(password, confirm_password);
+
+		const user = await this.mysqlRepository.findOne(User, id);
 
 		user.password = await this.bcryptHelper.hashString(password);
 
