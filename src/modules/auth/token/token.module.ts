@@ -4,7 +4,7 @@ import { BcryptHelper } from 'src/common/helpers';
 import { TokenService } from './token.service';
 import { TokenHelper } from './others/token.helper';
 import { TokenStrategy } from './others/token.strategy';
-import { ErrorModule } from '../../../core/error/error.module';
+import { ErrorsModule } from '../../../core/error/errors.module';
 import * as dotenv from 'dotenv';
 import { MongoRepositoryModule } from 'src/core/repositories';
 
@@ -13,7 +13,7 @@ dotenv.config();
 @Module({
 	imports: [
 		MongoRepositoryModule,
-		ErrorModule,
+		ErrorsModule,
 		JwtModule.register({
 			secret: process.env.JWT_KEY
 		})

@@ -19,9 +19,12 @@ export class UsersService {
 
 		this.usersPolicies.passwordsMustBeTheSame(user.password, user.confirm_password);
 
-		user.password = await this.bcryptHelper.hashString(user.password);
+		const newUser = new User();
 
-		const newUser = this.mysqlRepository.get(User).create(user);
+		newUser.name = user.name;
+		newUser.email = user.email;
+		newUser.password = await this.bcryptHelper.hashString(user.password);
+		newUser.type = user.type;
 
 		return this.mysqlRepository.save(User, newUser);
 	}
