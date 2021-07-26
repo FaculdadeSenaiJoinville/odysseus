@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { MySQLRepositoryService } from 'src/core/repositories';
 import { UpdatePasswordDTO } from './dtos';
 import { UsersPolicies } from './others/users.policies';
+import { Dictionary } from 'odyssey-dictionary';
+import { FindManyOptions } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +16,30 @@ export class UsersService {
 		private readonly bcryptHelper: BcryptHelper,
 		private readonly usersPolicies: UsersPolicies
 	) {}
+	
+	public async listOne(id: string): Promise<User> {
+
+		const options: FindManyOptions = {
+			where: {
+				id
+			},
+			select: [
+				'id',
+				'name',
+				'email',
+				'type',
+				'active'
+			]
+		}
+
+		const user = await this.mysqlRepository.findOne(User, options);
+
+		if (!user) {
+			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'))
+		}
+
+		return user;
+	}
 
 	public async create(user: CreateUserDTO): Promise<User> {
 

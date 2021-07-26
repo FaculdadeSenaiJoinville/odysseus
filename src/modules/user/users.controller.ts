@@ -1,4 +1,4 @@
-import { Body, Param, Post, Put } from '@nestjs/common';
+import { Body, Param, Get, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION } from './others/users.validation';
 import { User } from 'src/core/database/mysql/entities';
@@ -10,6 +10,13 @@ import { CreateUserDTO, UpdatePasswordDTO } from './dtos';
 export class UsersController {
 
 	constructor(private readonly userService: UsersService) {}
+
+	@Get('/:id')
+	@AuthProtection()
+	public async listOne(@Param('id') id: string): Promise<User> {
+
+		return this.userService.listOne(id);
+	}
 
 	@Post('create')
 	@AuthProtection()
