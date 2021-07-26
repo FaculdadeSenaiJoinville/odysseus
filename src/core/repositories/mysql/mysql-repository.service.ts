@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DeleteResult, EntityTarget, FindConditions, FindManyOptions, FindOneOptions, getConnectionManager, Repository } from 'typeorm';
-import { ErrorService } from '../../error/error.service';
+import { ErrorsService } from '../../error/errors.service';
 
 @Injectable()
 export class MySQLRepositoryService {
 
-	constructor(private errorService: ErrorService) {}
+	constructor(private errorService: ErrorsService) {}
 
 	public get<Entity>(target: EntityTarget<Entity>): Repository<Entity> {
 
@@ -14,9 +14,7 @@ export class MySQLRepositoryService {
 
 	public async findOne<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
 
-		return this.get(target).findOneOrFail(value).catch(error => {
-
-			console.log(error);
+		return this.get(target).findOne(value).catch(error => {
 
 			this.errorService.throwMySQLError(error);
 		});
