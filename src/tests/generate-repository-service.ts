@@ -17,6 +17,9 @@ export function generateRepositoryService() {
 
 	return {
 		get: () => repository,
-		...repository
+		findOne: jest.fn(),
+		findAll: jest.fn(),
+		save: jest.fn(),
+		delete: jest.fn()
 	}
 }

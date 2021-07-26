@@ -1,24 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { EntityTarget, getConnectionManager } from 'typeorm';
+import { DeleteResult, EntityTarget, FindConditions, FindManyOptions, FindOneOptions, getConnectionManager, Repository } from 'typeorm';
+import { ErrorService } from '../../error/error.service';
 
 @Injectable()
 export class MySQLRepositoryService {
 
-	public get<Entity>(target: EntityTarget<Entity>) {
+	constructor(private errorService: ErrorService) {}
+
+	public get<Entity>(target: EntityTarget<Entity>): Repository<Entity> {
 
 		return getConnectionManager().get('mysqlConnection').getRepository(target);
 	}
 
-	public save<Entity>(target: EntityTarget<Entity>, value: Entity) {
+	public async findOne<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
+
+		return this.get(target).findOneOrFail(value).catch(error => {
+
+			console.log(error);
+
+			this.errorService.throwMySQLError(error);
+		});
+	}
+
+	public async findAll<Entity>(target: EntityTarget<Entity>, options: FindManyOptions<Entity> | FindConditions<Entity>) {
+
+		return this.get(target).find(options).catch(error => {
+
+			this.errorService.throwMySQLError(error);
+		});
+	}
+
+	public async save<Entity>(target: EntityTarget<Entity>, value: Entity): Promise<Entity> {
 
 		const payload = this.get(target).create(value);
 
-		return this.get(target).save(payload);
+		return this.get(target).save(payload).catch(error => {
+			
+			this.errorService.throwMySQLError(error);
+		});
 	}
 
-	public delete<Entity>(target: EntityTarget<Entity>, id: string) {
+	public async delete<Entity>(target: EntityTarget<Entity>, id: string): Promise<DeleteResult> {
 
-		return this.get(target).delete(id);
+		return this.get(target).delete(id).catch(error => {
+			
+			this.errorService.throwMySQLError(error);
+		});
 	}
 
 }

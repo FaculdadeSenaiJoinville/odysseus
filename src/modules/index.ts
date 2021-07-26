@@ -1,7 +1,7 @@
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+import { UsersModule } from './user/users.module';
 
 export const modules = [
 	AuthModule,
-	UserModule
+	UsersModule
 ];

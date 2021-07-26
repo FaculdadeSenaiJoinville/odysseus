@@ -18,7 +18,7 @@ export class AuthService {
 
 	public async login({ email, password, expiresIn }: LoginDTO): Promise<LoginOutput> {
 
-		const databaseUser = await this.mysqlRepository.get(User).findOneOrFail({ email });
+		const databaseUser = await this.mysqlRepository.findOne(User, { email });
 
 		this.authPolicies.mustHaveThisUserInDatabase(databaseUser);
 
