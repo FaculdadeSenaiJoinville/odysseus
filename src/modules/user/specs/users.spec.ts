@@ -6,6 +6,8 @@ import { UserType } from '../others/users.type';
 import { UsersPolicies } from '../others/users.policies';
 import { BadRequestException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
+import { UsersRepository } from '../others/users.repository';
+import { FindManyOptions } from 'typeorm';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {
@@ -17,9 +19,36 @@ const userService = new UsersService(
 	bcryptHelper as any,
 	usersPolicies
 );
-const userController = new UsersController(userService);
+const userRepository = new UsersRepository(repositoryService as any); 
+const userController = new UsersController(
+	userService,
+	userRepository
+);
 
 describe('Users', () => {
+
+	describe('List', () => {
+
+		it('should return a list of users', async () => {
+			
+			const expected = [new User(), new User()];
+			const options: FindManyOptions = {
+				select: [
+					'id',
+					'name',
+					'email',
+					'type',
+					'active'
+				]
+			};
+
+			repositoryService.findAll.mockResolvedValue(expected);
+
+			await expect(userController.list()).resolves.toEqual(expected);
+
+			expect(repositoryService.findAll).toBeCalledWith(User, options);
+		});
+	});
 
 	describe('Create', () => {
 
