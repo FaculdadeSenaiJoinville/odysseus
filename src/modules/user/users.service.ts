@@ -22,14 +22,7 @@ export class UsersService {
 		const options: FindManyOptions = {
 			where: {
 				id
-			},
-			select: [
-				'id',
-				'name',
-				'email',
-				'type',
-				'active'
-			]
+			}
 		}
 
 		const user = await this.mysqlRepository.findOne(User, options);
