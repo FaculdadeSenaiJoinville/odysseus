@@ -24,9 +24,9 @@ export class UsersController {
 
 	@Get('/:id')
 	@AuthProtection()
-	public async listOne(@Param('id') id: string): Promise<User> {
+	public async getOne(@Param('id') id: string): Promise<User> {
 
-		return this.userService.listOne(id);
+		return this.userRepository.getOne(id);
 	}
 
 	@Post('create')

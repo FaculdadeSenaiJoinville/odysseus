@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Dictionary } from 'odyssey-dictionary';
 import { User } from 'src/core/database/mysql/entities';
 import { MySQLRepositoryService } from 'src/core/repositories';
-import { FindManyOptions } from 'typeorm';
 
 @Injectable()
 export class UsersRepository {
 
 	constructor (private readonly mysqlRepository: MySQLRepositoryService) {}
 
-	public list(): Promise<User[]> {
+	public async getOne(id: string): Promise<User> {
 
-		const options: FindManyOptions = {
-			select: [
-				'id',
-				'name',
-				'email',
-				'type',
-				'active'
-			]
+		const user = await this.mysqlRepository.findOne(User, id);
+
+		if (!user) {
+			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'))
 		}
 
-		return this.mysqlRepository.findAll(User, options);
+		return user;
+	}
+	
+
+	public list(): Promise<User[]> {
+
+		return this.mysqlRepository.findAll(User);
 	}
 
 }
