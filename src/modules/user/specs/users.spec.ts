@@ -7,7 +7,6 @@ import { UsersPolicies } from '../others/users.policies';
 import { BadRequestException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UsersRepository } from '../others/users.repository';
-import { FindManyOptions } from 'typeorm';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {
@@ -32,21 +31,12 @@ describe('Users', () => {
 		it('should return a list of users', async () => {
 			
 			const expected = [new User(), new User()];
-			const options: FindManyOptions = {
-				select: [
-					'id',
-					'name',
-					'email',
-					'type',
-					'active'
-				]
-			};
 
 			repositoryService.findAll.mockResolvedValue(expected);
 
 			await expect(userController.list()).resolves.toEqual(expected);
 
-			expect(repositoryService.findAll).toBeCalledWith(User, options);
+			expect(repositoryService.findAll).toBeCalledWith(User);
 		});
 	});
 
