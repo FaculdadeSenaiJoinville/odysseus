@@ -36,7 +36,7 @@ export class UsersController {
 		return this.userService.updatePassword(id, password_payload);
 	}
 
-	@Post('update/:id')
+	@Put('update/:id')
 	@AuthProtection()
 	public async update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) user: UpdateUserDTO): Promise<User> {
 
