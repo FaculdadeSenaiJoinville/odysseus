@@ -22,8 +22,7 @@ export class AuthService {
 		const options: FindOneOptions = {
 			where: { email },
 			select: ['password']
-		}
-		
+		};
 		const databaseUser = await this.mysqlRepository.findOne(User, options);
 
 		this.authPolicies.mustHaveThisUserInDatabase(databaseUser);
