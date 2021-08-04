@@ -13,12 +13,11 @@ export class UsersRepository {
 		const user = await this.mysqlRepository.findOne(User, id);
 
 		if (!user) {
-			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'))
+			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'));
 		}
 
 		return user;
 	}
-	
 
 	public list(): Promise<User[]> {
 
