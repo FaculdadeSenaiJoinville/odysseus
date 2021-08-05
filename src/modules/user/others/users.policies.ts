@@ -13,7 +13,7 @@ export class UsersPolicies {
 		}
 	}
 
-	public mustHasUser(user: User): void {
+	public mustHaveUser(user: User): void {
 		
 		if (!user) {
 			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'));

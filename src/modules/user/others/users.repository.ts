@@ -15,7 +15,7 @@ export class UsersRepository {
 
 		const user = await this.mysqlRepository.findOne(User, id);
 
-		this.usersPolicies.mustHasUser(user);
+		this.usersPolicies.mustHaveUser(user);
 
 		return user;
 	}
