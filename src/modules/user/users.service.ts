@@ -35,6 +35,8 @@ export class UsersService {
 
 		const user = await this.mysqlRepository.findOne(User, id);
 
+		this.usersPolicies.mustHasUser(user);
+
 		user.password = await this.bcryptHelper.hashString(password);
 
 		return this.mysqlRepository.save(User, user);

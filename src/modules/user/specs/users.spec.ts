@@ -4,7 +4,7 @@ import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
 import { UserType } from '../others/users.type';
 import { UsersPolicies } from '../others/users.policies';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UsersRepository } from '../others/users.repository';
 
@@ -18,13 +18,43 @@ const userService = new UsersService(
 	bcryptHelper as any,
 	usersPolicies
 );
-const userRepository = new UsersRepository(repositoryService as any); 
+const userRepository = new UsersRepository(
+	repositoryService as any,
+	usersPolicies
+); 
 const userController = new UsersController(
 	userService,
 	userRepository
 );
 
 describe('Users', () => {
+
+	describe('Details', () => {
+
+		it('should receive an id and return details of an user', async () => {
+			
+			const expected = new User();
+			const id = 's45as45a4ss5as1s2';
+
+			repositoryService.findOne.mockResolvedValue(expected);
+
+			await expect(userController.getOne(id)).resolves.toEqual(expected);
+
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
+		});
+
+		it('should receive an nonexistent id and return an error', async () => {
+
+			const expected = new NotFoundException(Dictionary.users.getMessage('user_not_found'));
+			const id = 's45as45a4ss5as1s2';
+
+			repositoryService.findOne.mockResolvedValue(null);
+
+			await expect(userController.getOne(id)).rejects.toEqual(expected);
+
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
+		});
+	});
 
 	describe('List', () => {
 
@@ -100,6 +130,20 @@ describe('Users', () => {
 			};
 			const id = 's45as45a4ss5as1s2';
 			const expected = new BadRequestException(Dictionary.users.getMessage('password_not_equal'));
+
+			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
+		});
+
+		it('should receive an nonexistent id and return an error', async () => {
+			
+			const input = {
+				password: 'João@1234',
+				confirm_password: 'João@1234'
+			};
+			const id = 's45as45a4ss5as1s2';
+			const expected = new NotFoundException(Dictionary.users.getMessage('user_not_found'));
+
+			repositoryService.findOne.mockResolvedValue(null);
 
 			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
 		});

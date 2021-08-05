@@ -22,7 +22,7 @@ export class UsersController {
 		return this.userRepository.list();
 	}
 
-	@Get('list/:id')
+	@Get('details/:id')
 	@AuthProtection()
 	public async getOne(@Param('id') id: string): Promise<User> {
 

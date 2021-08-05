@@ -1,20 +1,21 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Dictionary } from 'odyssey-dictionary';
+import { Injectable } from '@nestjs/common';
 import { User } from 'src/core/database/mysql/entities';
 import { MySQLRepositoryService } from 'src/core/repositories';
+import { UsersPolicies } from './users.policies';
 
 @Injectable()
 export class UsersRepository {
 
-	constructor (private readonly mysqlRepository: MySQLRepositoryService) {}
+	constructor (
+		private readonly mysqlRepository: MySQLRepositoryService,
+		private readonly usersPolicies: UsersPolicies
+	) {}
 
 	public async getOne(id: string): Promise<User> {
 
 		const user = await this.mysqlRepository.findOne(User, id);
 
-		if (!user) {
-			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'));
-		}
+		this.usersPolicies.mustHasUser(user);
 
 		return user;
 	}
