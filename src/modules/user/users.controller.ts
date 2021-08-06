@@ -36,4 +36,11 @@ export class UsersController {
 		return this.userService.updatePassword(id, password_payload);
 	}
 
+	@Put('disable/:id')
+	@AuthProtection()
+	public async disable(@Param('id') id: string): Promise<User> {
+
+		return this.userService.disable(id);
+	}
+
 }

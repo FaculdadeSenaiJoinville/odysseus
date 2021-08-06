@@ -40,4 +40,15 @@ export class UsersService {
 		return this.mysqlRepository.save(User, user);
 	}
 
+	public async disable(id: string): Promise<User> {
+
+		const user = await this.mysqlRepository.findOne(User, id);
+
+		this.usersPolicies.userMustBeActive(user);
+
+		user.active = false;
+
+		return this.mysqlRepository.save(User, user);
+	}
+
 }

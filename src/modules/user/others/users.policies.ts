@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
+import { User } from 'src/core/database/mysql/entities';
 
 @Injectable()
 export class UsersPolicies {
@@ -9,6 +10,16 @@ export class UsersPolicies {
 		if (first_password !== second_password) {
 
 			throw new BadRequestException(Dictionary.users.getMessage('password_not_equal'));
+		}
+	}
+
+
+
+	public userMustBeActive(user: User): void {
+
+		if (!user.active) {
+
+			throw new BadRequestException(Dictionary.users.getMessage('user_already_disabled'));
 		}
 	}
 

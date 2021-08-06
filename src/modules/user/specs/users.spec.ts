@@ -8,6 +8,7 @@ import { BadRequestException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UsersRepository } from '../others/users.repository';
 import { FindManyOptions } from 'typeorm';
+import { UserStubs } from './stubs/user.stubs';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {
@@ -24,6 +25,7 @@ const userController = new UsersController(
 	userService,
 	userRepository
 );
+const userStubs = new UserStubs();
 
 describe('Users', () => {
 
@@ -112,6 +114,38 @@ describe('Users', () => {
 			const expected = new BadRequestException(Dictionary.users.getMessage('password_not_equal'));
 
 			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
+		});
+	});
+
+	describe('Disable', () => {
+
+		it('should disable user and return the updated user', async () => {
+
+			const activeUser = await userStubs.getUserStub(true, UserType.ADMIN);
+			const disabledUser = await userStubs.getUserStub(false, UserType.ADMIN);
+			const id = 's45as45a4ss5as1s2';
+			const expected = disabledUser;
+
+			repositoryService.findOne.mockResolvedValue(activeUser);
+			repositoryService.save.mockResolvedValue(disabledUser);
+
+			await expect(userController.disable(id)).resolves.toEqual(expected);
+
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
+			expect(repositoryService.save).toBeCalledWith(User, disabledUser);
+		});
+
+		it('should return an error when user already disabled', async () => {
+			
+			const user = userStubs.getUserStub(false, UserType.ADMIN);
+			const id = 's45as45a4ss5as1s2';
+			const expected = new BadRequestException(Dictionary.users.getMessage('user_already_disabled'));
+			
+			repositoryService.findOne.mockResolvedValue(user);
+
+			await expect(userController.disable(id)).rejects.toEqual(expected);
+
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
 		});
 	});
 });
