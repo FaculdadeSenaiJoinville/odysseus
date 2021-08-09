@@ -20,7 +20,7 @@ export class MySQLRepositoryService {
 		});
 	}
 
-	public async findAll<Entity>(target: EntityTarget<Entity>, options: FindManyOptions<Entity> | FindConditions<Entity>) {
+	public async findAll<Entity>(target: EntityTarget<Entity>, options?: FindManyOptions<Entity> | FindConditions<Entity>) {
 
 		return this.get(target).find(options).catch(error => {
 
