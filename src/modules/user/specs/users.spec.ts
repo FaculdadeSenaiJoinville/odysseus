@@ -117,9 +117,9 @@ describe('Users', () => {
 		});
 	});
 
-	describe('Disable', () => {
+	describe('ChangeStatus', () => {
 
-		it('should disable user and return the updated user', async () => {
+		it('should cahnge user status and return the updated user', async () => {
 
 			const activeUser = await userStubs.getUserStub(true, UserType.ADMIN);
 			const disabledUser = await userStubs.getUserStub(false, UserType.ADMIN);
@@ -129,23 +129,10 @@ describe('Users', () => {
 			repositoryService.findOne.mockResolvedValue(activeUser);
 			repositoryService.save.mockResolvedValue(disabledUser);
 
-			await expect(userController.disable(id)).resolves.toEqual(expected);
+			await expect(userController.updateStatus(id)).resolves.toEqual(expected);
 
 			expect(repositoryService.findOne).toBeCalledWith(User, id);
 			expect(repositoryService.save).toBeCalledWith(User, disabledUser);
-		});
-
-		it('should return an error when user already disabled', async () => {
-			
-			const user = userStubs.getUserStub(false, UserType.ADMIN);
-			const id = 's45as45a4ss5as1s2';
-			const expected = new BadRequestException(Dictionary.users.getMessage('user_already_disabled'));
-			
-			repositoryService.findOne.mockResolvedValue(user);
-
-			await expect(userController.disable(id)).rejects.toEqual(expected);
-
-			expect(repositoryService.findOne).toBeCalledWith(User, id);
 		});
 	});
 });

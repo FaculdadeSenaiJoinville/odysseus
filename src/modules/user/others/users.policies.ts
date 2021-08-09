@@ -13,14 +13,4 @@ export class UsersPolicies {
 		}
 	}
 
-
-
-	public userMustBeActive(user: User): void {
-
-		if (!user.active) {
-
-			throw new BadRequestException(Dictionary.users.getMessage('user_already_disabled'));
-		}
-	}
-
 }

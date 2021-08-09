@@ -36,11 +36,11 @@ export class UsersController {
 		return this.userService.updatePassword(id, password_payload);
 	}
 
-	@Put('disable/:id')
+	@Put('update-status/:id')
 	@AuthProtection()
-	public async disable(@Param('id') id: string): Promise<User> {
+	public async updateStatus(@Param('id') id: string): Promise<User> {
 
-		return this.userService.disable(id);
+		return this.userService.updateStatus(id);
 	}
 
 }
