@@ -13,6 +13,7 @@ describe('Validate Body Pipe', () => {
 			name: 'Maria',
 			email: 'maria@gmail.com',
 			password: 'Teste@123',
+			confirm_password: 'Teste@123',
 			type: 'STUDENT'
 		};
 
