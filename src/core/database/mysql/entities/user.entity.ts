@@ -9,7 +9,7 @@ export class User extends MySqlCoreEntity {
 	@Index()
 	public email: string;
 
-	@Column()
+	@Column({ select: false })
 	public password: string;
 
 	@Column()
