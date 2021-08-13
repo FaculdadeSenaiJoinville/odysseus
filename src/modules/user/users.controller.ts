@@ -15,11 +15,18 @@ export class UsersController {
 		private readonly userRepository: UsersRepository
 	) {}
 
-	@Get()
+	@Get('/list')
 	@AuthProtection()
 	public async list(): Promise<User[]> {
 
 		return this.userRepository.list();
+	}
+
+	@Get('details/:id')
+	@AuthProtection()
+	public async getOne(@Param('id') id: string): Promise<User> {
+
+		return this.userRepository.getOne(id);
 	}
 
 	@Post('create')

@@ -6,6 +6,7 @@ import { LoginDTO } from './dtos/login.dto';
 import { User } from 'src/core/database/mysql/entities';
 import { Dictionary } from 'odyssey-dictionary';
 import { MySQLRepositoryService } from 'src/core/repositories';
+import { FindOneOptions } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,11 @@ export class AuthService {
 
 	public async login({ email, password, expiresIn }: LoginDTO): Promise<LoginOutput> {
 
-		const databaseUser = await this.mysqlRepository.findOne(User, { email });
+		const options: FindOneOptions = {
+			where: { email },
+			select: ['password']
+		};
+		const databaseUser = await this.mysqlRepository.findOne(User, options);
 
 		this.authPolicies.mustHaveThisUserInDatabase(databaseUser);
 

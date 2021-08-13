@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { User } from 'src/core/database/mysql/entities';
 
@@ -10,6 +10,13 @@ export class UsersPolicies {
 		if (first_password !== second_password) {
 
 			throw new BadRequestException(Dictionary.users.getMessage('password_not_equal'));
+		}
+	}
+
+	public mustHaveUser(user: User): void {
+		
+		if (!user) {
+			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'));
 		}
 	}
 
