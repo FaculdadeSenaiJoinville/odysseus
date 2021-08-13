@@ -19,9 +19,9 @@ export class UsersPolicies {
 		if (!(user_payload.type !== user.type || user_payload.name !== user.name || user_payload.email !== user.email)) {
 
 			throw new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
-		}
+	  	}
 	}
-
+  
 	public mustHaveUser(user: User): void {
 		
 		if (!user) {
