@@ -6,6 +6,7 @@ import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO } from './dtos';
 import { UsersRepository } from './others/users.repository';
+import { SuccessSaveMessage } from '../../common/types';
 
 @ApiController('users')
 export class UsersController {
@@ -31,14 +32,14 @@ export class UsersController {
 
 	@Post('create')
 	@AuthProtection()
-	public async create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) user: CreateUserDTO): Promise<User> {
+	public async create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.create(user);
 	}
 
 	@Put('update-password/:id')
 	@AuthProtection()
-	public async updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<User> {
+	public async updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.updatePassword(id, password_payload);
 	}
