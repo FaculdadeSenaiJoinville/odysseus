@@ -21,7 +21,18 @@ export class AuthService {
 
 		const options: FindOneOptions = {
 			where: { email },
-			select: ['password']
+			select: [
+				'id',
+				'name',
+				'email',
+				'type',
+				'active',
+				'password',
+				'created_at',
+				'updated_at',
+				'created_by',
+				'updated_by'
+			]
 		};
 		const databaseUser = await this.mysqlRepository.findOne(User, options);
 
