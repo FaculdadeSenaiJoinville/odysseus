@@ -7,7 +7,6 @@ import { UsersPolicies } from '../others/users.policies';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UsersRepository } from '../others/users.repository';
-import { FindManyOptions } from 'typeorm';
 import { UserStubs } from './stubs/user.stubs';
 
 const repositoryService = generateRepositoryService();
