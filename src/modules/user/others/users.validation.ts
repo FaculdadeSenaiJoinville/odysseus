@@ -14,3 +14,9 @@ export const UPDATE_PASSWORD_VALIDATION = buildValidation('users', {
 	password: Joi.string().min(8).required(),
 	confirm_password: Joi.string().min(8).required()
 });
+
+export const UPDATE_USER_VALIDATION = buildValidation('users', {
+	name: Joi.string().required(),
+	email: Joi.string().email().required(),
+	type: Joi.string().required()
+});
