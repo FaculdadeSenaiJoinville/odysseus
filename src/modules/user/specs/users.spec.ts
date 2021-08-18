@@ -167,4 +167,43 @@ describe('Users', () => {
 			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
 		});
 	});
+
+	describe('Update', () => {
+
+		it('should receive a payload and return the updated user', async () => {
+			
+			const input = {
+				name: 'João da Silva Teste',
+				email: 'joao.teste@gmail.com',
+				type: UserType.ADMIN
+			};
+			const id = 's45as45a4ss5as1s2';
+			const expected = new User();
+
+			repositoryService.findOne.mockResolvedValue(new User());
+			repositoryService.save.mockResolvedValue(new User());
+
+			await expect(userController.update(id, input)).resolves.toEqual(expected);
+			
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
+			expect(repositoryService.save).toBeCalledWith(User, input);
+		});
+
+		it('should receive an invalid payload and return an error', async () => {
+			
+			const input = {
+				name: 'João da Silva Teste',
+				email: 'joao.teste@gmail.com',
+				type: UserType.ADMIN
+			};
+			const id = 's45as45a4ss5as1s2';
+			const expected = new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
+
+			repositoryService.findOne.mockResolvedValue(input);
+
+			await expect(userController.update(id, input)).rejects.toEqual(expected);
+			
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
+		});
+	});
 });

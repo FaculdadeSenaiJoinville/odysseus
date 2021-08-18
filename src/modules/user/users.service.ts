@@ -3,7 +3,7 @@ import { CreateUserDTO } from './dtos/create-user.dto';
 import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { MySQLRepositoryService } from 'src/core/repositories';
-import { UpdatePasswordDTO } from './dtos';
+import { UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { UsersPolicies } from './others/users.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
@@ -52,6 +52,19 @@ export class UsersService {
 			message: Dictionary.users.getMessage('password_successfully_updated'),
 			id
 		};
+	}
+
+	public async update(id: string, user_payload: UpdateUserDTO): Promise<User> {
+
+		const user = await this.mysqlRepository.findOne(User, id);
+
+		this.usersPolicies.ensurePayloadHasDiferences(user_payload, user);
+
+		user.name = user_payload.name;
+		user.email = user_payload.email;
+		user.type = user_payload.type;
+
+		return this.mysqlRepository.save(User, user);
 	}
 
 }
