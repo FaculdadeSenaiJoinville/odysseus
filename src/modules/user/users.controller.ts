@@ -46,7 +46,7 @@ export class UsersController {
 
 	@Put('update/:id')
 	@AuthProtection()
-	public async update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) user: UpdateUserDTO): Promise<User> {
+	public async update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) user: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.update(id, user);
 	}

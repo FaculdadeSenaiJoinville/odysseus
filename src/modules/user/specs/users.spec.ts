@@ -178,7 +178,10 @@ describe('Users', () => {
 				type: UserType.ADMIN
 			};
 			const id = 's45as45a4ss5as1s2';
-			const expected = new User();
+			const expected = {
+				id,
+				message: Dictionary.users.getMessage('successfully_updated')
+			};
 
 			repositoryService.findOne.mockResolvedValue(new User());
 			repositoryService.save.mockResolvedValue(new User());

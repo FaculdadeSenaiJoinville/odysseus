@@ -54,7 +54,7 @@ export class UsersService {
 		};
 	}
 
-	public async update(id: string, user_payload: UpdateUserDTO): Promise<User> {
+	public async update(id: string, user_payload: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
 		const user = await this.mysqlRepository.findOne(User, id);
 
@@ -64,7 +64,12 @@ export class UsersService {
 		user.email = user_payload.email;
 		user.type = user_payload.type;
 
-		return this.mysqlRepository.save(User, user);
+		await this.mysqlRepository.save(User, user);
+
+		return {
+			id,
+			message: Dictionary.users.getMessage('successfully_updated')
+		}
 	}
 
 }
