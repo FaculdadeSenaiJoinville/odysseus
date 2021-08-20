@@ -177,7 +177,10 @@ describe('Users', () => {
 			const activeUser = await userStubs.getUserStub(true, UserType.ADMIN);
 			const disabledUser = await userStubs.getUserStub(false, UserType.ADMIN);
 			const id = 's45as45a4ss5as1s2';
-			const expected = disabledUser;
+			const expected = {
+				id,
+				message: Dictionary.users.getMessage('status_successfully_updated')
+			};
 
 			repositoryService.findOne.mockResolvedValue(activeUser);
 			repositoryService.save.mockResolvedValue(disabledUser);

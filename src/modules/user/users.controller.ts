@@ -46,7 +46,7 @@ export class UsersController {
 
 	@Put('update-status/:id')
 	@AuthProtection()
-	public async updateStatus(@Param('id') id: string): Promise<User> {
+	public async updateStatus(@Param('id') id: string): Promise<SuccessSaveMessage> {
 
 		return this.userService.updateStatus(id);
 	}
