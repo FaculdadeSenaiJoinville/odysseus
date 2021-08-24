@@ -7,6 +7,7 @@ import { UsersPolicies } from '../others/users.policies';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UsersRepository } from '../others/users.repository';
+import { UserStubs } from './stubs/user.stubs';
 
 const repositoryService = generateRepositoryService();
 const bcryptHelper = {
@@ -26,6 +27,7 @@ const userController = new UsersController(
 	userService,
 	userRepository
 );
+const userStubs = new UserStubs();
 
 describe('Users', () => {
 
@@ -165,6 +167,28 @@ describe('Users', () => {
 			repositoryService.findOne.mockResolvedValue(null);
 
 			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
+		});
+	});
+
+	describe('ChangeStatus', () => {
+
+		it('should cahnge user status and return the updated user', async () => {
+
+			const activeUser = await userStubs.getUserStub(true, UserType.ADMIN);
+			const disabledUser = await userStubs.getUserStub(false, UserType.ADMIN);
+			const id = 's45as45a4ss5as1s2';
+			const expected = {
+				id,
+				message: Dictionary.users.getMessage('status_successfully_updated')
+			};
+
+			repositoryService.findOne.mockResolvedValue(activeUser);
+			repositoryService.save.mockResolvedValue(disabledUser);
+
+			await expect(userController.updateStatus(id)).resolves.toEqual(expected);
+
+			expect(repositoryService.findOne).toBeCalledWith(User, id);
+			expect(repositoryService.save).toBeCalledWith(User, disabledUser);
 		});
 	});
 
