@@ -22,10 +22,12 @@ export class MySQLRepositoryService {
 
 	public async findAll<Entity>(target: EntityTarget<Entity>, options?: FindManyOptions<Entity> | FindConditions<Entity>) {
 
-		return this.get(target).find(options).catch(error => {
+		const [list, count] = await this.get(target).findAndCount(options).catch(error => {
 
 			this.errorService.throwMySQLError(error);
 		});
+
+		return { list, count };
 	}
 
 	public async save<Entity>(target: EntityTarget<Entity>, value: Entity): Promise<Entity> {
