@@ -5,7 +5,6 @@ import { BcryptHelper } from 'src/common/helpers';
 import { ErrorsModule } from 'src/core/error/errors.module';
 import { MySQLRepositoryModule } from 'src/core/repositories';
 import { UsersPolicies } from './others/users.policies';
-import { UsersRepository } from './others/users.repository';
 
 @Module({
 	imports: [
@@ -18,7 +17,6 @@ import { UsersRepository } from './others/users.repository';
 	providers: [
 		UsersService,
 		UsersPolicies,
-		UsersRepository,
 		BcryptHelper
 	],
 	exports: [

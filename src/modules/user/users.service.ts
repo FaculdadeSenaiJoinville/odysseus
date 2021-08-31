@@ -17,6 +17,15 @@ export class UsersService {
 		private readonly usersPolicies: UsersPolicies
 	) {}
 
+	public async getOne(id: string): Promise<User> {
+
+		const user = await this.mysqlRepository.findOne(User, id);
+
+		this.usersPolicies.mustHaveUser(user);
+
+		return user;
+	}
+
 	public async create(user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
 		this.usersPolicies.passwordsMustBeTheSame(user.password, user.confirm_password);

@@ -1,59 +1,61 @@
-import { Body, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './others/users.validation';
 import { User } from 'src/core/database/mysql/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';
-import { UsersRepository } from './others/users.repository';
 import { SuccessSaveMessage } from '../../common/types';
+import { FindManyOptions } from 'typeorm';
+import { UsersPaginationPipe } from './others/users.pagination.pipe';
+import { MySQLRepositoryService } from 'src/core/repositories';
 
 @ApiController('users')
 export class UsersController {
 
 	constructor(
 		private readonly userService: UsersService,
-		private readonly userRepository: UsersRepository
+		private readonly mysqlRepository: MySQLRepositoryService
 	) {}
 
-	@Get('/list')
+	@Get('list')
 	@AuthProtection()
-	public async list(): Promise<User[]> {
+	public list(@Query(new UsersPaginationPipe()) options: FindManyOptions<User>): Promise<[User[], number]> {
 
-		return this.userRepository.list();
+		return this.mysqlRepository.get(User).findAndCount(options);
 	}
 
 	@Get('details/:id')
 	@AuthProtection()
-	public async getOne(@Param('id') id: string): Promise<User> {
+	public getOne(@Param('id') id: string): Promise<User> {
 
-		return this.userRepository.getOne(id);
+		return this.userService.getOne(id);
 	}
 
 	@Post('create')
 	@AuthProtection()
-	public async create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) user: CreateUserDTO): Promise<SuccessSaveMessage> {
+	public create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.create(user);
 	}
 
 	@Put('update-password/:id')
 	@AuthProtection()
-	public async updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
+	public updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.updatePassword(id, password_payload);
 	}
 
 	@Put('update-status/:id')
 	@AuthProtection()
-	public async updateStatus(@Param('id') id: string): Promise<SuccessSaveMessage> {
+	public updateStatus(@Param('id') id: string): Promise<SuccessSaveMessage> {
 
 		return this.userService.updateStatus(id);
 	}
 	
 	@Put('update/:id')
 	@AuthProtection()
-	public async update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) user: UpdateUserDTO): Promise<SuccessSaveMessage> {
+	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) user: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.update(id, user);
 	}
