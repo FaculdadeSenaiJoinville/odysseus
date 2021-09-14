@@ -1,12 +1,12 @@
 import * as Joi from 'joi';
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { FindManyOptions } from 'typeorm';
-import { CommonFilter, GenericObject } from '../../../common/types';
-import { PAGINATION_SCHEMA } from './pagination.validation';
+import { CommonFilter, GenericObject } from '../types';
+import { PAGINATION_SCHEMA } from '../../core/repositories/pagination/pagination.validation';
 import { JoiDetail } from 'odyssey-dictionary/dist/types/joi.type';
 import { JoiMessages } from 'odyssey-dictionary';
-import { IPagination } from './pagination.type';
-import { paginate, sort } from './pagination.helper';
+import { IPagination } from '../../core/repositories/pagination/pagination.type';
+import { paginate, sort } from '../../core/repositories/pagination/pagination.helper';
 
 @Injectable()
 export class PaginationPipe<E> {
