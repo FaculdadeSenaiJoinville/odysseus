@@ -16,7 +16,8 @@ export function generateRepositoryService() {
 	};
 
 	return {
-		get: () => repository,
+		repository,
+		get: jest.fn(() => repository as unknown),
 		findOne: jest.fn(),
 		findAll: jest.fn(),
 		save: jest.fn(),
