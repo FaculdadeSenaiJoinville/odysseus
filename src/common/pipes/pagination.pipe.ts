@@ -12,6 +12,7 @@ import { paginate, sort } from '../../core/repositories/pagination/pagination.he
 export class PaginationPipe<E> {
 
 	constructor(
+		private readonly module: string,
 		private readonly schema: GenericObject,
 		private readonly sortFieldValues: string[]) { }
 
@@ -33,7 +34,7 @@ export class PaginationPipe<E> {
 
 		if (error) {
 
-			throw new UnprocessableEntityException(error.details.map(detail => JoiMessages.translate(this.schema.module, detail as JoiDetail)).join('; '));
+			throw new UnprocessableEntityException(error.details.map(detail => JoiMessages.translate(this.module, detail as JoiDetail)).join('; '));
 		}
 
 		if (value.sortField && this.sortFieldValues.length && !this.sortFieldValues.includes(value.sortField)) {

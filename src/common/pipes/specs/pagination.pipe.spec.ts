@@ -13,7 +13,7 @@ describe('PaginationPipe test', () => {
 		'name',
 		'email'
 	];
-	const paginationPipe = new PaginationPipe(schema, sortOrderValues);
+	const paginationPipe = new PaginationPipe('users', schema, sortOrderValues);
 
 	it('should call validateAndFormatSchema and throw an error', () => {
 
