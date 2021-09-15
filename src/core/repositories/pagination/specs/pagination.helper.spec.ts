@@ -1,4 +1,4 @@
-import { paginate, sort } from "../pagination.helper";
+import { paginate, sort } from '../pagination.helper';
 
 describe('Pagination helper', () => {
 

@@ -9,12 +9,12 @@ export class UsersPaginationPipe implements IPaginationPipe {
     public readonly schema = PAGINATION_SCHEMA;
 
     public readonly sortOrderValues = [
-        'name',
-        'email'
+    	'name',
+    	'email'
     ];
 
     public transform(pagination: IPagination) {
 
-        return new PaginationPipe(this.schema, this.sortOrderValues).validateAndFormatSchema(pagination);
+    	return new PaginationPipe(this.schema, this.sortOrderValues).validateAndFormatSchema(pagination);
     }
 }

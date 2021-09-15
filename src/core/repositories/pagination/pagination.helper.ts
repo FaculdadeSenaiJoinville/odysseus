@@ -2,29 +2,29 @@ import { IPagination } from './pagination.type';
 
 export function paginate(pagination?: IPagination) {
 
-    if (pagination) {
+	if (pagination) {
 
-        const { page = 1, perPage = 20 } = pagination;
+		const { page = 1, perPage = 20 } = pagination;
 
-        return {
-            skip: [0, 1].includes(page) ? 0 : (page - 1) * perPage,
-            take: perPage
-        };
-    }
+		return {
+			skip: [0, 1].includes(page) ? 0 : (page - 1) * perPage,
+			take: perPage
+		};
+	}
 
-    return {};
+	return {};
 }
 
 export function sort(pagination?: IPagination) {
 
-    const order = {};
+	const order = {};
 
-    if (pagination && pagination.sortField) {
+	if (pagination && pagination.sortField) {
 
-        const { sortField, sortOrder } = pagination;
+		const { sortField, sortOrder } = pagination;
 
-        order[sortField] = sortOrder ? sortOrder.toUpperCase() : 'ASC';
-    }
+		order[sortField] = sortOrder ? sortOrder.toUpperCase() : 'ASC';
+	}
 
-    return order;
+	return order;
 }

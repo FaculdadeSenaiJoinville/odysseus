@@ -7,11 +7,11 @@ describe('PaginationPipe test', () => {
 
 	const schema = {
 		...PAGINATION_SCHEMA,
-        type: Joi.string()
+		type: Joi.string()
 	};
 	const sortOrderValues = [
 		'name',
-        'email'
+		'email'
 	];
 	const paginationPipe = new PaginationPipe(schema, sortOrderValues);
 
