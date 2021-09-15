@@ -15,6 +15,6 @@ export class UsersPaginationPipe implements IPaginationPipe {
 
     public transform(pagination: IPagination) {
 
-    	return new PaginationPipe(this.schema, this.sortOrderValues).validateAndFormatSchema(pagination);
+    	return new PaginationPipe('users', this.schema, this.sortOrderValues).validateAndFormatSchema(pagination);
     }
 }
