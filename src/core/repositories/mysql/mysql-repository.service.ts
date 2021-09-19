@@ -14,7 +14,7 @@ export class MySQLRepositoryService {
 
 	public async findOne<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
 
-		return this.get(target).findOne(value).catch(error => {
+		return this.get(target).findOneOrFail(value).catch(error => {
 
 			this.errorService.throwMySQLError(error);
 		});
@@ -38,7 +38,7 @@ export class MySQLRepositoryService {
 		});
 	}
 
-	public async delete<Entity>(target: EntityTarget<Entity>, id: string): Promise<DeleteResult> {
+	public async delete<Entity>(target: EntityTarget<Entity>, id: string | FindConditions<Entity>): Promise<DeleteResult> {
 
 		return this.get(target).delete(id).catch(error => {
 			
