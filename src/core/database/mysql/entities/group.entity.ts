@@ -32,4 +32,12 @@ export class Group extends MySqlCoreEntity {
 		this.users.push(user);
 	}
 
+	constructor(name: string, description: string) {
+
+		super();
+
+		this.name = name;
+		this.description = description;
+	}
+
 }

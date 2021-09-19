@@ -8,13 +8,15 @@ export class createGroupsMembersTable1632013690765 implements MigrationInterface
 			{
 				name: 'group_id',
 				type: 'varchar',
-				length: '64'
+				length: '64',
+				isNullable: false
 
 			},
 			{
 				name: 'user_id',
 				type: 'varchar',
-				length: '64'
+				length: '64',
+				isNullable: false
 			},
 			{
 				name: 'added_at',
