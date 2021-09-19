@@ -31,7 +31,7 @@ export class User extends MySqlCoreEntity {
 			referencedColumnName: 'id'
 		}
 	})
-	public groups: Group[];
+	public groups?: Group[];
 
 	addGroup(group: Group) {
 

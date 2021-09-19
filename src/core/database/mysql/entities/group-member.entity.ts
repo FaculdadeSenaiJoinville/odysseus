@@ -15,10 +15,10 @@ export class GroupMember {
 	
 	@ManyToOne(() => Group, (group: Group) => group.users, { primary: true })
 	@JoinColumn({ name: 'group_id' })
-	public group: Promise<Group>;
+	public group?: Promise<Group>;
 
 	@ManyToOne(() => User, (user: User) => user.groups, { primary: true })
 	@JoinColumn({ name: 'user_id' })
-	public user: Promise<User>;
+	public user?: Promise<User>;
 
 }

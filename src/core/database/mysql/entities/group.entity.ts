@@ -20,7 +20,7 @@ export class Group extends MySqlCoreEntity {
 			referencedColumnName: 'id'
 		}
 	})
-	public users: User[];
+	public users?: User[];
 
 	addUser(user: User) {
 
