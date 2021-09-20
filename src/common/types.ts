@@ -1,6 +1,12 @@
-export type SuccessSaveMessage = {
-	message: string,
-	id: string
+export type BaseMessage = {
+	message: string;
+}
+
+export type SuccessSaveMessage = BaseMessage & {
+	id: string;
+}
+
+export type SuccessRemoveMessage = {
 }
 
 export type GenericObject = {

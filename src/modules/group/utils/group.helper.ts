@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GroupMember } from 'src/core/database/mysql/entities';
+import { DeleteResult } from 'typeorm';
 import { MySQLRepositoryService } from '../../../core/repositories';
 
 @Injectable()
@@ -12,6 +13,11 @@ export class GroupHelper {
 		const payload = { group_id, user_id } as GroupMember;
 
 		return this.mysqlRepository.save(GroupMember, payload);
+	}
+
+	public removeUserFromGroup(group_id: string, user_id: string): Promise<DeleteResult> {
+
+		return this.mysqlRepository.delete(GroupMember, { group_id, user_id });
 	}
 
 }

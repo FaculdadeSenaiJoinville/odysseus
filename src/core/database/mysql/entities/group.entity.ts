@@ -6,7 +6,7 @@ import { User } from '.';
 export class Group extends MySqlCoreEntity {
 
 	@Column()
-	public description: string;
+	public description?: string;
 
 	@ManyToMany(() => User, (user: User) => user.groups)
 	@JoinTable({

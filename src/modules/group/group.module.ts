@@ -4,6 +4,8 @@ import { MySQLRepositoryModule } from '../../core/repositories';
 import { GroupController } from './group.controller';
 import { GroupService } from './group.service';
 import { GroupHelper } from './utils/group.helper';
+import { GroupPolicies } from './utils/group.policies';
+import { GroupRepository } from './utils/group.repository';
 
 @Module({
 	imports: [
@@ -14,6 +16,8 @@ import { GroupHelper } from './utils/group.helper';
 	],
 	providers: [
 		GroupService,
+		GroupPolicies,
+		GroupRepository,
 		GroupHelper
 	],
 	exports: [
