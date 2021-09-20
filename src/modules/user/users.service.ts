@@ -4,7 +4,7 @@ import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { MySQLRepositoryService } from 'src/core/repositories';
 import { UpdatePasswordDTO, UpdateUserDTO } from './dtos';
-import { UsersPolicies } from './others/users.policies';
+import { UsersPolicies } from './utils/users.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
 
@@ -16,15 +16,6 @@ export class UsersService {
 		private readonly bcryptHelper: BcryptHelper,
 		private readonly usersPolicies: UsersPolicies
 	) {}
-
-	public async getOne(id: string): Promise<User> {
-
-		const user = await this.mysqlRepository.findOne(User, id);
-
-		this.usersPolicies.mustHaveUser(user);
-
-		return user;
-	}
 
 	public async create(user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
@@ -50,8 +41,6 @@ export class UsersService {
 		this.usersPolicies.passwordsMustBeTheSame(password, confirm_password);
 
 		const user = await this.mysqlRepository.findOne(User, id);
-
-		this.usersPolicies.mustHaveUser(user);
 
 		user.password = await this.bcryptHelper.hashString(password);
 

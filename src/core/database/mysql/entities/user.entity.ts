@@ -1,6 +1,6 @@
 import { MySqlCoreEntity } from 'src/core/database';
 import { Entity, Column, Index, JoinTable, ManyToMany } from 'typeorm';
-import { UserType } from 'src/modules/user/others/users.type';
+import { UserType } from '../../../../modules/user/utils/users.type';
 import { Group } from '.';
 
 @Entity('users')
@@ -15,6 +15,9 @@ export class User extends MySqlCoreEntity {
 
 	@Column()
 	public active: boolean;
+
+	@Column()
+	public is_new: boolean;
 
 	@Column()
 	public type: UserType;

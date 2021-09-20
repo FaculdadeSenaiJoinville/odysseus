@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { JoiMessages } from 'odyssey-dictionary';
-import { CREATE_USER_VALIDATION } from 'src/modules/user/others/users.validation';
+import { CREATE_USER_VALIDATION } from 'src/modules/user/utils/users.validation';
 import { ValidateBodyPipe } from '../validate-body.pipe';
 
 describe('Validate Body Pipe', () => {

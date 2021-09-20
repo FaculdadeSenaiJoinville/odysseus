@@ -9,6 +9,7 @@ export interface IPagination {
     perPage?: number;
     sortField?: string;
     sortOrder?: Order;
+    like?: string;
 }
 
 export interface IPaginationPipe extends PipeTransform<IPagination, FindManyOptions> {
