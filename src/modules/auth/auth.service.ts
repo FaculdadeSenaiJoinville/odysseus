@@ -34,7 +34,7 @@ export class AuthService {
 				'updated_by'
 			]
 		};
-		const databaseUser = await this.mysqlRepository.findOne(User, options);
+		const databaseUser = await this.mysqlRepository.findOneOrFail(User, options);
 
 		this.authPolicies.mustHaveThisUserInDatabase(databaseUser);
 

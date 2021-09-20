@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MySQLRepositoryService } from 'src/core/repositories';
-import { FindManyOptions } from 'typeorm';
+import { ListOptions } from '../../../common/types';
 import { Group } from '../../../core/database/mysql/entities';
 
 @Injectable()
@@ -8,18 +8,13 @@ export class GroupRepository {
 
 	constructor (private readonly mysqlRepository: MySQLRepositoryService) {}
 
-	public list(options: FindManyOptions<Group>): Promise<[Group[], number]> {
+	public list(options: ListOptions<Group>): Promise<[Group[], number]> {
 
 		const queryBuilder = this.mysqlRepository.get(Group).createQueryBuilder('groups')
 			.select(['groups.id', 'groups.name', 'groups.description']);
 
-		if (options.where) {
-
-			queryBuilder.where(options.where);
-		}
-
 		return this.mysqlRepository
-			.setPaginationAndOrder(queryBuilder, options)
+			.setFindOptions(queryBuilder, options)
 			.getManyAndCount();
 	}
 

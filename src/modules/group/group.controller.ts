@@ -2,13 +2,12 @@
 import { Body, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { ApiController, AuthProtection } from 'src/common/decorators';
-import { BaseMessage, SuccessSaveMessage } from '../../common/types';
+import { BaseMessage, ListOptions, SuccessSaveMessage } from '../../common/types';
 import { ValidateBodyPipe } from '../../common/pipes';
 import { UpsertGroupDTO } from './dtos/upsert-group.dto';
 import { UPSERT_GROUP_VALIDATION } from './utils/group.validation';
 import { Group } from '../../core/database/mysql/entities';
 import { GroupRepository } from './utils/group.repository';
-import { FindManyOptions } from 'typeorm';
 import { GroupPaginationPipe } from './utils/group-pagination.pipe';
 
 @ApiController('groups')
@@ -21,7 +20,7 @@ export class GroupController {
 
 	@Get('/list')
 	@AuthProtection()
-	public list(@Query(new GroupPaginationPipe()) options: FindManyOptions<Group>): Promise<[Group[], number]> {
+	public list(@Query(new GroupPaginationPipe()) options: ListOptions<Group>): Promise<[Group[], number]> {
 
 		return this.groupRepository.list(options);
 	}

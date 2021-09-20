@@ -6,6 +6,8 @@ import { ErrorsModule } from 'src/core/error/errors.module';
 import { MySQLRepositoryModule } from 'src/core/repositories';
 import { UsersPolicies } from './utils/users.policies';
 import { UsersRepository } from './utils/users.repository';
+import { GroupHelper } from '../group/utils/group.helper';
+import { GroupPolicies } from '../group/utils/group.policies';
 
 @Module({
 	imports: [
@@ -19,6 +21,8 @@ import { UsersRepository } from './utils/users.repository';
 		UsersService,
 		UsersPolicies,
 		UsersRepository,
+		GroupHelper,
+		GroupPolicies,
 		BcryptHelper
 	],
 	exports: [

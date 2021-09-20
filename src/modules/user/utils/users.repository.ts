@@ -13,25 +13,8 @@ export class UsersRepository {
 		const queryBuilder = this.mysqlRepository.get(User).createQueryBuilder('users')
 			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active']);
 
-		if (options.where) {
-
-			queryBuilder.where(options.where);
-		}
-
-		if (options.like) {
-			
-			const parsedOptions = JSON.parse(options.like);
-
-			for (const key of Object.keys(parsedOptions)) {
-
-				if (key) {
-					queryBuilder.where(`users.${key} like :${key}`, { [key]: `%${parsedOptions[key]}%` })
-				}
-			}
-		}
-
 		return this.mysqlRepository
-			.setPaginationAndOrder(queryBuilder, options)
+			.setFindOptions(queryBuilder, options)
 			.getManyAndCount();
 	}
 
@@ -39,7 +22,17 @@ export class UsersRepository {
 
 		return this.mysqlRepository.get(User).createQueryBuilder('users')
 			.where({ id })
-			.select(['users.id', 'users.name', 'users.email', 'users.type'])
+			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])
+			.leftJoin('users.groups', 'groups')
+			.getOneOrFail();
+	}
+
+	public async profile(id: string): Promise<User> {
+
+		return this.mysqlRepository.get(User).createQueryBuilder('users')
+			.where({ id })
+			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])
+			.leftJoin('users.groups', 'groups')
 			.getOneOrFail();
 	}
 

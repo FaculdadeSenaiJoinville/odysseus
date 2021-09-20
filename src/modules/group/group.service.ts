@@ -39,7 +39,7 @@ export class GroupService {
 
 	public async update(id: string, group_payload: UpsertGroupDTO): Promise<SuccessSaveMessage> {
 
-		const group = await this.mysqlRepository.findOne(Group, {
+		const group = await this.mysqlRepository.findOneOrFail(Group, {
 			relations: ['users'],
 			where: { id }
 		});
