@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { FindManyOptions } from 'typeorm';
-import { CommonFilter, GenericObject } from '../types';
+import { CommonFilter, GenericObject, ListOptions } from '../types';
 import { PAGINATION_SCHEMA } from '../../core/repositories/pagination/pagination.validation';
 import { JoiDetail } from 'odyssey-dictionary/dist/types/joi.type';
 import { JoiMessages } from 'odyssey-dictionary';
@@ -16,7 +16,7 @@ export class PaginationPipe<E> {
 		private readonly schema: GenericObject,
 		private readonly sortFieldValues: string[]) { }
 
-	public validateAndFormatSchema(pagination: IPagination, specialFieldFillter?: string | string[]): FindManyOptions<E> {
+	public validateAndFormatSchema(pagination: IPagination, specialFieldFillter?: string | string[]): ListOptions<E> {
 
 		const value = this.validateSchema(pagination);
 
@@ -25,7 +25,10 @@ export class PaginationPipe<E> {
 			...paginate(value)
 		};
 
-		return this.fitWhereWithQueryParams(options, value, specialFieldFillter);
+		const findOptions = this.fitWhereWithQueryParams(options, value, specialFieldFillter);
+		const like = pagination.like;
+
+		return {...findOptions, like};
 	}
 
 	public validateSchema(pagination: IPagination) {

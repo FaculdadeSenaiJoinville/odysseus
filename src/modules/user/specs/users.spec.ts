@@ -2,8 +2,8 @@ import { User } from 'src/core/database/mysql/entities';
 import { generateRepositoryService } from 'src/tests/generate-repository-service';
 import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
-import { UserType } from '../others/users.type';
-import { UsersPolicies } from '../others/users.policies';
+import { UserType } from '../utils/users.type';
+import { UsersPolicies } from '../utils/users.policies';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UserStubs } from './stubs/user.stubs';
@@ -35,7 +35,7 @@ describe('Users', () => {
 
 			repositoryService.findOne.mockResolvedValue(expected);
 
-			await expect(userController.getOne(id)).resolves.toEqual(expected);
+			await expect(userController.details(id)).resolves.toEqual(expected);
 
 			expect(repositoryService.findOne).toBeCalledWith(User, id);
 		});
@@ -47,7 +47,7 @@ describe('Users', () => {
 
 			repositoryService.findOne.mockResolvedValue(null);
 
-			await expect(userController.getOne(id)).rejects.toEqual(expected);
+			await expect(userController.details(id)).rejects.toEqual(expected);
 
 			expect(repositoryService.findOne).toBeCalledWith(User, id);
 		});
