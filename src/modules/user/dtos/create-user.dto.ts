@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserType } from '../others/users.type';
+import { UserType } from '../utils/users.type';
 
 export class CreateUserDTO {
 
@@ -17,4 +17,8 @@ export class CreateUserDTO {
 
 	@ApiProperty({ example: 'ADMIN', description: 'Tipo do usuário.' })
 	type: UserType;
+
+	@ApiProperty({ example: ['saas5as4a65as', 's48d4df1d5fd5f'], description: 'Lista com IDs dos grupos aos quais o usuário será adicionado.' })
+	groups: string[];
+
 }

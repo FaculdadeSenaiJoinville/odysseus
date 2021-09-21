@@ -2,11 +2,10 @@ import { User } from 'src/core/database/mysql/entities';
 import { generateRepositoryService } from 'src/tests/generate-repository-service';
 import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
-import { UserType } from '../others/users.type';
-import { UsersPolicies } from '../others/users.policies';
+import { UserType } from '../utils/users.type';
+import { UsersPolicies } from '../utils/users.policies';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { UsersRepository } from '../others/users.repository';
 import { UserStubs } from './stubs/user.stubs';
 
 const repositoryService = generateRepositoryService();
@@ -19,13 +18,9 @@ const userService = new UsersService(
 	bcryptHelper as any,
 	usersPolicies
 );
-const userRepository = new UsersRepository(
-	repositoryService as any,
-	usersPolicies
-); 
 const userController = new UsersController(
 	userService,
-	userRepository
+	repositoryService as any
 );
 const userStubs = new UserStubs();
 
@@ -40,7 +35,7 @@ describe('Users', () => {
 
 			repositoryService.findOne.mockResolvedValue(expected);
 
-			await expect(userController.getOne(id)).resolves.toEqual(expected);
+			await expect(userController.details(id)).resolves.toEqual(expected);
 
 			expect(repositoryService.findOne).toBeCalledWith(User, id);
 		});
@@ -52,7 +47,7 @@ describe('Users', () => {
 
 			repositoryService.findOne.mockResolvedValue(null);
 
-			await expect(userController.getOne(id)).rejects.toEqual(expected);
+			await expect(userController.details(id)).rejects.toEqual(expected);
 
 			expect(repositoryService.findOne).toBeCalledWith(User, id);
 		});
@@ -62,13 +57,18 @@ describe('Users', () => {
 
 		it('should return a list of users', async () => {
 			
-			const expected = [new User(), new User()];
+			const expected = [[new User(), new User()], 2];
+			const options = {
+				skip: 0,
+				take: 20
+			};
 
-			repositoryService.findAll.mockResolvedValue(expected);
+			repositoryService.repository.findAndCount.mockResolvedValue(expected);
 
-			await expect(userController.list()).resolves.toEqual(expected);
+			await expect(userController.list(options)).resolves.toEqual(expected);
 
-			expect(repositoryService.findAll).toBeCalledWith(User);
+			expect(repositoryService.get).toBeCalledWith(User);
+			expect(repositoryService.repository.findAndCount).toBeCalledWith(options);
 		});
 	});
 
