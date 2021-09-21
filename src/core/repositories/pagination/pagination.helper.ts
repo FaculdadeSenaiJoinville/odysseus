@@ -4,7 +4,7 @@ export function paginate(pagination?: IPagination) {
 
 	if (pagination) {
 
-		const { page = 1, perPage = 20 } = pagination;
+		const { page = 1, perPage = 10 } = pagination;
 
 		return {
 			skip: [0, 1].includes(page) ? 0 : (page - 1) * perPage,

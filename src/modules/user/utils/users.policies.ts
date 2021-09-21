@@ -21,13 +21,5 @@ export class UsersPolicies {
 			throw new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
 	  	}
 	}
-  
-	public mustHaveUser(user: User): void {
-		
-		if (!user) {
-
-			throw new NotFoundException(Dictionary.users.getMessage('user_not_found'));
-		}
-	}
 
 }
