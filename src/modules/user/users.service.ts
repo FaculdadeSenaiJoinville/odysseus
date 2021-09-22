@@ -40,7 +40,7 @@ export class UsersService {
 
 		this.usersPolicies.passwordsMustBeTheSame(password, confirm_password);
 
-		const user = await this.mysqlRepository.findOne(User, id);
+		const user = await this.mysqlRepository.findOneOrFail(User, id);
 
 		user.password = await this.bcryptHelper.hashString(password);
 
@@ -54,7 +54,7 @@ export class UsersService {
 
 	public async updateStatus(id: string): Promise<SuccessSaveMessage> {
 
-		const user = await this.mysqlRepository.findOne(User, id);
+		const user = await this.mysqlRepository.findOneOrFail(User, id);
 
 		user.active = !user.active;
 
@@ -67,7 +67,7 @@ export class UsersService {
 	}
 	public async update(id: string, user_payload: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
-		const user = await this.mysqlRepository.findOne(User, id);
+		const user = await this.mysqlRepository.findOneOrFail(User, id);
 
 		this.usersPolicies.ensurePayloadHasDiferences(user_payload, user);
 

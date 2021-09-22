@@ -7,7 +7,6 @@ import { ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { UsersPaginationPipe } from './utils/users.pagination.pipe';
-import { MySQLRepositoryService } from 'src/core/repositories';
 import { UsersRepository } from './utils/users.repository';
 
 @ApiController('users')
@@ -15,7 +14,6 @@ export class UsersController {
 
 	constructor(
 		private readonly userService: UsersService,
-		private readonly mysqlRepository: MySQLRepositoryService,
 		private readonly usersRepository: UsersRepository
 	) {}
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DeleteResult, EntityTarget, FindConditions, FindManyOptions, FindOneOptions, getConnectionManager, Repository, SelectQueryBuilder } from 'typeorm';
+import { ListOptions } from '../../../common/types';
 import { ErrorsService } from '../../error/errors.service';
 import { Order } from '../pagination/pagination.type';
 
@@ -14,6 +15,14 @@ export class MySQLRepositoryService {
 	}
 
 	public async findOne<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
+
+		return this.get(target).findOne(value).catch(error => {
+
+			this.errorService.throwMySQLError(error);
+		});
+	}
+
+	public async findOneOrFail<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
 
 		return this.get(target).findOneOrFail(value).catch(error => {
 
@@ -41,7 +50,7 @@ export class MySQLRepositoryService {
 		});
 	}
 
-	public async delete<Entity>(target: EntityTarget<Entity>, id: string): Promise<DeleteResult> {
+	public async delete<Entity>(target: EntityTarget<Entity>, id: string | FindConditions<Entity>): Promise<DeleteResult> {
 
 		return this.get(target).delete(id).catch(error => {
 			
@@ -49,11 +58,29 @@ export class MySQLRepositoryService {
 		});
 	}
 
-	public setPaginationAndOrder<E>(queryBuilder: SelectQueryBuilder<E>, options: FindManyOptions<E>): SelectQueryBuilder<E> {
+	public setFindOptions<E>(queryBuilder: SelectQueryBuilder<E>, options: ListOptions<E>): SelectQueryBuilder<E> {
 
-		const { skip, take, order } = options;
+		const { skip, take, order, where, like } = options;
 
 		queryBuilder.take(take).skip(skip);
+
+		if (where) {
+
+			queryBuilder.where(where);
+		}
+
+		if (like) {
+			
+			const parsedOptions = JSON.parse(like);
+
+			for (const key of Object.keys(parsedOptions)) {
+
+				if (key) {
+
+					queryBuilder.where(`users.${key} like :${key}`, { [key]: `%${parsedOptions[key]}%` })
+				}
+			}
+		}
 
 		if (order) {
 

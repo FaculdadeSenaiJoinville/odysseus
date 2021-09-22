@@ -17,6 +17,5 @@ export const mysqlConfig: TypeOrmModuleOptions = {
 	cli: {
 		entitiesDir: join(__dirname, 'entities'),
 		migrationsDir: join(__dirname, 'migrations')
-	},
-	logging: true
+	}
 };
