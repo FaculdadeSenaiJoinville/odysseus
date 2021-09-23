@@ -6,7 +6,7 @@ import { TokenHelper } from './others/token.helper';
 import { TokenStrategy } from './others/token.strategy';
 import { ErrorsModule } from '../../../core/error/errors.module';
 import * as dotenv from 'dotenv';
-import { MongoRepositoryModule } from 'src/core/repositories';
+import { MongoRepositoryModule } from 'src/core/repository';
 
 dotenv.config();
 

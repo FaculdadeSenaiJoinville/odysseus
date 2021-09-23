@@ -1,7 +1,7 @@
 import { session } from 'src/core/session';
 import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeUpdate, Index, BeforeInsert } from 'typeorm';
 
-export class MySqlCoreEntity {
+export class CoreEntity {
 
     @PrimaryGeneratedColumn('uuid')
 	@Index()

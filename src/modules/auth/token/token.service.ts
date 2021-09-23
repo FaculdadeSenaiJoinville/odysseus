@@ -3,7 +3,7 @@ import { Token } from 'src/core/database/mongo/entities';
 import { User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { TokenHelper } from './others/token.helper';
-import { MongoRepositoryService } from 'src/core/repositories';
+import { MongoRepositoryService } from 'src/core/repository';
 
 @Injectable()
 export class TokenService {

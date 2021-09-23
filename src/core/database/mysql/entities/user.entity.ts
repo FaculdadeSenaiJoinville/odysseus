@@ -1,9 +1,9 @@
-import { MySqlCoreEntity } from 'src/core/database';
+import { CoreEntity } from 'src/core/database';
 import { Entity, Column, Index } from 'typeorm';
 import { UserType } from 'src/modules/user/utils/users.type';
 
 @Entity('users')
-export class User extends MySqlCoreEntity {
+export class User extends CoreEntity {
 
 	@Column({ length: 100 })
 	@Index()

@@ -5,7 +5,7 @@ import { LoginOutput, LogoutOutput } from './others/auth.type';
 import { LoginDTO } from './dtos/login.dto';
 import { User } from 'src/core/database/mysql/entities';
 import { Dictionary } from 'odyssey-dictionary';
-import { MySQLRepositoryService } from 'src/core/repositories';
+import { MySQLRepositoryService } from 'src/core/repository';
 import { FindOneOptions } from 'typeorm';
 
 @Injectable()

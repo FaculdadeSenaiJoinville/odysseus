@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { TokenModule } from './token/token.module';
 import { AuthPolicies } from './others/auth.policies';
 import { BcryptHelper } from 'src/common/helpers';
-import { MySQLRepositoryModule } from 'src/core/repositories';
+import { MySQLRepositoryModule } from 'src/core/repository';
 
 @Module({
 	imports: [

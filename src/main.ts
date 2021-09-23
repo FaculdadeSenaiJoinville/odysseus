@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { EntityNotFoundExceptionFilter } from './core/repositories/filters/entity-not-found-exception.filter';
+import { EntityNotFoundExceptionFilter } from './core/repository/filters/entity-not-found-exception.filter';
 
 async function bootstrap() {
 	
