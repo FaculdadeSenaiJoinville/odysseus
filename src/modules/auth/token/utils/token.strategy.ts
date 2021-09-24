@@ -2,10 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Dictionary } from 'odyssey-dictionary';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Token } from 'src/core/database/mongo/entities';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { session } from 'src/core/session';
 import { getConnectionManager } from 'typeorm';
+import { Token } from '../../../../core/database/entities/token.entity';
 import { TokenPayload } from './token.type';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class TokenStrategy extends PassportStrategy(Strategy) {
 
 	public async validate(payload: TokenPayload) {
 
-		const databaseToken = await getConnectionManager().get('mongoConnection').getRepository(Token).findOneOrFail({ user_id: payload.id });
+		const databaseToken = await getConnectionManager().get('mysqlConnection').getRepository(Token).findOneOrFail({ user_id: payload.id });
 
 		if (!databaseToken) {
 

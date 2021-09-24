@@ -3,8 +3,8 @@ import { Dictionary } from 'odyssey-dictionary';
 import { generateMySqlRepositoryService } from 'src/tests/generate-repository-service';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
-import { AuthPolicies } from '../others/auth.policies';
-import { User } from 'src/core/database/mysql/entities';
+import { AuthPolicies } from '../utils/auth.policies';
+import { User } from 'src/core/database/entities';
 import { session } from 'src/core/session';
 
 const mysqlRepositoryService = generateMySqlRepositoryService();
@@ -73,7 +73,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.findOne.mockResolvedValue(databaseUser);
+			mysqlRepositoryService.findOneOrFail.mockResolvedValue(databaseUser);
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);

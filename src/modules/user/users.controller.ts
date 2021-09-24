@@ -1,7 +1,7 @@
 import { Body, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './utils/users.validation';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';

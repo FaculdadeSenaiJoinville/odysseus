@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ErrorsService } from './errors.service';
+import { ErrorService } from './errors.service';
 
 @Module({
 	providers: [
-		ErrorsService
+		ErrorService
 	],
 	exports: [
-		ErrorsService
+		ErrorService
 	]
 })
-export class ErrorsModule {}
+export class ErrorModule {}

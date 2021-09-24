@@ -1,4 +1,4 @@
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { generateMySqlRepositoryService } from 'src/tests/generate-repository-service';
 import { TokenService } from '../token.service';
 

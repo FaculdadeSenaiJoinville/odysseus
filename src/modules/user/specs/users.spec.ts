@@ -1,4 +1,4 @@
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { generateMySqlRepositoryService, MOCKED_QUERY_BUILDER } from 'src/tests/generate-repository-service';
 import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';

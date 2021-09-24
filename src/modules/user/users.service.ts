@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { BcryptHelper } from 'src/common/helpers';
 import { MySQLRepositoryService } from 'src/core/repository';
 import { UpdatePasswordDTO, UpdateUserDTO } from './dtos';

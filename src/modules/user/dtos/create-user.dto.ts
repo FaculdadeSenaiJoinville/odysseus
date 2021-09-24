@@ -17,4 +17,5 @@ export class CreateUserDTO {
 
 	@ApiProperty({ example: 'ADMIN', description: 'Tipo do usuário.' })
 	type: UserType;
+
 }

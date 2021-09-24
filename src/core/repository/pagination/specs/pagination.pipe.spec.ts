@@ -1,7 +1,7 @@
 import { PaginationPipe } from '../pagination.pipe';
 import * as Joi from 'joi';
 import { UnprocessableEntityException } from '@nestjs/common';
-import { PAGINATION_SCHEMA } from '../utils/pagination.validation';
+import { PAGINATION_SCHEMA } from '../pagination.validation';
 
 describe('PaginationPipe test', () => {
 
