@@ -1,6 +1,5 @@
-import { CoreEntity } from 'src/core/database';
 import { Entity, Column, JoinTable, ManyToMany } from 'typeorm';
-import { User } from '.';
+import { CoreEntity, User } from '.';
 
 @Entity('groups')
 export class Group extends CoreEntity {
