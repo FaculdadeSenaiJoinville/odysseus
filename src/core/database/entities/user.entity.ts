@@ -1,6 +1,7 @@
 import { CoreEntity } from 'src/core/database';
-import { Entity, Column, Index } from 'typeorm';
-import { UserType } from 'src/modules/user/utils/users.type';
+import { Entity, Column, Index, JoinTable, ManyToMany } from 'typeorm';
+import { UserType } from '../../../modules/user/utils/users.type';
+import { Group } from './group.entity';
 
 @Entity('users')
 export class User extends CoreEntity {
@@ -17,5 +18,29 @@ export class User extends CoreEntity {
 
 	@Column()
 	public type: UserType;
+
+	@ManyToMany(() => Group, (group: Group) => group.users)
+	@JoinTable({
+		name: 'groups_members',
+		joinColumn: {
+			name: 'user_id',
+			referencedColumnName: 'id'
+		},
+		inverseJoinColumn: {
+			name: 'group_id',
+			referencedColumnName: 'id'
+		}
+	})
+	public groups?: Group[];
+
+	addGroup(group: Group) {
+
+		if (!this.groups) {
+
+			this.groups = new Array<Group>();
+		}
+
+		this.groups.push(group);
+	}
 
 }
