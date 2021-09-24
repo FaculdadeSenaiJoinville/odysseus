@@ -2,23 +2,23 @@ import * as readline from 'readline';
 import * as fs from 'fs';
 
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+	input: process.stdin,
+	output: process.stdout
 });
 
 function getFileDir(scriptName: string): string {
 
-    scriptName = scriptName.toLowerCase();
+	scriptName = scriptName.toLowerCase();
 
-    const date = new Date().toISOString();
-    const scriptID = date.split('.')[0].replace(/-/g, '').replace(/:/g, '').replace('T', '');
-    
-    return `src/core/database/mysql/scripts/${scriptID}_${scriptName}.script.ts`;
+	const date = new Date().toISOString();
+	const scriptID = date.split('.')[0].replace(/-/g, '').replace(/:/g, '').replace('T', '');
+
+	return `src/core/database/mysql/scripts/${scriptID}_${scriptName}.script.ts`;
 }
 
 function getFileContent(): string {
 
-    return `
+	return `
 import { createConnection } from "typeorm";
 import { Entity } from "../entities";
 
@@ -41,18 +41,18 @@ createConnection('mysqlConnection')
 `;
 }
 
-rl.question("Nome do script: ", scriptName => {
-    
+rl.question('Nome do script: ', scriptName => {
+
 	const scriptsDir = 'src/core/database/mysql/scripts';
-    const fileDir = getFileDir(scriptName);
-    const fileContent = getFileContent();
+	const fileDir = getFileDir(scriptName);
+	const fileContent = getFileContent();
 
 	if (!fs.existsSync(scriptsDir)) {
-		
+
 		fs.mkdirSync(scriptsDir);
 	}
 
-    fs.writeFileSync(fileDir, fileContent);
+	fs.writeFileSync(fileDir, fileContent);
 
-    rl.close();
+	rl.close();
 });

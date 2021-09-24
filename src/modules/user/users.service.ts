@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
-import { Group, User } from 'src/core/database/mysql/entities';
 import { BcryptHelper } from 'src/common/helpers';
-import { MySQLRepositoryService } from 'src/core/repositories';
 import { UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { UsersPolicies } from './utils/users.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
+import { MySQLRepositoryService } from '../../core/repository';
+import { Group, User } from '../../core/database/entities';
 
 @Injectable()
 export class UsersService {

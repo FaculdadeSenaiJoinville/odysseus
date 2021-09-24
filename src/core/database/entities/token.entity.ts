@@ -1,11 +1,11 @@
-import { Entity, Column, Index, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('tokens')
 export class Token {
 
-	@ObjectIdColumn()
+	@PrimaryGeneratedColumn('uuid')
 	@Index()
-	public _id: ObjectID;
+	public id: string;
 
 	@Column()
 	public token: string;
