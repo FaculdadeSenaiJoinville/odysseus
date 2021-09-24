@@ -1,4 +1,4 @@
-import { PaginationPipe } from 'src/core/repository/pagination/pagination.pipe';
+import { PaginationPipe } from '../../../core/repository/pagination';
 import { UsersPaginationPipe } from '../utils/users.pagination.pipe';
 
 jest.mock('../../../core/repository/pagination/pagination.pipe');
