@@ -3,7 +3,7 @@ import { UsersPaginationPipe } from '../utils/users.pagination.pipe';
 
 jest.mock('../../../core/repository/pagination/pagination.pipe');
 
-describe('ImportMapPaginationPipe test', () => {
+describe('UserPaginationPipe test', () => {
 
 	const usersPaginationPipe = new UsersPaginationPipe();
 
