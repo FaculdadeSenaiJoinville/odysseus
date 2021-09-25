@@ -19,5 +19,5 @@ export const UPDATE_USER_VALIDATION = buildValidation('users', {
 	name: Joi.string().required(),
 	email: Joi.string().email().required(),
 	type: Joi.string().required(),
-	active: Joi.boolean().required
+	active: Joi.boolean().required()
 });
