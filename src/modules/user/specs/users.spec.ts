@@ -199,7 +199,8 @@ describe('Users', () => {
 			const input = {
 				name: 'João da Silva Teste',
 				email: 'joao.teste@gmail.com',
-				type: UserType.ADMIN
+				type: UserType.ADMIN,
+				active: false
 			};
 			const id = 's45as45a4ss5as1s2';
 			const expected = {
@@ -221,7 +222,8 @@ describe('Users', () => {
 			const input = {
 				name: 'João da Silva Teste',
 				email: 'joao.teste@gmail.com',
-				type: UserType.ADMIN
+				type: UserType.ADMIN,
+				active: false
 			};
 			const id = 's45as45a4ss5as1s2';
 			const expected = new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));

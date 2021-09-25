@@ -12,4 +12,7 @@ export class UpdateUserDTO {
 	@ApiProperty({ example: 'ADMIN', description: 'Tipo do usuário.' })
 	type: UserType;
 
+	@ApiProperty({ example: true, description: 'Status do usuário' })
+	active: boolean;
+
 }
