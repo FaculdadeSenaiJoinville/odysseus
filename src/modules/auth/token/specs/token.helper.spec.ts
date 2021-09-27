@@ -1,5 +1,5 @@
-import { User } from 'src/core/database/mysql/entities';
-import { TokenHelper } from '../others/token.helper';
+import { User } from 'src/core/database/entities';
+import { TokenHelper } from '../utils/token.helper';
 
 const jwtService = {
 	signAsync: jest.fn(),

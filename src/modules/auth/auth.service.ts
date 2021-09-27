@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { TokenService } from './token/token.service';
-import { AuthPolicies } from './others/auth.policies';
-import { LoginOutput, LogoutOutput } from './others/auth.type';
+import { AuthPolicies } from './utils/auth.policies';
+import { LoginOutput, LogoutOutput } from './utils/auth.type';
 import { LoginDTO } from './dtos/login.dto';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { Dictionary } from 'odyssey-dictionary';
-import { MySQLRepositoryService } from 'src/core/repositories';
 import { FindOneOptions } from 'typeorm';
+import { MySQLRepositoryService } from '../../core/repository';
 
 @Injectable()
 export class AuthService {
@@ -34,9 +34,7 @@ export class AuthService {
 				'updated_by'
 			]
 		};
-		const databaseUser = await this.mysqlRepository.findOne(User, options);
-
-		this.authPolicies.mustHaveThisUserInDatabase(databaseUser);
+		const databaseUser = await this.mysqlRepository.findOneOrFail(User, options);
 
 		await this.authPolicies.mustBeTheSamePassword(password, databaseUser.password);
 

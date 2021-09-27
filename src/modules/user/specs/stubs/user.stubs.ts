@@ -1,5 +1,5 @@
-import { User } from 'src/core/database/mysql/entities';
-import { UserType } from '../../others/users.type';
+import { User } from 'src/core/database/entities';
+import { UserType } from '../../utils/users.type';
 
 export class UserStubs {
 
@@ -15,4 +15,5 @@ export class UserStubs {
 
 		return user;
 	}
+
 }

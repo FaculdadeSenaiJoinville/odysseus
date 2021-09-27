@@ -3,10 +3,10 @@ import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from '../../common/decorators';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dtos/login.dto';
-import { LoginOutput, LogoutOutput } from './others/auth.type';
-import { LOGIN_VALIDATION } from './others/auth.validation';
+import { LoginOutput, LogoutOutput } from './utils/auth.type';
+import { LOGIN_VALIDATION } from './utils/auth.validation';
 import { session } from 'src/core/session';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 
 @ApiController('auth')
 export class AuthController {

@@ -1,10 +1,9 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { MongoError } from 'typeorm';
-import { MySQLError } from '../database';
+import { MySQLError } from './utils/error.types';
 
 @Injectable()
-export class ErrorsService {
+export class ErrorService {
 
 	public throwInternalServerError = (): never => {
 
@@ -14,11 +13,6 @@ export class ErrorsService {
 	public throwMySQLError(error: MySQLError): never {
 
 		throw new BadRequestException(error.sqlMessage);
-	}
-
-	public throwMongoError(error: MongoError): never {
-		
-		throw new BadRequestException(error.message);
 	}
 
 }
