@@ -1,31 +1,30 @@
-import { User } from 'src/core/database/mysql/entities';
-import { generateRepositoryService } from 'src/tests/generate-repository-service';
+import { User } from 'src/core/database/entities';
+import { generateMySqlRepositoryService, MOCKED_QUERY_BUILDER } from 'src/tests/generate-repository-service';
 import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
-import { UserType } from '../others/users.type';
-import { UsersPolicies } from '../others/users.policies';
+import { UserType } from '../utils/users.type';
+import { UsersPolicies } from '../utils/users.policies';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { UsersRepository } from '../others/users.repository';
 import { UserStubs } from './stubs/user.stubs';
+import { ListOptions } from '../../../common/types';
+import { UsersRepository } from '../utils/users.repository';
+import { UpdateUserDTO } from '../dtos';
 
-const repositoryService = generateRepositoryService();
+const mysqlRepository = generateMySqlRepositoryService();
+const usersRepository = new UsersRepository(mysqlRepository as any);
 const bcryptHelper = {
 	hashString: jest.fn()
 };
 const usersPolicies = new UsersPolicies();
 const userService = new UsersService(
-	repositoryService as any,
+	mysqlRepository as any,
 	bcryptHelper as any,
 	usersPolicies
 );
-const userRepository = new UsersRepository(
-	repositoryService as any,
-	usersPolicies
-); 
 const userController = new UsersController(
 	userService,
-	userRepository
+	usersRepository
 );
 const userStubs = new UserStubs();
 
@@ -35,26 +34,32 @@ describe('Users', () => {
 
 		it('should receive an id and return details of an user', async () => {
 			
+			const input = 's45as45a4ss5as1s2';
 			const expected = new User();
-			const id = 's45as45a4ss5as1s2';
 
-			repositoryService.findOne.mockResolvedValue(expected);
+			mysqlRepository.repository.createQueryBuilder.mockReturnValue(MOCKED_QUERY_BUILDER)
+			mysqlRepository.repository.queryBuilder.getOneOrFail.mockResolvedValue(expected);
 
-			await expect(userController.getOne(id)).resolves.toEqual(expected);
+			await expect(userController.details(input)).resolves.toEqual(expected);
 
-			expect(repositoryService.findOne).toBeCalledWith(User, id);
+			expect(mysqlRepository.repository.createQueryBuilder).toBeCalledWith('users');
+			expect(mysqlRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
+			expect(mysqlRepository.repository.queryBuilder.select).toBeCalledWith(['users.id', 'users.name', 'users.email', 'users.type']);
 		});
 
 		it('should receive an nonexistent id and return an error', async () => {
 
+			const input = 's45as45a4ss5as1s2';
 			const expected = new NotFoundException(Dictionary.users.getMessage('user_not_found'));
-			const id = 's45as45a4ss5as1s2';
 
-			repositoryService.findOne.mockResolvedValue(null);
+			mysqlRepository.repository.createQueryBuilder.mockReturnValue(MOCKED_QUERY_BUILDER)
+			mysqlRepository.repository.queryBuilder.getOneOrFail.mockRejectedValue(expected);
 
-			await expect(userController.getOne(id)).rejects.toEqual(expected);
+			await expect(userController.details(input)).rejects.toEqual(expected);
 
-			expect(repositoryService.findOne).toBeCalledWith(User, id);
+			expect(mysqlRepository.repository.createQueryBuilder).toBeCalledWith('users');
+			expect(mysqlRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
+			expect(mysqlRepository.repository.queryBuilder.select).toBeCalledWith(['users.id', 'users.name', 'users.email', 'users.type']);
 		});
 	});
 
@@ -62,13 +67,19 @@ describe('Users', () => {
 
 		it('should return a list of users', async () => {
 			
-			const expected = [new User(), new User()];
+			const options = {
+				skip: 0,
+				take: 20
+			} as ListOptions<User>;
+			const expected = [[new User(), new User()], 2];
 
-			repositoryService.findAll.mockResolvedValue(expected);
+			mysqlRepository.repository.createQueryBuilder.mockReturnValue(MOCKED_QUERY_BUILDER)
+			mysqlRepository.repository.queryBuilder.getManyAndCount.mockResolvedValue(expected);
 
-			await expect(userController.list()).resolves.toEqual(expected);
+			await expect(userController.list(options)).resolves.toEqual(expected);
 
-			expect(repositoryService.findAll).toBeCalledWith(User);
+			expect(mysqlRepository.repository.createQueryBuilder).toBeCalledWith('users');
+			expect(mysqlRepository.setFindOptions).toBeCalledWith(MOCKED_QUERY_BUILDER, options);
 		});
 	});
 
@@ -96,7 +107,7 @@ describe('Users', () => {
 			};
 
 			bcryptHelper.hashString.mockResolvedValue('$dsjsdjkjaksasbbc2424');
-			repositoryService.save.mockResolvedValue(createdUser);
+			mysqlRepository.save.mockResolvedValue(createdUser);
 
 			await expect(userController.create(input)).resolves.toEqual(expected);
 		});
@@ -136,9 +147,9 @@ describe('Users', () => {
 				message: Dictionary.users.getMessage('password_successfully_updated')
 			};
 
-			repositoryService.findOne.mockResolvedValue(user);
+			mysqlRepository.findOneOrFail.mockResolvedValue(user);
 			bcryptHelper.hashString.mockResolvedValue('$dsjsdjkjaksasbbc2424');
-			repositoryService.save.mockResolvedValue(new User());
+			mysqlRepository.save.mockResolvedValue(new User());
 
 			await expect(userController.updatePassword(id, input)).resolves.toEqual(expected);
 		});
@@ -164,7 +175,7 @@ describe('Users', () => {
 			const id = 's45as45a4ss5as1s2';
 			const expected = new NotFoundException(Dictionary.users.getMessage('user_not_found'));
 
-			repositoryService.findOne.mockResolvedValue(null);
+			mysqlRepository.findOneOrFail.mockRejectedValue(expected);
 
 			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
 		});
@@ -182,13 +193,13 @@ describe('Users', () => {
 				message: Dictionary.users.getMessage('status_successfully_updated')
 			};
 
-			repositoryService.findOne.mockResolvedValue(activeUser);
-			repositoryService.save.mockResolvedValue(disabledUser);
+			mysqlRepository.findOneOrFail.mockResolvedValue(activeUser);
+			mysqlRepository.save.mockResolvedValue(disabledUser);
 
 			await expect(userController.updateStatus(id)).resolves.toEqual(expected);
 
-			expect(repositoryService.findOne).toBeCalledWith(User, id);
-			expect(repositoryService.save).toBeCalledWith(User, disabledUser);
+			expect(mysqlRepository.findOneOrFail).toBeCalledWith(User, id);
+			expect(mysqlRepository.save).toBeCalledWith(User, disabledUser);
 		});
 	});
 
@@ -208,13 +219,13 @@ describe('Users', () => {
 				message: Dictionary.users.getMessage('successfully_updated')
 			};
 
-			repositoryService.findOne.mockResolvedValue(new User());
-			repositoryService.save.mockResolvedValue(new User());
+			mysqlRepository.findOneOrFail.mockResolvedValue(new User());
+			mysqlRepository.save.mockResolvedValue(new User());
 
 			await expect(userController.update(id, input)).resolves.toEqual(expected);
 			
-			expect(repositoryService.findOne).toBeCalledWith(User, id);
-			expect(repositoryService.save).toBeCalledWith(User, input);
+			expect(mysqlRepository.findOneOrFail).toBeCalledWith(User, id);
+			expect(mysqlRepository.save).toBeCalledWith(User, input);
 		});
 
 		it('should receive an invalid payload and return an error', async () => {
@@ -228,11 +239,11 @@ describe('Users', () => {
 			const id = 's45as45a4ss5as1s2';
 			const expected = new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
 
-			repositoryService.findOne.mockResolvedValue(input);
+			mysqlRepository.findOneOrFail.mockResolvedValue(input);
 
 			await expect(userController.update(id, input)).rejects.toEqual(expected);
 			
-			expect(repositoryService.findOne).toBeCalledWith(User, id);
+			expect(mysqlRepository.findOneOrFail).toBeCalledWith(User, id);
 		});
 	});
 });

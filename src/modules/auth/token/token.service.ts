@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Token } from 'src/core/database/mongo/entities';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { BcryptHelper } from 'src/common/helpers';
-import { TokenHelper } from './others/token.helper';
-import { MongoRepositoryService } from 'src/core/repositories';
+import { TokenHelper } from './utils/token.helper';
+import { Token } from '../../../core/database/entities/token.entity';
+import { MySQLRepositoryService } from '../../../core/repository';
 
 @Injectable()
 export class TokenService {
 
 	constructor(
-		private readonly mongoRepository: MongoRepositoryService,
+		private readonly mysqlRepository: MySQLRepositoryService,
 		private readonly tokenHelper: TokenHelper,
 		private readonly bcryptHelper: BcryptHelper
 	) {}
@@ -18,11 +18,11 @@ export class TokenService {
 
 		const token = await this.tokenHelper.generateToken(user, expiresIn);
 
-		await this.mongoRepository.get(Token).delete({ user_id: user.id });
+		await this.mysqlRepository.get(Token).delete({ user_id: user.id });
 
 		const encryptedToken = await this.bcryptHelper.hashString(token);
 
-		await this.mongoRepository.get(Token).save(new Token(encryptedToken, user.id));
+		await this.mysqlRepository.get(Token).save(new Token(encryptedToken, user.id));
 
 		return `Bearer ${token}`;
 	}
@@ -33,7 +33,7 @@ export class TokenService {
 
 		const { id } = await this.tokenHelper.getUserData(token);
 
-		this.mongoRepository.get(Token).delete({ user_id: id });
+		this.mysqlRepository.get(Token).delete({ user_id: id });
 	}
 
 }

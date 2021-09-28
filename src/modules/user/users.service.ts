@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 import { BcryptHelper } from 'src/common/helpers';
-import { MySQLRepositoryService } from 'src/core/repositories';
+import { MySQLRepositoryService } from 'src/core/repository';
 import { UpdatePasswordDTO, UpdateUserDTO } from './dtos';
-import { UsersPolicies } from './others/users.policies';
+import { UsersPolicies } from './utils/users.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
 
@@ -40,9 +40,7 @@ export class UsersService {
 
 		this.usersPolicies.passwordsMustBeTheSame(password, confirm_password);
 
-		const user = await this.mysqlRepository.findOne(User, id);
-
-		this.usersPolicies.mustHaveUser(user);
+		const user = await this.mysqlRepository.findOneOrFail(User, id);
 
 		user.password = await this.bcryptHelper.hashString(password);
 
@@ -56,7 +54,7 @@ export class UsersService {
 
 	public async updateStatus(id: string): Promise<SuccessSaveMessage> {
 
-		const user = await this.mysqlRepository.findOne(User, id);
+		const user = await this.mysqlRepository.findOneOrFail(User, id);
 
 		user.active = !user.active;
 
@@ -69,7 +67,7 @@ export class UsersService {
 	}
 	public async update(id: string, user_payload: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
-		const user = await this.mysqlRepository.findOne(User, id);
+		const user = await this.mysqlRepository.findOneOrFail(User, id);
 
 		this.usersPolicies.ensurePayloadHasDiferences(user_payload, user);
 
