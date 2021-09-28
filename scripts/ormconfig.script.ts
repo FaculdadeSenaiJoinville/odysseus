@@ -1,6 +1,6 @@
 
 import * as fs from 'fs';
-import { mysqlConfig } from 'src/core/database';
+import { mysqlConfig } from 'src/core/database/mysql.config';
 
 const mysql = {
 	...mysqlConfig,
