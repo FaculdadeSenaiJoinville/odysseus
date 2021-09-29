@@ -6,7 +6,7 @@ import { ValidateBodyPipe } from 'src/common/pipes';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
-import { UsersPaginationPipe } from './utils/users.pagination.pipe';
+import { UsersPaginationPipe } from './utils/users-pagination.pipe';
 import { UsersRepository } from './utils/users.repository';
 
 @ApiController('users')
