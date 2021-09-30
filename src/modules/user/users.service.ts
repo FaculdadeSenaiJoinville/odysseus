@@ -97,6 +97,7 @@ export class UsersService {
 		user.name = user_payload.name;
 		user.email = user_payload.email;
 		user.type = user_payload.type;
+		user.active = user_payload.active;
 
 		await this.mysqlRepository.save(User, user);
 
