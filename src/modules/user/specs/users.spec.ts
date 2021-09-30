@@ -9,7 +9,6 @@ import { Dictionary } from 'odyssey-dictionary';
 import { UserStubs } from './stubs/user.stubs';
 import { ListOptions } from '../../../common/types';
 import { UsersRepository } from '../utils/users.repository';
-import { UpdateUserDTO } from '../dtos';
 
 const mysqlRepository = generateMySqlRepositoryService();
 const usersRepository = new UsersRepository(mysqlRepository as any);
