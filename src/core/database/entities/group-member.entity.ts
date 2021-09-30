@@ -21,7 +21,7 @@ export class GroupMember {
 	@JoinColumn({ name: 'user_id' })
 	public user: Promise<User>;
 
-	constructor(group_id: string, user_id: string) {
+	constructor(group_id?: string, user_id?: string) {
 
 		this.group_id = group_id;
 		this.user_id = user_id;

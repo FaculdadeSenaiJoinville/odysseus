@@ -31,7 +31,7 @@ export class Group extends CoreEntity {
 		this.users.push(user);
 	}
 
-	constructor(name: string, description: string) {
+	constructor(name?: string, description?: string) {
 
 		super();
 

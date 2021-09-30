@@ -1,8 +1,9 @@
 
 import { Injectable } from '@nestjs/common';
+import { Dictionary } from 'odyssey-dictionary';
 import { BaseMessage, SuccessSaveMessage } from '../../common/types';
-import { Group, GroupMember } from '../../core/database/mysql/entities';
-import { MySQLRepositoryService } from '../../core/repositories';
+import { Group, GroupMember } from '../../core/database/entities';
+import { MySQLRepositoryService } from '../../core/repository';
 import { UpsertGroupDTO } from './dtos/upsert-group.dto';
 import { GroupHelper } from './utils/group.helper';
 import { GroupPolicies } from './utils/group.policies';
@@ -27,12 +28,20 @@ export class GroupService {
 
 			for (const userId of groupMembers) {
 
-				await this.groupHelper.addUserToGroup(createdGroup.id, userId);
+				const groupWithUsers = await this.mysqlRepository.findOne(Group, {
+					relations: ['users'],
+					where: { id: createdGroup.id }
+				});
+
+				if (groupWithUsers && !this.groupPolicies.hasUserInGroup(userId, groupWithUsers)) {
+	
+					await this.groupHelper.addUserToGroup(createdGroup.id, userId);
+				}
 			}
 		}
 
 		return {
-			message: 'Grupo criado com sucesso!',
+			message: Dictionary.groups.getMessage('successfully_created'),
 			id: createdGroup.id
 		};
 	}
@@ -46,6 +55,8 @@ export class GroupService {
 		const groupMembers = group_payload.members;
 		const membersToRemove = group_payload.members_to_remove;
 
+		this.groupPolicies.ensurePayloadHasDiferences(group_payload, group);
+
 		group.name = group_payload.name;
 		group.description = group_payload.description;
 
@@ -54,8 +65,13 @@ export class GroupService {
 		if (groupMembers) {
 
 			for (const userId of groupMembers) {
-	
-				if (!this.groupPolicies.hasUserInGroup(userId, group)) {
+
+				const groupWithUsers = await this.mysqlRepository.findOne(Group, {
+					relations: ['users'],
+					where: { id: group.id }
+				});
+
+				if (groupWithUsers && !this.groupPolicies.hasUserInGroup(userId, groupWithUsers)) {
 	
 					await this.groupHelper.addUserToGroup(updatedGroup.id, userId);
 				}
@@ -65,8 +81,13 @@ export class GroupService {
 		if (membersToRemove) {
 
 			for (const userId of membersToRemove) {
+
+				const groupWithUsers = await this.mysqlRepository.findOne(Group, {
+					relations: ['users'],
+					where: { id: group.id }
+				});
 	
-				if (this.groupPolicies.hasUserInGroup(userId, group)) {
+				if (groupWithUsers && this.groupPolicies.hasUserInGroup(userId, groupWithUsers)) {
 	
 					await this.groupHelper.removeUserFromGroup(updatedGroup.id, userId);
 				}
@@ -74,7 +95,7 @@ export class GroupService {
 		}
 
 		return {
-			message: 'Grupo editado com sucesso!',
+			message: Dictionary.groups.getMessage('successfully_updated'),
 			id: updatedGroup.id
 		};
 	}
@@ -85,7 +106,7 @@ export class GroupService {
 		await this.mysqlRepository.delete(Group, id);
 
 		return {
-			message: 'Grupo excluído com sucesso!'
+			message:  Dictionary.groups.getMessage('successfully_deleted')
 		};
 	}
 

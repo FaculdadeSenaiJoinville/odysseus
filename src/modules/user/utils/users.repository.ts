@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ListOptions } from 'src/common/types';
 import { MySQLRepositoryService } from 'src/core/repository';
+import { ListOptions } from '../../../common/types';
 import { User } from '../../../core/database/entities';
 
 @Injectable()

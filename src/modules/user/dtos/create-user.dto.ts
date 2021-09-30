@@ -19,6 +19,6 @@ export class CreateUserDTO {
 	type: UserType;
 
 	@ApiProperty({ example: ['saas5as4a65as', 's48d4df1d5fd5f'], description: 'Lista com IDs dos grupos aos quais o usuário será adicionado.' })
-	groups: string[];
+	groups?: string[];
 
 }

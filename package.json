@@ -49,7 +49,7 @@
 		"joi": "^17.4.1",
 		"mongodb": "^3.6.4",
 		"mysql2": "^2.2.5",
-		"odyssey-dictionary": "2.15.0",
+		"odyssey-dictionary": "C:\\Users\\borge\\Documents\\projects\\senai\\odyssey-dictionary",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"reflect-metadata": "^0.1.13",
