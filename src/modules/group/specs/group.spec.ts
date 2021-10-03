@@ -84,7 +84,7 @@ describe('Groups', () => {
 				description: 'Teste de função'
 			};
 			const createdGroup = {
-				id: 'sdsdsd87s8d',
+				id: 'ssdsds5d45sd',
 				...input
 			}
 			const expected = {
@@ -109,7 +109,7 @@ describe('Groups', () => {
 				]
 			};
 			const createdGroup = {
-				id: 'sdsdsd87s8d',
+				id: 'ssdsds5d45sd',
 				...input
 			}
 			const group1 = {
@@ -161,7 +161,7 @@ describe('Groups', () => {
 			expect(groupController.update(id, input)).resolves.toEqual(expected);
 		});
 
-		it('should receive a payload and return the updated group id (with users to insert)', () => {
+		it('should receive a payload and return the updated group id (with users to insert and remove)', () => {
 			
 			const input = {
 				name: 'Nome Atualizado',
@@ -177,13 +177,13 @@ describe('Groups', () => {
 			const id = 'ssdsds5d45sd';
 			const group1 = {
 				id,
-				users: [{
+				members: [{
 					id: 'dsdsdsd45sd45sd'
 				}]
 			};
 			const group2 = {
 				id,
-				users: [{
+				members: [{
 					id: 'sdsd56sd4e23w2e6'
 				}]
 			};

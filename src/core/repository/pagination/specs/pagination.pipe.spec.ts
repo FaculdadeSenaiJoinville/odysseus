@@ -127,7 +127,7 @@ describe('PaginationPipe test', () => {
 
 		if (error) {
 
-			console.info(error);
+			console.log('apenas ignorar');
 		}
 
 		expect(() => paginationPipe.validateAndFormatSchema(pagination as any, 'type')).toThrow(UnprocessableEntityException);
