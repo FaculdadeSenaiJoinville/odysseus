@@ -19,16 +19,16 @@ export class Group extends CoreEntity {
 			referencedColumnName: 'id'
 		}
 	})
-	public users?: User[];
+	public members?: User[];
 
 	addUser(user: User) {
 
-		if (!this.users) {
+		if (!this.members) {
 
-			this.users = new Array<User>();
+			this.members = new Array<User>();
 		}
 
-		this.users.push(user);
+		this.members.push(user);
 	}
 
 	constructor(name?: string, description?: string) {

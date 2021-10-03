@@ -173,19 +173,19 @@ describe('Users', () => {
 				id: 's4s5a4s5as',
 				name: 'Grupo de Teste 1',
 				description: 'Teste de função',
-				users: []
+				members: []
 			} as Group;
 			const groupToInsert2 = {
 				id: 's4s5a4s5as',
 				name: 'Grupo de Teste 2',
 				description: 'Teste de função',
-				users: []
+				members: []
 			} as Group;
 			const groupToInsert3 = {
 				id: 's4s5a4s5as',
 				name: 'Grupo de Teste 3',
 				description: 'Teste de função',
-				users: [{
+				members: [{
 					id: 's45as45a4ss5as1s2'
 				}]
 			} as Group;
@@ -336,13 +336,13 @@ describe('Users', () => {
 				id: 'dsd4s5d4',
 				name: 'Grupo de Teste 1',
 				description: 'Teste de função',
-				users: []
+				members: []
 			} as Group;
 			const groupToInsert2 = {
 				id: 'sdsdsdsd541',
 				name: 'Grupo de Teste 2',
 				description: 'Teste de função',
-				users: [{
+				members: [{
 					id: 's45as45a4ss5as1s2'
 				}]
 			} as Group;
@@ -350,7 +350,7 @@ describe('Users', () => {
 				id: 'asasas45as4',
 				name: 'Grupo de Teste 3',
 				description: 'Teste de função',
-				users: [{
+				members: [{
 					id: 's45as45a4ss5as1s2'
 				}]
 			} as Group;
@@ -358,7 +358,7 @@ describe('Users', () => {
 				id: 'sd4s6d1wwesd',
 				name: 'Grupo de Teste 4',
 				description: 'Teste de função',
-				users: []
+				members: []
 			} as Group;
 			const expected = {
 				id,
