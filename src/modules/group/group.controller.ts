@@ -4,7 +4,7 @@ import { GroupService } from './group.service';
 import { ApiController, AuthProtection } from 'src/common/decorators';
 import { BaseMessage, ListOptions, SuccessSaveMessage } from '../../common/types';
 import { ValidateBodyPipe } from '../../common/pipes';
-import { UpsertGroupDTO } from './dtos/upsert-group.dto';
+import { UpsertGroupDTO } from './dto/upsert-group.dto';
 import { UPSERT_GROUP_VALIDATION } from './utils/group.validation';
 import { Group } from '../../core/database/entities';
 import { GroupRepository } from './utils/group.repository';

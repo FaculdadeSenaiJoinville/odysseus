@@ -4,7 +4,7 @@ import { Dictionary } from 'odyssey-dictionary';
 import { BaseMessage, SuccessSaveMessage } from '../../common/types';
 import { Group, GroupMember } from '../../core/database/entities';
 import { MySQLRepositoryService } from '../../core/repository';
-import { UpsertGroupDTO } from './dtos/upsert-group.dto';
+import { UpsertGroupDTO } from './dto/upsert-group.dto';
 import { GroupHelper } from './utils/group.helper';
 import { GroupPolicies } from './utils/group.policies';
 
