@@ -53,7 +53,6 @@
 		"joi": "^17.4.1",
 		"mongodb": "^3.6.4",
 		"mysql2": "^2.2.5",
-		"nestjs-telegram": "^1.1.3",
 		"odyssey-dictionary": "2.8.0",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
@@ -62,6 +61,7 @@
 		"rxjs": "^6.0.0",
 		"swagger-ui-express": "^4.1.6",
 		"typeorm": "^0.2.31",
+		"watson-developer-cloud": "^4.0.1",
 		"webpack": "*"
 	},
 	"devDependencies": {

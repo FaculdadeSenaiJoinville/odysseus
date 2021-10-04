@@ -1,6 +1,6 @@
 import { SessionsClient } from '@google-cloud/dialogflow';
 import { Injectable } from '@nestjs/common';
-import { CREDENTIALS } from '../../../../core/credentials/dialogflow';
+import { DIALOGFLOW_CREDENTIALS } from './dialogflow.config';
 import { DialogflowRequest, MessageData } from './dialogflow.types';
 
 @Injectable()
@@ -10,8 +10,8 @@ export class DialogflowHelper {
 
 		const configuration = {
 			credentials: {
-				private_key: CREDENTIALS.private_key,
-				client_email: CREDENTIALS.client_email
+				private_key: DIALOGFLOW_CREDENTIALS.private_key,
+				client_email: DIALOGFLOW_CREDENTIALS.client_email
 			}
 		};
 
@@ -21,8 +21,9 @@ export class DialogflowHelper {
 	public setRequest(messageData: MessageData): DialogflowRequest {
 
 		const { language_code, session_id, message } = messageData;
-		const project_id = CREDENTIALS.project_id;
+		const project_id = DIALOGFLOW_CREDENTIALS.project_id;
 		const sessionClient = this.setSessionClient();
+
 		const sessionPath = sessionClient.projectAgentSessionPath(project_id, session_id);
 		
 		return {
