@@ -1,7 +1,7 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { UpdateUserDTO } from '../dtos';
-import { User } from 'src/core/database/mysql/entities';
+import { User } from 'src/core/database/entities';
 
 @Injectable()
 export class UsersPolicies {
@@ -16,7 +16,7 @@ export class UsersPolicies {
 
 	public  ensurePayloadHasDiferences(user_payload: UpdateUserDTO, user: User): void {
 
-		if (!(user_payload.type !== user.type || user_payload.name !== user.name || user_payload.email !== user.email)) {
+		if (!(user_payload.type !== user.type || user_payload.name !== user.name || user_payload.email !== user.email || user_payload.active !== user.active)) {
 
 			throw new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
 	  	}

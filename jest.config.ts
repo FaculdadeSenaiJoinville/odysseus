@@ -38,7 +38,6 @@ const config: Config.InitialOptions = {
 		'/src/core/database',
 		'/src/core/error',
 		'/src/core/session',
-		'/src/core/repositories/mongo',
 		'/src/core/repositories/mysql'
 	],
 	coverageThreshold: {

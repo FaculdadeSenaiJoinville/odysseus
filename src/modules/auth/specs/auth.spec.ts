@@ -1,13 +1,13 @@
-import { UnauthorizedException } from '@nestjs/common';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { generateRepositoryService } from 'src/tests/generate-repository-service';
+import { generateMySqlRepositoryService } from 'src/tests/generate-repository-service';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
-import { AuthPolicies } from '../others/auth.policies';
-import { User } from 'src/core/database/mysql/entities';
+import { AuthPolicies } from '../utils/auth.policies';
+import { User } from 'src/core/database/entities';
 import { session } from 'src/core/session';
 
-const mysqlRepositoryService = generateRepositoryService();
+const mysqlRepositoryService = generateMySqlRepositoryService();
 const tokenService = {
 	create: jest.fn(),
 	delete: jest.fn()
@@ -39,7 +39,7 @@ describe('Token', () => {
 				token: '7ye9g7sd8a7sdgas8d8sdasddas'
 			};
 
-			mysqlRepositoryService.findOne.mockResolvedValue(input);
+			mysqlRepositoryService.findOneOrFail.mockResolvedValue(input);
 			bcryptHelper.compareStringToHash.mockResolvedValue(true);
 			tokenService.create.mockResolvedValue(expected.token);
 
@@ -53,9 +53,9 @@ describe('Token', () => {
 				password: 'João@123',
 				expiresIn: 84000
 			};
-			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
+			const expected = new NotFoundException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.findOne.mockResolvedValue(null);
+			mysqlRepositoryService.findOneOrFail.mockRejectedValue(expected);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
 		});
@@ -73,7 +73,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.findOne.mockResolvedValue(databaseUser);
+			mysqlRepositoryService.findOneOrFail.mockResolvedValue(databaseUser);
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);

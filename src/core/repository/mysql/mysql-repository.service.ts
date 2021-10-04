@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { DeleteResult, EntityTarget, FindConditions, FindManyOptions, FindOneOptions, getConnectionManager, Repository, SelectQueryBuilder } from 'typeorm';
 import { ListOptions } from '../../../common/types';
-import { ErrorsService } from '../../error/errors.service';
+import { ErrorService } from '../../error/errors.service';
 import { Order } from '../pagination/pagination.type';
 
 @Injectable()
 export class MySQLRepositoryService {
 
-	constructor(private errorService: ErrorsService) {}
+	constructor(private errorService: ErrorService) {}
 
 	public get<Entity>(target: EntityTarget<Entity>): Repository<Entity> {
 
@@ -134,4 +134,5 @@ export class MySQLRepositoryService {
 
 		return queryBuilder.addOrderBy(`${queryBuilder.alias}.${sortField}`, order);
 	}
+
 }

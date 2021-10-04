@@ -1,9 +1,9 @@
-import { PaginationPipe } from 'src/common/pipes/pagination.pipe';
+import { PaginationPipe } from '../../../core/repository/pagination';
 import { UsersPaginationPipe } from '../utils/users.pagination.pipe';
 
-jest.mock('../../../common/pipes/pagination.pipe');
+jest.mock('../../../core/repository/pagination/pagination.pipe');
 
-describe('ImportMapPaginationPipe test', () => {
+describe('UserPaginationPipe test', () => {
 
 	const usersPaginationPipe = new UsersPaginationPipe();
 

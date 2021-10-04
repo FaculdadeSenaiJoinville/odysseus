@@ -1,10 +1,9 @@
-import { MySqlCoreEntity } from 'src/core/database';
 import { Entity, Column, Index, JoinTable, ManyToMany } from 'typeorm';
-import { UserType } from '../../../../modules/user/utils/users.type';
-import { Group } from '.';
+import { CoreEntity, Group } from '.';
+import { UserType } from '../../../modules/user/utils/users.type';
 
 @Entity('users')
-export class User extends MySqlCoreEntity {
+export class User extends CoreEntity {
 
 	@Column({ length: 100 })
 	@Index()

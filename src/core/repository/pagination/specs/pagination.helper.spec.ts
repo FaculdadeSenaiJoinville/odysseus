@@ -13,7 +13,7 @@ describe('Pagination helper', () => {
 
 			expect(paginate({} as any)).toEqual({
 				skip: 0,
-				take: 20
+				take: 10
 			});
 
 			expect(paginate({
