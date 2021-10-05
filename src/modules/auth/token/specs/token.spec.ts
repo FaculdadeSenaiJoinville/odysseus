@@ -1,8 +1,7 @@
 import { User } from 'src/core/database/entities';
-import { generateMySqlRepositoryService } from 'src/tests/generate-repository-service';
+import { mockedMySQLRepository } from 'src/tests/generate-repository-service';
 import { TokenService } from '../token.service';
 
-const repositoryService = generateMySqlRepositoryService();
 const bcryptHelper = {
 	hashString: jest.fn()
 };
@@ -11,7 +10,7 @@ const tokenHelper = {
 	getUserData: jest.fn()
 };
 const tokenService = new TokenService(
-	repositoryService as any,
+	mockedMySQLRepository as any,
 	tokenHelper as any,
 	bcryptHelper as any
 );

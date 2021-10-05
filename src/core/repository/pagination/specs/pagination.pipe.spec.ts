@@ -125,6 +125,11 @@ describe('PaginationPipe test', () => {
 		]
 	])('should validateAndFormatSchema throw a UnprocessableEntityException with joi message', (pagination, error) => {
 
+		if (error) {
+
+			console.log('apenas ignorar');
+		}
+
 		expect(() => paginationPipe.validateAndFormatSchema(pagination as any, 'type')).toThrow(UnprocessableEntityException);
 	});
 

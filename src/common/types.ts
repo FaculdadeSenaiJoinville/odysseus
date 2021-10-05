@@ -1,4 +1,4 @@
-import { FindManyOptions } from 'typeorm'
+import { FindManyOptions } from 'typeorm';
 
 export type BaseMessage = {
 	message: string;

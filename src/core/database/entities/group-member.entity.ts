@@ -13,15 +13,15 @@ export class GroupMember {
 	@CreateDateColumn()
 	public added_at: Date;
 	
-	@ManyToOne(() => Group, (group: Group) => group.users, { primary: true })
+	@ManyToOne(() => Group, (group: Group) => group.members, { primary: true })
 	@JoinColumn({ name: 'group_id' })
 	public group: Promise<Group>;
 
 	@ManyToOne(() => User, (user: User) => user.groups, { primary: true })
 	@JoinColumn({ name: 'user_id' })
-	public user: Promise<User>;
+	public member: Promise<User>;
 
-	constructor(group_id: string, user_id: string) {
+	constructor(group_id?: string, user_id?: string) {
 
 		this.group_id = group_id;
 		this.user_id = user_id;

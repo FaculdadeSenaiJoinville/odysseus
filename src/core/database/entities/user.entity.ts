@@ -16,9 +16,12 @@ export class User extends CoreEntity {
 	public active: boolean;
 
 	@Column()
+	public is_new: boolean;
+
+	@Column()
 	public type: UserType;
 
-	@ManyToMany(() => Group, (group: Group) => group.users)
+	@ManyToMany(() => Group, (group: Group) => group.members)
 	@JoinTable({
 		name: 'groups_members',
 		joinColumn: {

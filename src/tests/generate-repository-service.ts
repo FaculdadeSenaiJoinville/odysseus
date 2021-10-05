@@ -1,4 +1,4 @@
-export const MOCKED_QUERY_BUILDER = {
+export const mockedQueryBuilder = {
 	addGroupBy: jest.fn().mockReturnThis(),
 	andWhere: jest.fn().mockReturnThis(),
 	addSelect: jest.fn().mockReturnThis(),
@@ -32,32 +32,29 @@ export const MOCKED_QUERY_BUILDER = {
 	having:  jest.fn().mockReturnThis()
 };
 
-export function generateMySqlRepositoryService() {
+const repository = {
+	queryBuilder: mockedQueryBuilder,
+	createQueryBuilder: jest.fn(),
+	findAndCount: jest.fn(),
+	find: jest.fn(),
+	findByIds: jest.fn(),
+	findOne: jest.fn(),
+	findOneOrFail: jest.fn(),
+	delete: jest.fn(),
+	remove: jest.fn(),
+	save: jest.fn(),
+	update: jest.fn(),
+	create: jest.fn(),
+	count: jest.fn()
+};
 
-	const repository = {
-		queryBuilder: MOCKED_QUERY_BUILDER,
-		createQueryBuilder: jest.fn(),
-		findAndCount: jest.fn(),
-		find: jest.fn(),
-		findByIds: jest.fn(),
-		findOne: jest.fn(),
-		findOneOrFail: jest.fn(),
-		delete: jest.fn(),
-		remove: jest.fn(),
-		save: jest.fn(),
-		update: jest.fn(),
-		create: jest.fn(),
-		count: jest.fn()
-	};
-
-	return {
-		repository,
-		get: jest.fn(() => repository as unknown),
-		findOneOrFail: jest.fn(),
-		findOne: jest.fn(),
-		findAll: jest.fn(),
-		save: jest.fn(),
-		delete: jest.fn(),
-		setFindOptions: jest.fn().mockReturnValue(MOCKED_QUERY_BUILDER)
-	}
-}
+export const mockedMySQLRepository = {
+	repository,
+	get: jest.fn(() => repository as unknown),
+	findOneOrFail: jest.fn(),
+	findOne: jest.fn(),
+	findAll: jest.fn(),
+	save: jest.fn(),
+	delete: jest.fn(),
+	setFindOptions: jest.fn().mockReturnValue(mockedQueryBuilder)
+};
