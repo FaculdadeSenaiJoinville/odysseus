@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { GroupMember } from 'src/core/database/mysql/entities';
 import { DeleteResult } from 'typeorm';
-import { MySQLRepositoryService } from '../../../core/repositories';
+import { GroupMember } from '../../../core/database/entities';
+import { MySQLRepositoryService } from '../../../core/repository';
 
 @Injectable()
 export class GroupHelper {

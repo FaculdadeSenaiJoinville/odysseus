@@ -1,13 +1,12 @@
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { generateMySqlRepositoryService } from 'src/tests/generate-repository-service';
+import { mockedMySQLRepository } from 'src/tests/generate-repository-service';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 import { AuthPolicies } from '../utils/auth.policies';
 import { User } from 'src/core/database/entities';
 import { session } from 'src/core/session';
 
-const mysqlRepositoryService = generateMySqlRepositoryService();
 const tokenService = {
 	create: jest.fn(),
 	delete: jest.fn()
@@ -17,7 +16,7 @@ const bcryptHelper = {
 };
 const authPolicies = new AuthPolicies(bcryptHelper as any);
 const authService = new AuthService(
-	mysqlRepositoryService as any,
+	mockedMySQLRepository as any,
 	tokenService as any,
 	authPolicies as any
 );
@@ -39,7 +38,7 @@ describe('Token', () => {
 				token: '7ye9g7sd8a7sdgas8d8sdasddas'
 			};
 
-			mysqlRepositoryService.findOneOrFail.mockResolvedValue(input);
+			mockedMySQLRepository.findOneOrFail.mockResolvedValue(input);
 			bcryptHelper.compareStringToHash.mockResolvedValue(true);
 			tokenService.create.mockResolvedValue(expected.token);
 
@@ -55,7 +54,7 @@ describe('Token', () => {
 			};
 			const expected = new NotFoundException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.findOneOrFail.mockRejectedValue(expected);
+			mockedMySQLRepository.findOneOrFail.mockRejectedValue(expected);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
 		});
@@ -73,7 +72,7 @@ describe('Token', () => {
 			};
 			const expected = new UnauthorizedException(Dictionary.auth.getMessage('user_not_found'));
 
-			mysqlRepositoryService.findOneOrFail.mockResolvedValue(databaseUser);
+			mockedMySQLRepository.findOneOrFail.mockResolvedValue(databaseUser);
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
