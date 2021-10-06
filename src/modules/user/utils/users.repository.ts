@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ListOptions } from 'src/common/types';
 import { MySQLRepositoryService } from 'src/core/repository';
+import { ListOptions } from '../../../common/types';
 import { User } from '../../../core/database/entities';
 
 @Injectable()
@@ -22,7 +22,17 @@ export class UsersRepository {
 
 		return this.mysqlRepository.get(User).createQueryBuilder('users')
 			.where({ id })
-			.select(['users.id', 'users.name', 'users.email', 'users.type'])
+			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])
+			.leftJoin('users.groups', 'groups')
+			.getOneOrFail();
+	}
+
+	public async profile(id: string): Promise<User> {
+
+		return this.mysqlRepository.get(User).createQueryBuilder('users')
+			.where({ id })
+			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])
+			.leftJoin('users.groups', 'groups')
 			.getOneOrFail();
 	}
 

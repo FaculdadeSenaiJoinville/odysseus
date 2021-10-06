@@ -28,9 +28,9 @@
 		"run:script": "ts-node -r tsconfig-paths/register ./scripts/dml/run_mysql_dml.script.ts",
 		"new:migration": "yarn typeorm migration:create -c mysqlConnection -n",
 		"run:migration": "yarn typeorm migration:run -c mysqlConnection",
-		"generate:ormconfig": "(rm -rf ormconfig.json) && ts-node -r tsconfig-paths/register ./scripts/ormconfig.script.ts",
+		"ormconfig:generate": "(rm -rf ormconfig.json) && ts-node -r tsconfig-paths/register ./scripts/ormconfig.script.ts",
 		"refresh:project": "yarn cache clean && rm -rf node_modules && yarn install",
-		"db:magic": "yarn generate:ormconfig && yarn run:migration"
+		"db:magic": "yarn ormconfig:generate && yarn mysql:migration:run"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.6.13",
@@ -48,7 +48,7 @@
 		"express": "^4.17.1",
 		"joi": "^17.4.1",
 		"mysql2": "^2.2.5",
-		"odyssey-dictionary": "2.15.0",
+		"odyssey-dictionary": "2.17.0",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"reflect-metadata": "^0.1.13",

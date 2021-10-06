@@ -1,11 +1,11 @@
 import { PaginationPipe } from '../../../core/repository/pagination';
-import { UsersPaginationPipe } from '../utils/users.pagination.pipe';
+import { GroupPaginationPipe } from '../utils/group-pagination.pipe';
 
 jest.mock('../../../core/repository/pagination/pagination.pipe');
 
-describe('UserPaginationPipe test', () => {
+describe('GroupPaginationPipe test', () => {
 
-	const usersPaginationPipe = new UsersPaginationPipe();
+	const groupPaginationPipe = new GroupPaginationPipe();
 
 	it('should call for validateAndFormatSchema from PaginationPipe', () => {
 
@@ -16,7 +16,7 @@ describe('UserPaginationPipe test', () => {
 			perPage: '5'
 		};
 
-		usersPaginationPipe.transform(pagination as any);
+		groupPaginationPipe.transform(pagination as any);
 
 		expect(PaginationPipe.prototype.validateAndFormatSchema).toHaveBeenCalledWith(pagination);
 	});
