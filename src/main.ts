@@ -4,8 +4,8 @@ import { AppModule } from './app.module';
 import { EntityNotFoundExceptionFilter } from './core/repository/filters/entity-not-found-exception.filter';
 
 async function bootstrap() {
-	
 	const app = await NestFactory.create(AppModule);
+	const port = process.env.PORT || 3000;
 	
 	app.enableCors();
 	app.useGlobalFilters(new EntityNotFoundExceptionFilter());
@@ -19,7 +19,7 @@ async function bootstrap() {
 	
 	SwaggerModule.setup('api', app, document);
 
-	await app.listen(3000);
+	await app.listen(port);
 }
 
 bootstrap();
