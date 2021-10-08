@@ -1,4 +1,3 @@
-import { google } from '@google-cloud/dialogflow/build/protos/protos';
 
 export type MessageData = {
 	language_code: string;
@@ -31,13 +30,6 @@ export type ParametersFields = {
 
 export type ResponseParameters = {
 	fields: ParametersFields;
-}
-
-export type DialogflowResponse = {
-	bot_message: string;
-	intent_name: string;
-	parameters: google.protobuf.IStruct;
-	user_message: string;
 }
 
 export type DialogflowCredentials = {

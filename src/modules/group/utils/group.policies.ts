@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Group } from '../../../core/database/mysql/entities';
+import { Group } from 'src/core/database/entities';
+
 
 @Injectable()
 export class GroupPolicies {

@@ -1,8 +1,8 @@
 
 import { Injectable } from '@nestjs/common';
+import { Group, GroupMember } from 'src/core/database/entities';
+import { MySQLRepositoryService } from 'src/core/repository';
 import { BaseMessage, SuccessSaveMessage } from '../../common/types';
-import { Group, GroupMember } from '../../core/database/mysql/entities';
-import { MySQLRepositoryService } from '../../core/repositories';
 import { UpsertGroupDTO } from './dtos/upsert-group.dto';
 import { GroupHelper } from './utils/group.helper';
 import { GroupPolicies } from './utils/group.policies';

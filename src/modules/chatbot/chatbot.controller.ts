@@ -8,8 +8,8 @@ export class ChatbotController {
 
 	constructor(private readonly chatbotService: ChatbotService) {}
 
-	@Post()
-	@AuthProtection()
+	@Post('create-intent')
+	//@AuthProtection()
 	public async sendMessage() {
 
 		return this.chatbotService.testBot();

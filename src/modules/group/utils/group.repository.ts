@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { MySQLRepositoryService } from 'src/core/repositories';
+import { Group } from 'src/core/database/entities';
+import { MySQLRepositoryService } from 'src/core/repository';
 import { ListOptions } from '../../../common/types';
-import { Group } from '../../../core/database/mysql/entities';
 
 @Injectable()
 export class GroupRepository {
