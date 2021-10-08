@@ -21,7 +21,7 @@ export class User extends CoreEntity {
 	@Column()
 	public type: UserType;
 
-	@ManyToMany(() => Group, (group: Group) => group.users)
+	@ManyToMany(() => Group, (group: Group) => group.members)
 	@JoinTable({
 		name: 'groups_members',
 		joinColumn: {
