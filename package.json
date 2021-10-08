@@ -30,7 +30,7 @@
 		"run:migration": "yarn typeorm migration:run -c mysqlConnection",
 		"ormconfig:generate": "(rm -rf ormconfig.json) && ts-node -r tsconfig-paths/register ./scripts/ormconfig.script.ts",
 		"refresh:project": "yarn cache clean && rm -rf node_modules && yarn install",
-		"db:magic": "yarn ormconfig:generate && yarn mysql:migration:run"
+		"db:magic": "yarn ormconfig:generate && yarn run:migration"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.6.13",
