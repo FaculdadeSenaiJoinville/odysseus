@@ -7,7 +7,7 @@ export class DialogflowService {
 
 	constructor(private readonly httpService: HttpService) {}
 
-	private async getApiKey() {
+	private async getApiConfig(url: string) {
 
 		const teste = new google.auth.GoogleAuth({
 			scopes: DIALOGFLOW_AUTH_SCOPES,
@@ -21,18 +21,15 @@ export class DialogflowService {
 			}
 		});
 
-		return teste;
+		return teste.authorizeRequest({ url });
 	}
 
 	public async createIntent(intentBody) {
 
-		const apiKey = await this.getApiKey();
-		const createIntentUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents`;
+		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents`;
+		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		const teste = await apiKey.getRequestHeaders(createIntentUrl);
-
-
-		return this.httpService.post(createIntentUrl, intentBody).toPromise();
+		return this.httpService.post(url, intentBody, { headers }).toPromise();
 	}
 
 }

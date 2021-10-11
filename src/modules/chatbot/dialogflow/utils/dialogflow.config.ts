@@ -3,8 +3,6 @@ import { DialogflowCredentials } from './dialogflow.types';
 
 dotenv.config();
 
-const dialogflow_api_uri = 'https://dialogflow.googleapis.com';
-
 export const DIALOGFLOW_CREDENTIALS: DialogflowCredentials = {
 	type: 'service_account',
 	project_id: process.env.BOT_POJECT_ID,
