@@ -27,7 +27,7 @@ function callback(error: ExecException, stdout: string, stderr: string) {
 
 rl.question('Nome do script: ', scriptName => {
 
-	const operation = `ts-node -r tsconfig-paths/register ./src/core/database/mysql/scripts/${scriptName}`;
+	const operation = `ts-node -r tsconfig-paths/register ./src/core/database/scripts/${scriptName}`;
 
 	console.log(operation);
 
