@@ -1,4 +1,3 @@
-
 export type MessageData = {
 	language_code: string;
 	message: string;
@@ -40,4 +39,5 @@ export type DialogflowCredentials = {
 	client_email: string;
 	client_id: string;
 	client_x509_cert_url: string;
+	api_key: string;
 };

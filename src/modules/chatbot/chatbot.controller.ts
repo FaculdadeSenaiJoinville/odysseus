@@ -12,7 +12,7 @@ export class ChatbotController {
 	//@AuthProtection()
 	public async sendMessage() {
 
-		return this.chatbotService.testBot();
+		return this.chatbotService.createIntent();
 	}
 
 }

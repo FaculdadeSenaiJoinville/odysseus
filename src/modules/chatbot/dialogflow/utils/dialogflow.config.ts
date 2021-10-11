@@ -12,7 +12,8 @@ export const DIALOGFLOW_CREDENTIALS: DialogflowCredentials = {
 	private_key: process.env.BOT_PRIVATE_KEY,
 	client_email: process.env.BOT_CLIENT_EMAIL,
 	client_id: process.env.BOT_CLIENT_ID,
-	client_x509_cert_url: process.env.BOT_CLIENT_CERT_URL
+	client_x509_cert_url: process.env.BOT_CLIENT_CERT_URL,
+	api_key: process.env.BOT_API_KEY
 };
 
 export const DIALOGFLOW_ENPOINTS = {
@@ -21,3 +22,8 @@ export const DIALOGFLOW_ENPOINTS = {
 	auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
 	create_intent: `${dialogflow_api_uri}/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}}/agent/intents`
 };
+
+export const DIALOGFLOW_AUTH_SCOPES = [
+	'https://www.googleapis.com/auth/cloud-platform',
+	'https://www.googleapis.com/auth/dialogflow'
+];
