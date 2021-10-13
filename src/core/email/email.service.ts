@@ -1,6 +1,5 @@
 import * as nodemailer from 'nodemailer';
 import * as EmailTemplate from 'email-templates';
-import { join } from 'path';
 import { Injectable } from '@nestjs/common';
 import { SMTP_CONFIG } from './utils/email.config';
 import { EmailConfig } from './utils/email.type';
@@ -46,9 +45,8 @@ export class EmailService {
 				from: `Odyssey <${from}>`
 			},
 			transport,
-			views: {
-				root: join(__dirname, 'templates')
-			}
+			send: true,
+			preview: false
 		});
 	}
 
