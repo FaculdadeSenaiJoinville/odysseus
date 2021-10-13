@@ -8,9 +8,11 @@ import { UsersPolicies } from './utils/users.policies';
 import { UsersRepository } from './utils/users.repository';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
+import { EmailModule } from '../../core/email/email.module';
 
 @Module({
 	imports: [
+		EmailModule,
 		MySQLRepositoryModule,
 		ErrorModule
 	],
