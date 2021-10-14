@@ -8,28 +8,22 @@ import { EmailOptions } from 'email-templates';
 @Injectable()
 export class EmailService {
 
-	public async sendEmail(email_config: EmailConfig) {
+	public sendEmail(email_config: EmailConfig): Promise<any> {
 
 		const { to, template, locals } = email_config;
 		const emailTransporter = this.getEmailTransporter();
 		const emailOptions: EmailOptions = {
 			template,
 			locals,
-			message: { to }
+			message: {
+				to: to.join(',')
+			}
 		};
 
-		return emailTransporter.send(emailOptions)
-			.then(() => {
-
-				console.log('deu boa');
-			})
-			.catch(error => {
-
-				console.log(error);
-			});
+		return emailTransporter.send(emailOptions);
 	}
 
-	private getEmailTransporter() {
+	private getEmailTransporter(): EmailTemplate<any> {
 
 		const { host, user, pass, from } = SMTP_CONFIG;
 		const transport = nodemailer.createTransport({
@@ -43,6 +37,9 @@ export class EmailService {
 		return new EmailTemplate({
 			message: {
 				from: `Odyssey <${from}>`
+			},
+			views: {
+				root: 'src/core/email/templates'
 			},
 			transport,
 			send: true,
