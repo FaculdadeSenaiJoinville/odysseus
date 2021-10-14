@@ -19,7 +19,7 @@ export class UsersController {
 
 	@Get('list')
 	@AuthProtection()
-	public async list(@Query(new UsersPaginationPipe()) options: ListOptions<User>): Promise<[User[], number]> {
+	public list(@Query(new UsersPaginationPipe()) options: ListOptions<User>): Promise<[User[], number]> {
 
 		return this.usersRepository.list(options);
 	}
