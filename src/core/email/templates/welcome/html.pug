@@ -1,0 +1,61 @@
+doctype strict
+html(lang="pt-BR")
+	head
+		meta(http-equiv="Content-Type" content="text/html" charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1")
+
+		link(rel="preconnect" href="https://fonts.googleapis.com")
+		link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+		link(href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet")
+
+		style(type="text/css").
+			.o-email-container {
+				font-family: 'Nunito', sans-serif;
+				font-size: 1rem;
+				background: #EBF2F5;
+			}
+
+			.o-email-header {
+				text-align: center;
+				font: 2rem 'Rowdies', sans-serif;
+				font-weight: 800;
+				letter-spacing: 0.1rem;
+				color: #4ED1B3;
+				padding: 1rem;
+				background: #031c42;
+				user-select: none;
+			}
+
+			.o-email-footer {
+				padding: 1rem;
+				color: #FFFFFF;
+				background: #031c42;
+			}
+
+			.o-text-container {
+				margin: 40px;
+				text-align: justify;
+			}
+
+			.o-text-bold {
+				font-weight: 600;
+			}
+
+			.o-important-message {
+				text-align: center;
+				font-size: 1.5rem;
+			}
+
+	body
+		section(class="o-email-container")
+			div(class="o-email-header")
+				spam ODYSSEY
+
+			div(class="o-text-container")
+				p(class="o-bold") Olá #{name}!
+				p Essa é a senha para o seu primeiro acesso:
+				p(class="o-text-bold o-important-message") #{password}
+				p Não precisa memorizar, você precisará trocá-la logo após realizar o primeiro acesso no sistema. =)
+
+			div(class="o-email-footer")
+				spam Inserir footer bonitin

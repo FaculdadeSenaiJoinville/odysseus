@@ -8,28 +8,18 @@ import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { UsersPaginationPipe } from './utils/users-pagination.pipe';
 import { UsersRepository } from './utils/users.repository';
-import { EmailService } from '../../core/email/email.service';
 
 @ApiController('users')
 export class UsersController {
 
 	constructor(
 		private readonly userService: UsersService,
-		private readonly usersRepository: UsersRepository,
-		private readonly emailService: EmailService
+		private readonly usersRepository: UsersRepository
 	) {}
 
 	@Get('list')
-	// @AuthProtection()
+	@AuthProtection()
 	public async list(@Query(new UsersPaginationPipe()) options: ListOptions<User>): Promise<[User[], number]> {
-
-		await this.emailService.sendEmail({
-			to: 'gabriel_silva_borges@estudante.sc.senai.br',
-			template: 'welcome',
-			locals: {
-				name: 'Gabriel'
-			}
-		});
 
 		return this.usersRepository.list(options);
 	}
