@@ -1,6 +1,7 @@
 import { HttpService, Injectable } from '@nestjs/common';
-import { DIALOGFLOW_AUTH_SCOPES, DIALOGFLOW_CREDENTIALS, GOOGLE_APIS_ENPOINTS } from './utils/dialogflow.config';
+import { DIALOGFLOW_AUTH_SCOPES, DIALOGFLOW_CREDENTIALS } from './utils/dialogflow.config';
 import { google } from 'googleapis';
+import { Intent } from './utils/dialogflow.types';
 
 @Injectable()
 export class DialogflowService {
@@ -14,22 +15,54 @@ export class DialogflowService {
 			credentials: {
 				client_id: DIALOGFLOW_CREDENTIALS.client_id,
 				private_key: DIALOGFLOW_CREDENTIALS.private_key,
-				client_email: DIALOGFLOW_CREDENTIALS.client_email,
-				type: DIALOGFLOW_CREDENTIALS.type,
-				token_url: GOOGLE_APIS_ENPOINTS.token_url,
-				quota_project_id: DIALOGFLOW_CREDENTIALS.project_id
+				client_email: DIALOGFLOW_CREDENTIALS.client_email
 			}
 		});
 
 		return teste.authorizeRequest({ url });
 	}
 
-	public async createIntent(intentBody) {
+	public async listIntents() {
+
+		const unauthorizedUrl = ``;
+		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
+
+		return this.httpService.get(url, { headers }).toPromise();
+	}
+
+	public async findIntent() {
+
+		const unauthorizedUrl = ``;
+		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
+
+		return this.httpService.get(url, { headers }).toPromise();
+	}
+
+	public async createIntent(intent_body: Intent): Promise<Intent> {
 
 		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.post(url, intentBody, { headers }).toPromise();
+		return this.httpService.post(url, intent_body, { headers }).toPromise().then(response => {
+
+			return response.data;
+		});
+	}
+
+	public async updateIntent(intent_body: Intent) {
+
+		const unauthorizedUrl = ``;
+		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
+
+		return this.httpService.post(url, intent_body, { headers }).toPromise();
+	}
+
+	public async deleteIntent() {
+
+		const unauthorizedUrl = ``;
+		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
+
+		return this.httpService.delete(url, { headers }).toPromise();
 	}
 
 }
