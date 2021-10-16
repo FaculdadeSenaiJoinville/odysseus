@@ -1,5 +1,5 @@
 import { GenericObject } from '../../../../common/types'
-import { CreateIntentDTO } from '../../dto/create-intent.dto'
+import { CreateIntentDTO } from '../../intent/dto/create-intent.dto'
 
 export enum TrainingPhraseType {
 	EXAMPLE

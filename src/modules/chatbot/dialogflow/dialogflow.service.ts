@@ -24,18 +24,24 @@ export class DialogflowService {
 
 	public async listIntents() {
 
-		const unauthorizedUrl = ``;
+		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.get(url, { headers }).toPromise();
+		return this.httpService.get(url, { headers }).toPromise().then(response => {
+
+			return response.data;
+		});
 	}
 
-	public async findIntent() {
+	public async getIntent(id: string): Promise<Intent> {
 
-		const unauthorizedUrl = ``;
+		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents/${id}`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.get(url, { headers }).toPromise();
+		return this.httpService.get(url, { headers }).toPromise().then(response => {
+
+			return response.data;
+		});
 	}
 
 	public async createIntent(intent_body: Intent): Promise<Intent> {
@@ -45,16 +51,24 @@ export class DialogflowService {
 
 		return this.httpService.post(url, intent_body, { headers }).toPromise().then(response => {
 
-			return response.data;
+			const { trainingPhrases } = intent_body;
+
+			return {
+				...response.data,
+				trainingPhrases
+			};
 		});
 	}
 
-	public async updateIntent(intent_body: Intent) {
+	public async updateIntent(intent_body: Intent): Promise<Intent> {
 
 		const unauthorizedUrl = ``;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.post(url, intent_body, { headers }).toPromise();
+		return this.httpService.post(url, intent_body, { headers }).toPromise().then(response => {
+
+			return response.data;
+		});
 	}
 
 	public async deleteIntent() {
@@ -62,7 +76,10 @@ export class DialogflowService {
 		const unauthorizedUrl = ``;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.delete(url, { headers }).toPromise();
+		return this.httpService.delete(url, { headers }).toPromise().then(response => {
+
+			return response.data;
+		});
 	}
 
 }
