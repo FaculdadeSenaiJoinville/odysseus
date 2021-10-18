@@ -31,11 +31,11 @@ export class UsersController {
 		return this.usersRepository.details(id);
 	}
 
-	@Get('profile/:id')
+	@Get('profile')
 	@AuthProtection()
-	public profile(@Param('id') id: string): Promise<User> {
+	public profile(): Promise<User> {
 
-		return this.usersRepository.profile(id);
+		return this.usersRepository.profile();
 	}
 
 	@Post('create')
