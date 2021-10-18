@@ -9,7 +9,8 @@ export class EntityNotFoundExceptionFilter implements ExceptionFilter {
 
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
-		return response.status(404).json({ message: { statusCode: 404, error: 'Not Found', message: exception.message } });
+
+		return response.status(404).json({ statusCode: 404, error: 'Not Found', message: exception.message });
 	}
 
 }
