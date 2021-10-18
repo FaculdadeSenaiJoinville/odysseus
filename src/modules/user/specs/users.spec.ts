@@ -12,6 +12,7 @@ import { UpdateUserDTO } from '../dtos';
 import { GroupPolicies } from '../../group/utils/group.policies';
 import { GroupHelper } from '../../group/utils/group.helper';
 import { ListOptions } from '../../../common/types';
+import { session } from '../../../core/session';
 
 const usersRepository = new UsersRepository(mockedMySQLRepository as any);
 const bcryptHelper = {
@@ -70,16 +71,20 @@ describe('Users', () => {
 
 		it('should receive an id and return the profile data of an user', async () => {
 			
-			const input = 's45as45a4ss5as1s2';
+			const loggedUser = {
+				id: 's45as45a4ss5as1s2'
+			};
 			const expected = new User();
+
+			session.setUser(loggedUser as User);
 
 			mockedMySQLRepository.repository.createQueryBuilder.mockReturnValue(mockedQueryBuilder)
 			mockedMySQLRepository.repository.queryBuilder.getOneOrFail.mockResolvedValue(expected);
 
-			await expect(userController.profile(input)).resolves.toEqual(expected);
+			await expect(userController.profile()).resolves.toEqual(expected);
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('users');
-			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
+			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: loggedUser.id });
 			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name']);
 		});
 
