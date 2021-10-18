@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MySQLRepositoryService } from 'src/core/repository';
 import { ListOptions } from '../../../common/types';
 import { User } from '../../../core/database/entities';
+import { session } from '../../../core/session';
 
 @Injectable()
 export class UsersRepository {
@@ -27,11 +28,13 @@ export class UsersRepository {
 			.getOneOrFail();
 	}
 
-	public async profile(id: string): Promise<User> {
+	public async profile(): Promise<User> {
+
+		const id = session.getUser().id;
 
 		return this.mysqlRepository.get(User).createQueryBuilder('users')
 			.where({ id })
-			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])
+			.select(['users.name', 'users.email', 'users.type', 'groups.name', 'groups.description'])
 			.leftJoin('users.groups', 'groups')
 			.getOneOrFail();
 	}
