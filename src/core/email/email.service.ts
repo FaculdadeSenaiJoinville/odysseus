@@ -1,50 +1,35 @@
-import * as nodemailer from 'nodemailer';
-import * as EmailTemplate from 'email-templates';
 import { Injectable } from '@nestjs/common';
-import { SMTP_CONFIG } from './utils/email.config';
-import { EmailConfig } from './utils/email.type';
+import { EmailTransporter, SendEmailConfig, SentEmailInfo } from './utils/email.type';
 import { EmailOptions } from 'email-templates';
+import { EmailHelper } from './utils/email.helper';
 
 @Injectable()
 export class EmailService {
 
-	public sendEmail(email_config: EmailConfig): Promise<any> {
+	constructor(private readonly emailHelper: EmailHelper) {}
 
-		const { to, template, locals } = email_config;
-		const emailTransporter = this.getEmailTransporter();
+	public sendEmail(email_config?: SendEmailConfig): Promise<SentEmailInfo> {
+
+		const { to, cc, template, locals } = email_config;
+		const emailTransporter = this.emailHelper.getTransporterConfig() as EmailTransporter;
 		const emailOptions: EmailOptions = {
 			template,
-			locals,
 			message: {
 				to: to.join(',')
 			}
 		};
 
+		if (locals) {
+
+			emailOptions.locals = locals;
+		}
+
+		if (cc) {
+
+			emailOptions.message.cc = cc.join(',');
+		}
+
 		return emailTransporter.send(emailOptions);
-	}
-
-	private getEmailTransporter(): EmailTemplate<any> {
-
-		const { host, user, pass, from } = SMTP_CONFIG;
-		const transport = nodemailer.createTransport({
-			host,
-			auth: {
-				user,
-				pass
-			}
-		});
-
-		return new EmailTemplate({
-			message: {
-				from: `Odyssey <${from}>`
-			},
-			views: {
-				root: 'src/core/email/templates'
-			},
-			transport,
-			send: true,
-			preview: false
-		});
 	}
 
 }
