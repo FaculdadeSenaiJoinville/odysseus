@@ -51,13 +51,6 @@ export class UsersController {
 
 		return this.userService.updatePassword(id, password_payload);
 	}
-
-	@Put('update-status/:id')
-	@AuthProtection()
-	public updateStatus(@Param('id') id: string): Promise<SuccessSaveMessage> {
-
-		return this.userService.updateStatus(id);
-	}
 	
 	@Put('update/:id')
 	@AuthProtection()
