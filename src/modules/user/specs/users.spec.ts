@@ -275,28 +275,6 @@ describe('Users', () => {
 		});
 	});
 
-	describe('ChangeStatus', () => {
-
-		it('should cahnge user status and return the updated user', async () => {
-
-			const activeUser = await userStubs.getUserStub(true, UserType.ADMIN);
-			const disabledUser = await userStubs.getUserStub(false, UserType.ADMIN);
-			const id = 's45as45a4ss5as1s2';
-			const expected = {
-				id,
-				message: Dictionary.users.getMessage('status_successfully_updated')
-			};
-
-			mockedMySQLRepository.findOneOrFail.mockResolvedValue(activeUser);
-			mockedMySQLRepository.save.mockResolvedValue(disabledUser);
-
-			await expect(userController.updateStatus(id)).resolves.toEqual(expected);
-
-			expect(mockedMySQLRepository.findOneOrFail).toBeCalledWith(User, id);
-			expect(mockedMySQLRepository.save).toBeCalledWith(User, disabledUser);
-		});
-	});
-
 	describe('Update', () => {
 
 		it('should receive a payload and return the updated user', async () => {
