@@ -1,4 +1,4 @@
 export type MySQLError = {
-    message: string;
-    stack: string;
+    errno: number;
+    sqlMessage: string;
 };
