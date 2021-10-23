@@ -12,7 +12,9 @@ export class ErrorService {
 
 	public throwMySQLError(error: MySQLError): never {
 
-		throw new BadRequestException(error.sqlMessage);
+		// tratar e traduzir a mensagem de erro do banco se for possível
+
+		throw new BadRequestException(error.message);
 	}
 
 }
