@@ -14,12 +14,22 @@ export class UsersPolicies {
 		}
 	}
 
-	public  ensurePayloadHasDiferences(user_payload: UpdateUserDTO, user: User): void {
+	public ensurePayloadHasDiferences(user_payload: UpdateUserDTO, user: User): void {
 
 		if (!(user_payload.type !== user.type || user_payload.name !== user.name || user_payload.email !== user.email || user_payload.active !== user.active)) {
 
 			throw new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
 	  	}
+	}
+
+	public mustHaveLastName(name: string) {
+
+		const regex = new RegExp('^[a-zA-Z\.\'\-]{2,50}(?: [a-zA-Z\.\'\-]{2,50})+$');
+
+		if (!regex.test(name)) {
+
+			throw new BadRequestException(Dictionary.users.getMessage('must_have_last_name'));
+		}
 	}
 
 }

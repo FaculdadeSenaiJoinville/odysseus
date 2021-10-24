@@ -19,7 +19,7 @@ export class ErrorService {
 			error.sqlMessage = Dictionary.errors.getMessage('duplicate_entry', { value });
 		}
 
-		throw new BadRequestException(error.sqlMessage);
+		throw new BadRequestException(error.sqlMessage || error.message);
 	}
 
 }
