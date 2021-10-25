@@ -18,9 +18,14 @@ export class BotIntent extends CoreEntity {
 	@Column()
 	public end_interaction: boolean;
 
-	constructor(body?: Intent) {
+	constructor(body?: Intent, id?: string) {
 
 		super();
+
+		if (id) {
+
+			this.id = id;
+		}
 
 		if (body) {
 

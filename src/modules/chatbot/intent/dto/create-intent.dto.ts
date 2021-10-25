@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateIntentDTO {
+export class UpsertIntentDTO {
 
 	@ApiProperty({ example: 'Boas Vindas', description: 'Nome da intent.' })
 	name: string;

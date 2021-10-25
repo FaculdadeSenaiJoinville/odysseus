@@ -1,5 +1,5 @@
 import { GenericObject } from '../../../../common/types'
-import { CreateIntentDTO } from '../../intent/dto/create-intent.dto'
+import { UpsertIntentDTO } from '../../intent/dto/create-intent.dto'
 
 export enum TrainingPhraseType {
 	EXAMPLE
@@ -289,7 +289,7 @@ export class Intent {
 
 	public followupIntentInfo?: IntentFollowupIntentInfo[];
 
-	constructor(body: CreateIntentDTO) {
+	constructor(body: UpsertIntentDTO) {
 
 		const { name, training_phrases, priority, end_interaction } = body;
 

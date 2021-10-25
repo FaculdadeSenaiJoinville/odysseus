@@ -60,20 +60,25 @@ export class DialogflowService {
 		});
 	}
 
-	public async updateIntent(intent_body: Intent): Promise<Intent> {
+	public async updateIntent(id: string, intent_body: Intent): Promise<Intent> {
 
-		const unauthorizedUrl = ``;
+		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents/${id}`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.post(url, intent_body, { headers }).toPromise().then(response => {
+		return this.httpService.patch(url, intent_body, { headers }).toPromise().then(response => {
 
-			return response.data;
+			const { trainingPhrases } = intent_body;
+
+			return {
+				...response.data,
+				trainingPhrases
+			};
 		});
 	}
 
-	public async deleteIntent() {
+	public async deleteIntent(id: string) {
 
-		const unauthorizedUrl = ``;
+		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents/${id}`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
 		return this.httpService.delete(url, { headers }).toPromise().then(response => {
