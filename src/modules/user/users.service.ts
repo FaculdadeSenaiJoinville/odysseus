@@ -73,19 +73,6 @@ export class UsersService {
 		};
 	}
 
-	public async updateStatus(id: string): Promise<SuccessSaveMessage> {
-
-		const user = await this.mysqlRepository.findOneOrFail(User, id);
-
-		user.active = !user.active;
-
-		await this.mysqlRepository.save(User, user);
-
-		return {
-			message: Dictionary.users.getMessage('status_successfully_updated'),
-			id
-		};
-	}
 	public async update(id: string, user_payload: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
 		const user = await this.mysqlRepository.findOneOrFail(User, id);

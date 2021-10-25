@@ -31,11 +31,11 @@ export class UsersController {
 		return this.usersRepository.details(id);
 	}
 
-	@Get('profile/:id')
+	@Get('profile')
 	@AuthProtection()
-	public profile(@Param('id') id: string): Promise<User> {
+	public profile(): Promise<User> {
 
-		return this.usersRepository.profile(id);
+		return this.usersRepository.profile();
 	}
 
 	@Post('create')
@@ -50,13 +50,6 @@ export class UsersController {
 	public updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.updatePassword(id, password_payload);
-	}
-
-	@Put('update-status/:id')
-	@AuthProtection()
-	public updateStatus(@Param('id') id: string): Promise<SuccessSaveMessage> {
-
-		return this.userService.updateStatus(id);
 	}
 	
 	@Put('update/:id')

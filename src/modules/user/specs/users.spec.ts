@@ -12,6 +12,7 @@ import { UpdateUserDTO } from '../dtos';
 import { GroupPolicies } from '../../group/utils/group.policies';
 import { GroupHelper } from '../../group/utils/group.helper';
 import { ListOptions } from '../../../common/types';
+import { session } from '../../../core/session';
 
 const usersRepository = new UsersRepository(mockedMySQLRepository as any);
 const bcryptHelper = {
@@ -70,16 +71,20 @@ describe('Users', () => {
 
 		it('should receive an id and return the profile data of an user', async () => {
 			
-			const input = 's45as45a4ss5as1s2';
+			const loggedUser = {
+				id: 's45as45a4ss5as1s2'
+			};
 			const expected = new User();
+
+			session.setUser(loggedUser as User);
 
 			mockedMySQLRepository.repository.createQueryBuilder.mockReturnValue(mockedQueryBuilder)
 			mockedMySQLRepository.repository.queryBuilder.getOneOrFail.mockResolvedValue(expected);
 
-			await expect(userController.profile(input)).resolves.toEqual(expected);
+			await expect(userController.profile()).resolves.toEqual(expected);
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('users');
-			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
+			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: loggedUser.id });
 			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name']);
 		});
 
@@ -267,28 +272,6 @@ describe('Users', () => {
 			mockedMySQLRepository.findOneOrFail.mockRejectedValue(expected);
 
 			await expect(userController.updatePassword(id, input)).rejects.toEqual(expected);
-		});
-	});
-
-	describe('ChangeStatus', () => {
-
-		it('should cahnge user status and return the updated user', async () => {
-
-			const activeUser = await userStubs.getUserStub(true, UserType.ADMIN);
-			const disabledUser = await userStubs.getUserStub(false, UserType.ADMIN);
-			const id = 's45as45a4ss5as1s2';
-			const expected = {
-				id,
-				message: Dictionary.users.getMessage('status_successfully_updated')
-			};
-
-			mockedMySQLRepository.findOneOrFail.mockResolvedValue(activeUser);
-			mockedMySQLRepository.save.mockResolvedValue(disabledUser);
-
-			await expect(userController.updateStatus(id)).resolves.toEqual(expected);
-
-			expect(mockedMySQLRepository.findOneOrFail).toBeCalledWith(User, id);
-			expect(mockedMySQLRepository.save).toBeCalledWith(User, disabledUser);
 		});
 	});
 
