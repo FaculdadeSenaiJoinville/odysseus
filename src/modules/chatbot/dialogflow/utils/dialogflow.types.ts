@@ -1,4 +1,5 @@
 import { GenericObject } from '../../../../common/types'
+import { UpsertContentDTO } from '../../content/dto/create-content.dto'
 import { UpsertIntentDTO } from '../../intent/dto/create-intent.dto'
 
 export enum TrainingPhraseType {
@@ -246,6 +247,23 @@ export type IntentMessage = {
 export type IntentFollowupIntentInfo = {
 	followupIntentName: string;
 	parentFollowupIntentName: string;
+}
+
+export class Content {
+	public name?: string;
+
+	public explanation?: string;
+
+	public link?: string;
+
+	constructor(body: UpsertContentDTO) {
+
+		const { name, explanation, link } = body;
+
+		this.name = name;
+		this.explanation = explanation;
+		this.link = link;
+	}
 }
 
 export class Intent {

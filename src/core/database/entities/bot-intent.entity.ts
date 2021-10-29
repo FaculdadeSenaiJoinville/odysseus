@@ -1,7 +1,8 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { CoreEntity } from '.';
 import { DIALOGFLOW_CREDENTIALS } from '../../../modules/chatbot/dialogflow/utils/dialogflow.config';
 import { Intent } from '../../../modules/chatbot/dialogflow/utils/dialogflow.types';
+import { BotContent } from './bot-content.entity';
 
 @Entity('bot_intents')
 export class BotIntent extends CoreEntity {
@@ -17,6 +18,20 @@ export class BotIntent extends CoreEntity {
 
 	@Column()
 	public end_interaction: boolean;
+
+	@ManyToMany(() => BotContent, (content: BotContent) => content.intents)
+	@JoinTable({
+		name: 'bot_intent_contents',
+		joinColumn: {
+			name: 'intent_id',
+			referencedColumnName: 'id'
+		},
+		inverseJoinColumn: {
+			name: 'bot_contents',
+			referencedColumnName: 'id'
+		}
+	})
+	public contents?: BotContent[];
 
 	constructor(body?: Intent, id?: string) {
 

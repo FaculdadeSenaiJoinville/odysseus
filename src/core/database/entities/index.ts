@@ -4,3 +4,5 @@ export * from './group.entity';
 export * from './group-member.entity';
 export * from './token.entity';
 export * from './bot-intent.entity';
+export * from './bot-intent-contents.entity';
+export * from './bot-content.entity';
