@@ -38,7 +38,8 @@ const config: Config.InitialOptions = {
 		'/src/core/database',
 		'/src/core/error',
 		'/src/core/session',
-		'/src/core/repositories/mysql'
+		'/src/core/repositories/mysql',
+		'./*.stubs.ts'
 	],
 	coverageThreshold: {
 		'global': {

@@ -23,6 +23,7 @@ export class UsersService {
 
 	public async create(user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
+		this.usersPolicies.mustHaveLastName(user.name);
 		this.usersPolicies.passwordsMustBeTheSame(user.password, user.confirm_password);
 
 		const newUser = new User();
