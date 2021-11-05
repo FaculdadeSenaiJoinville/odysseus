@@ -6,7 +6,6 @@ import { UserType } from '../utils/users.type';
 import { UsersPolicies } from '../utils/users.policies';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { UserStubs } from './stubs/user.stubs';
 import { UsersRepository } from '../utils/users.repository';
 import { UpdateUserDTO } from '../dtos';
 import { GroupPolicies } from '../../group/utils/group.policies';
@@ -30,7 +29,6 @@ const userController = new UsersController(
 	userService,
 	usersRepository
 );
-const userStubs = new UserStubs();
 
 describe('Users', () => {
 

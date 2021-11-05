@@ -12,7 +12,14 @@ export class ErrorService {
 
 	public throwMySQLError(error: MySQLError): never {
 
-		throw new BadRequestException(error.sqlMessage);
+		if (error.errno === 1062) {
+
+			const value = `"${error.sqlMessage.split(/'/)[1]}"`;
+
+			error.sqlMessage = Dictionary.errors.getMessage('duplicate_entry', { value });
+		}
+
+		throw new BadRequestException(error.sqlMessage || error.message);
 	}
 
 }
