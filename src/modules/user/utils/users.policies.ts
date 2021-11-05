@@ -24,7 +24,7 @@ export class UsersPolicies {
 
 	public mustHaveLastName(name: string) {
 
-		const regex = new RegExp('^[a-zA-Z\.\'\-]{2,50}(?: [a-zA-Z\.\'\-]{2,50})+$');
+		const regex = /[ ]/g;
 
 		if (!regex.test(name)) {
 
