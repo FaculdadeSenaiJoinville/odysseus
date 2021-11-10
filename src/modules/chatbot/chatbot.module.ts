@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import { DialogflowModule } from './dialogflow/dialogflow.module';
 import { MySQLRepositoryModule } from '../../core/repository';
 import { BotIntentModule } from './intent/intent.module';
+import { BotContentModule } from './content/content.module';
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ dotenv.config();
 	imports: [
 		DialogflowModule,
 		MySQLRepositoryModule,
-		BotIntentModule
+		BotIntentModule,
+		BotContentModule
 	],
 	controllers: [
 		ChatbotController

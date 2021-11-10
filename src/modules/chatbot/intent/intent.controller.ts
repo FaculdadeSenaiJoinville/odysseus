@@ -8,7 +8,7 @@ import { UpsertIntentDTO } from './dto/create-intent.dto';
 import { BotIntentService } from './intent.service';
 import { BotIntentPaginationPipe } from './utils/bot-intent-pagination.pipe';
 import { BotIntentRepository } from './utils/bot-intent.repository';
-import { CREATE_INTENT_VALIDATION } from './utils/bot-intent.validation';
+import { UPSERT_INTENT_VALIDATION } from './utils/bot-intent.validation';
 
 @ApiController('chatbot/intent')
 export class BotIntentController {
@@ -34,14 +34,14 @@ export class BotIntentController {
 
 	@Post('/create')
 	@AuthProtection()
-	public create(@Body(new ValidateBodyPipe(CREATE_INTENT_VALIDATION)) body: UpsertIntentDTO) {
+	public create(@Body(new ValidateBodyPipe(UPSERT_INTENT_VALIDATION)) body: UpsertIntentDTO) {
 
 		return this.botIntentService.create(body);
 	}
 
 	@Put('/update/:id')
 	@AuthProtection()
-	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(CREATE_INTENT_VALIDATION)) body: UpsertIntentDTO) {
+	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPSERT_INTENT_VALIDATION)) body: UpsertIntentDTO) {
 
 		return this.botIntentService.update(id, body);
 	}

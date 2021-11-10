@@ -13,16 +13,16 @@ export enum WebhookState {
 }
 
 export enum IntentPlatform {
-	PLATFORM_UNSPECIFIED,
-	FACEBOOK,
-	SLACK,
-	TELEGRAM,
-	KIK,
-	SKYPE,
-	LINE,
-	VIBER,
-	ACTIONS_ON_GOOGLE,
-	GOOGLE_HANGOUTS
+	PLATFORM_UNSPECIFIED = 'PLATFORM_UNSPECIFIED',
+	FACEBOOK = 'FACEBOOK',
+	SLACK = 'SLACK',
+	TELEGRAM = 'TELEGRAM',
+	KIK = 'KIK',
+	SKYPE = 'SKYPE',
+	LINE = 'LINE',
+	VIBER = 'VIBER',
+	ACTIONS_ON_GOOGLE = 'ACTIONS_ON_GOOGLE',
+	GOOGLE_HANGOUTS = 'GOOGLE_HANGOUTS'
 }
 
 export enum IntentImageDisplayOptions {
@@ -227,7 +227,7 @@ export type IntentMediaContent = {
 }
 
 export type IntentMessage = {
-	platform?: IntentPlatform;
+	platform: IntentPlatform;
 	text?: IntentMessageText;
 	image?: IntentImage;
 	quickReplies?: QuickReplies;
@@ -307,13 +307,16 @@ export class Intent {
 
 	public followupIntentInfo?: IntentFollowupIntentInfo[];
 
-	constructor(body: UpsertIntentDTO) {
+	constructor(body: UpsertIntentDTO, messages: IntentMessage[]) {
 
 		const { name, training_phrases, priority, end_interaction } = body;
 
 		this.displayName = name;
-		this.priority = priority;
-		this.endInteraction = end_interaction;
+		this.priority = priority || 0;
+		this.endInteraction = end_interaction || false;
+		this.defaultResponsePlatforms = [
+			IntentPlatform.TELEGRAM
+		];
 		this.trainingPhrases = training_phrases.map(trainingPhrase => {
 
 			return {
@@ -323,5 +326,6 @@ export class Intent {
 				}]
 			};
 		});
+		this.messages = messages;
 	}
 }

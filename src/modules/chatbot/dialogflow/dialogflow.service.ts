@@ -1,4 +1,4 @@
-import { HttpService, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpService, Injectable } from '@nestjs/common';
 import { DIALOGFLOW_AUTH_SCOPES, DIALOGFLOW_CREDENTIALS } from './utils/dialogflow.config';
 import { google } from 'googleapis';
 import { Intent } from './utils/dialogflow.types';
@@ -49,15 +49,20 @@ export class DialogflowService {
 		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.post(url, intent_body, { headers }).toPromise().then(response => {
+		return this.httpService.post(url, intent_body, { headers }).toPromise()
+			.then(response => {
 
-			const { trainingPhrases } = intent_body;
+				const { trainingPhrases } = intent_body;
 
-			return {
-				...response.data,
-				trainingPhrases
-			};
-		});
+				return {
+					...response.data,
+					trainingPhrases
+				};
+			})
+			.catch(error => {
+
+				throw new BadRequestException(error.response.data.error.message);
+			});
 	}
 
 	public async updateIntent(id: string, intent_body: Intent): Promise<Intent> {
@@ -65,15 +70,20 @@ export class DialogflowService {
 		const unauthorizedUrl = `https://dialogflow.googleapis.com/v2/projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents/${id}`;
 		const { url, headers } = await this.getApiConfig(unauthorizedUrl);
 
-		return this.httpService.patch(url, intent_body, { headers }).toPromise().then(response => {
+		return this.httpService.patch(url, intent_body, { headers }).toPromise()
+			.then(response => {
 
-			const { trainingPhrases } = intent_body;
+				const { trainingPhrases } = intent_body;
 
-			return {
-				...response.data,
-				trainingPhrases
-			};
-		});
+				return {
+					...response.data,
+					trainingPhrases
+				};
+			})
+			.catch(error => {
+
+				throw new BadRequestException(error.response.data.error.message);
+			});
 	}
 
 	public async deleteIntent(id: string) {

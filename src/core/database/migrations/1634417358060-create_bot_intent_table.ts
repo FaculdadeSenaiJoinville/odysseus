@@ -31,6 +31,11 @@ export class createBotIntentTable1634417358060 implements MigrationInterface {
 				isNullable: false
 			},
 			{
+				name: 'messages',
+				type: 'json',
+				isNullable: false
+			},
+			{
 				name: 'priority',
 				type: 'int',
 				default: 0

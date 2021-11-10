@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { CoreEntity } from '.';
 import { DIALOGFLOW_CREDENTIALS } from '../../../modules/chatbot/dialogflow/utils/dialogflow.config';
-import { Intent } from '../../../modules/chatbot/dialogflow/utils/dialogflow.types';
+import { Intent, IntentMessage } from '../../../modules/chatbot/dialogflow/utils/dialogflow.types';
 import { BotContent } from './bot-content.entity';
 
 @Entity('bot_intents')
@@ -12,6 +12,9 @@ export class BotIntent extends CoreEntity {
 
 	@Column('json')
 	public training_phrases: string[];
+
+	@Column('json')
+	public messages: IntentMessage[];
 
 	@Column()
 	public priority: number;

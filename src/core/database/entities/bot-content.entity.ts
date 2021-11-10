@@ -6,10 +6,10 @@ import { BotIntent, CoreEntity } from '.';
 export class BotContent extends CoreEntity {
 
 	@Column()
-	public explanation: string;
+	public explanation?: string;
 
 	@Column()
-	public link: string;
+	public link?: string;
 
 	@ManyToMany(() => BotIntent, (intent: BotIntent) => intent.contents)
 	@JoinTable({
