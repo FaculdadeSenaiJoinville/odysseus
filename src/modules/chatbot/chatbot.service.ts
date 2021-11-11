@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { DialogflowService } from './dialogflow/dialogflow.service';
+import { MessageDataDTO } from './dto/message-data.dto';
 
 @Injectable()
 export class ChatbotService {
 
 	constructor(private readonly dialogflowService: DialogflowService) {}
 
-	public sendMessage() {
+	public sendMessage(messageData: MessageDataDTO) {
 
-		return 'Olá';
+		return this.dialogflowService.sendMessage(messageData);
 	}
 
 }

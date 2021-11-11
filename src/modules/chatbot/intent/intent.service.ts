@@ -3,7 +3,7 @@ import { BaseMessage, SuccessSaveMessage } from '../../../common/types';
 import { BotContent, BotIntent } from '../../../core/database/entities';
 import { MySQLRepositoryService } from '../../../core/repository';
 import { DialogflowService } from '../dialogflow/dialogflow.service';
-import { Intent, IntentMessage, IntentPlatform } from '../dialogflow/utils/dialogflow.types';
+import { Intent, IntentMessage } from '../dialogflow/utils/dialogflow.types';
 import { UpsertIntentDTO } from './dto/create-intent.dto';
 
 @Injectable()
@@ -58,12 +58,10 @@ export class BotIntentService {
 	private async getMessages({ message, contents }: UpsertIntentDTO): Promise<IntentMessage[]> {
 
 		const messages = [];
-		const platform = IntentPlatform.TELEGRAM;
 
 		if (message) {
 
 			messages.push({
-				platform,
 				text: {
 					text: [
 						message
@@ -81,7 +79,6 @@ export class BotIntentService {
 				if (explanation) {
 
 					messages.push({
-						platform,
 						text: {
 							text: [
 								explanation
@@ -93,7 +90,6 @@ export class BotIntentService {
 				if (link) {
 
 					messages.push({
-						platform,
 						text: {
 							text: [
 								link

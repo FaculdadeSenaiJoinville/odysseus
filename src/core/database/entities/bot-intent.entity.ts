@@ -47,7 +47,7 @@ export class BotIntent extends CoreEntity {
 
 		if (body) {
 
-			const { name, displayName, trainingPhrases, priority, endInteraction } = body;
+			const { name, displayName, trainingPhrases, priority, endInteraction, messages } = body;
 			const dialogflowId = name.replace(`projects/${DIALOGFLOW_CREDENTIALS.project_id}/agent/intents/`, '');
 	
 			this.dialogflow_id = dialogflowId;
@@ -56,6 +56,7 @@ export class BotIntent extends CoreEntity {
 	
 				return trainingPhrase.parts[0].text;
 			});
+			this.messages = messages;
 			this.priority = priority;
 			this.end_interaction = endInteraction;
 		}

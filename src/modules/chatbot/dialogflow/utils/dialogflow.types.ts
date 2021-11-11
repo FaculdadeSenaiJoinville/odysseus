@@ -1,15 +1,16 @@
+import { google } from '@google-cloud/dialogflow/build/protos/protos';
 import { GenericObject } from '../../../../common/types'
 import { UpsertContentDTO } from '../../content/dto/create-content.dto'
 import { UpsertIntentDTO } from '../../intent/dto/create-intent.dto'
 
 export enum TrainingPhraseType {
-	EXAMPLE
+	EXAMPLE = 'EXAMPLE'
 }
 
 export enum WebhookState {
-	WEBHOOK_STATE_UNSPECIFIED,
-	WEBHOOK_STATE_ENABLED,
-	WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING
+	WEBHOOK_STATE_UNSPECIFIED = 'WEBHOOK_STATE_UNSPECIFIED',
+	WEBHOOK_STATE_ENABLED = 'WEBHOOK_STATE_ENABLED',
+	WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING = 'WEBHOOK_STATE_ENABLED_FOR_SLOT_FILLING'
 }
 
 export enum IntentPlatform {
@@ -26,29 +27,29 @@ export enum IntentPlatform {
 }
 
 export enum IntentImageDisplayOptions {
-	IMAGE_DISPLAY_OPTIONS_UNSPECIFIED,
-	GRAY,
-	WHITE,
-	CROPPED,
-	BLURRED_BACKGROUND
+	IMAGE_DISPLAY_OPTIONS_UNSPECIFIED = 'IMAGE_DISPLAY_OPTIONS_UNSPECIFIED',
+	GRAY = 'GRAY',
+	WHITE = 'WHITE',
+	CROPPED = 'CROPPED',
+	BLURRED_BACKGROUND = 'BLURRED_BACKGROUND'
 }
 
 export enum IntentUrlTypeHint {
-	URL_TYPE_HINT_UNSPECIFIED,
-	AMP_ACTION,
-	AMP_CONTENT
+	URL_TYPE_HINT_UNSPECIFIED = 'URL_TYPE_HINT_UNSPECIFIED',
+	AMP_ACTION = 'AMP_ACTION',
+	AMP_CONTENT = 'AMP_CONTENT'
 }
 
 export enum IntentHorizontalAlignment {
-	HORIZONTAL_ALIGNMENT_UNSPECIFIED,
-	LEADING,
-	CENTER,
-	TRAILING
+	HORIZONTAL_ALIGNMENT_UNSPECIFIED = 'HORIZONTAL_ALIGNMENT_UNSPECIFIED',
+	LEADING = 'LEADING',
+	CENTER = 'CENTER',
+	TRAILING = 'TRAILING'
 }
 
 export enum IntentResponseMediaType {
-	RESPONSE_MEDIA_TYPE_UNSPECIFIED,
-	AUDIO
+	RESPONSE_MEDIA_TYPE_UNSPECIFIED = 'RESPONSE_MEDIA_TYPE_UNSPECIFIED',
+	AUDIO = 'AUDIO'
 }
 
 export type DialogflowCredentials = {
@@ -312,11 +313,8 @@ export class Intent {
 		const { name, training_phrases, priority, end_interaction } = body;
 
 		this.displayName = name;
-		this.priority = priority || 0;
+		this.priority = priority || 50000;
 		this.endInteraction = end_interaction || false;
-		this.defaultResponsePlatforms = [
-			IntentPlatform.TELEGRAM
-		];
 		this.trainingPhrases = training_phrases.map(trainingPhrase => {
 
 			return {
@@ -327,5 +325,35 @@ export class Intent {
 			};
 		});
 		this.messages = messages;
+		this.resetContexts = false;
+		this.mlDisabled = false;
+		this.webhookState = WebhookState.WEBHOOK_STATE_UNSPECIFIED;
 	}
+}
+
+export type QueryInputText = {
+	text: string;
+	languageCode: string;
+}
+
+export type QueryInput = {
+	text: QueryInputText;
+}
+
+export type DialogflowRequest = {
+	session: string;
+	queryInput: QueryInput;
+}
+
+export type MessageData = {
+	language_code: string;
+	message: string;
+	session_id: string;
+};
+
+export type DialogflowResponse = {
+	intent_name: string;
+	user_message: string;
+	bot_response: string[];
+	parameters: google.protobuf.IStruct;
 }
