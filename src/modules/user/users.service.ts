@@ -41,7 +41,7 @@ export class UsersService {
 			for (const groupId of groups) {
 
 				const group = await this.mysqlRepository.findOne(Group, {
-					relations: ['users'],
+					relations: ['members'],
 					where: { id: groupId }
 				});
 	
@@ -94,7 +94,7 @@ export class UsersService {
 			for (const groupId of groups) {
 
 				const group = await this.mysqlRepository.findOne(Group, {
-					relations: ['users'],
+					relations: ['members'],
 					where: { id: groupId }
 				});
 	
@@ -110,7 +110,7 @@ export class UsersService {
 			for (const groupId of groupsToLeave) {
 
 				const group = await this.mysqlRepository.findOne(Group, {
-					relations: ['users'],
+					relations: ['members'],
 					where: { id: groupId }
 				});
 	
