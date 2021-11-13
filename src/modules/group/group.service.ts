@@ -29,7 +29,7 @@ export class GroupService {
 			for (const userId of groupMembers) {
 
 				const groupWithUsers = await this.mysqlRepository.findOne(Group, {
-					relations: ['users'],
+					relations: ['members'],
 					where: { id: createdGroup.id }
 				});
 
@@ -49,7 +49,7 @@ export class GroupService {
 	public async update(id: string, group_payload: UpsertGroupDTO): Promise<SuccessSaveMessage> {
 
 		const group = await this.mysqlRepository.findOneOrFail(Group, {
-			relations: ['users'],
+			relations: ['members'],
 			where: { id }
 		});
 		const groupMembers = group_payload.members;
@@ -67,7 +67,7 @@ export class GroupService {
 			for (const userId of groupMembers) {
 
 				const groupWithUsers = await this.mysqlRepository.findOne(Group, {
-					relations: ['users'],
+					relations: ['members'],
 					where: { id: group.id }
 				});
 
@@ -83,7 +83,7 @@ export class GroupService {
 			for (const userId of membersToRemove) {
 
 				const groupWithUsers = await this.mysqlRepository.findOne(Group, {
-					relations: ['users'],
+					relations: ['members'],
 					where: { id: group.id }
 				});
 	
