@@ -1,6 +1,6 @@
 
 import { Module } from '@nestjs/common';
-import { MySQLRepositoryModule } from '../../core/repository';
+import { MySQLRepositoryModule } from 'src/core/repository';
 import { GroupController } from './group.controller';
 import { GroupService } from './group.service';
 import { GroupHelper } from './utils/group.helper';

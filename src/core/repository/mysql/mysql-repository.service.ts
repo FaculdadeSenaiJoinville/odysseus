@@ -77,7 +77,7 @@ export class MySQLRepositoryService {
 
 				if (key) {
 
-					queryBuilder.where(`users.${key} like :${key}`, { [key]: `%${parsedOptions[key]}%` })
+					queryBuilder.where(`${queryBuilder.expressionMap.mainAlias?.tablePath}.${key} like :${key}`, { [key]: `%${parsedOptions[key]}%` })
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { IPagination, IPaginationPipe, PaginationPipe, PAGINATION_SCHEMA } from '../../../core/repository/pagination';
+import { IPagination, IPaginationPipe, PaginationPipe, PAGINATION_SCHEMA } from 'src/core/repository/pagination';
+
 
 @Injectable()
 export class GroupPaginationPipe implements IPaginationPipe {

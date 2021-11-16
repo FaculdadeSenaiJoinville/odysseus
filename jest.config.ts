@@ -39,7 +39,8 @@ const config: Config.InitialOptions = {
 		'/src/core/error',
 		'/src/core/session',
 		'/src/core/repositories/mysql',
-		'./*.stubs.ts'
+		'./*.stubs.ts',
+		'/src/modules/chatbot'
 	],
 	coverageThreshold: {
 		'global': {

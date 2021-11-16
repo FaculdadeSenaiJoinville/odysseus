@@ -25,8 +25,8 @@ export class CoreEntity {
 	@BeforeInsert()
 	protected setInsertProperties() {
 
-		this.created_by = session.getUser().id;
-		this.updated_by = session.getUser().id;
+		this.created_by = session.getUser()?.id;
+		this.updated_by = session.getUser()?.id;
 	}
 
 	@BeforeUpdate()

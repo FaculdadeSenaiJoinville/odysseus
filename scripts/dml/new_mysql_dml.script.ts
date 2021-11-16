@@ -13,14 +13,14 @@ function getFileDir(scriptName: string): string {
 	const date = new Date().toISOString();
 	const scriptID = date.split('.')[0].replace(/-/g, '').replace(/:/g, '').replace('T', '');
 
-	return `src/core/database/mysql/scripts/${scriptID}_${scriptName}.script.ts`;
+	return `src/core/database/scripts/${scriptID}_${scriptName}.script.ts`;
 }
 
 function getFileContent(): string {
 
 	return `
-import { createConnection } from "typeorm";
-import { Entity } from "../entities";
+import { createConnection } from 'typeorm';
+import { Entity } from '../entities';
 
 createConnection('mysqlConnection')
     .then(async connection => {
@@ -43,7 +43,7 @@ createConnection('mysqlConnection')
 
 rl.question('Nome do script: ', scriptName => {
 
-	const scriptsDir = 'src/core/database/mysql/scripts';
+	const scriptsDir = 'src/core/database/scripts';
 	const fileDir = getFileDir(scriptName);
 	const fileContent = getFileContent();
 
