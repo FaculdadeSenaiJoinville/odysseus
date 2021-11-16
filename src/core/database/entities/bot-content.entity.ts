@@ -39,8 +39,8 @@ export class BotContent extends CoreEntity {
 			const { name, explanation, link } = body;
 	
 			this.name = name;
-			this.explanation = explanation;
-			this.link = link
+			this.explanation = explanation || '';
+			this.link = link || ''
 		}
 	}
 }
