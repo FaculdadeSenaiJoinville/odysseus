@@ -1,15 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import * as TelegramBot from 'node-telegram-bot-api';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { DialogflowService } from './dialogflow/dialogflow.service';
-import { MessageDataDTO } from './dto/message-data.dto';
+import { TELEGRAM_CONFIG } from './utils/telegram.config';
 
 @Injectable()
-export class ChatbotService {
+export class ChatbotService implements OnModuleInit {
 
 	constructor(private readonly dialogflowService: DialogflowService) {}
 
-	public sendMessage(messageData: MessageDataDTO) {
+	public onModuleInit() {
 
-		return this.dialogflowService.sendMessage(messageData);
+		this.telegramBot();
+	}
+
+	private telegramBot(): void{
+
+		const bot = new TelegramBot(TELEGRAM_CONFIG.token, { polling: true });
+
+		bot.on('message', async message => {
+
+			const chatId = message.chat.id;
+			const data = {
+				session_id: String(chatId),
+				message: message.text || ''
+			};
+
+			this.dialogflowService.sendMessage(data)
+				.then(async (response) => {
+		
+					const { bot_response } = response;
+					
+					for (const message of bot_response) {
+				
+						await bot.sendMessage(chatId, message);
+					}
+				})
+				.catch(async (error) => {
+		
+					console.error(error);
+		
+					await bot.sendMessage(chatId, 'Ooops! Deu um um problema nos meus circuitos...');
+				});
+		
+			return true;
+		});
 	}
 
 }
