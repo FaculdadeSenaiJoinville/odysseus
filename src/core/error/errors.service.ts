@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { MySQLError } from './utils/error.types';
 
@@ -20,6 +20,11 @@ export class ErrorService {
 		}
 
 		throw new BadRequestException(error.sqlMessage || error.message);
+	}
+
+	public throwNotFoundError(): never {
+
+		throw new NotFoundException(Dictionary.errors.getMessage('not_found'));
 	}
 
 }
