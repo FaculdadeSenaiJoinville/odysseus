@@ -5672,10 +5672,10 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
-odyssey-dictionary@2.18.0:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/odyssey-dictionary/-/odyssey-dictionary-2.18.0.tgz#a54693bacafa147680ebcbd2dad9de6c89463bee"
-  integrity sha512-ux0aZzjqQ6hnz1t4oBdkFjbad2NqlppLjVUUf0snro2u26+f9BhAgg7mvZLRZDVYustJi23HivC7vnG5mQEHZw==
+odyssey-dictionary@2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/odyssey-dictionary/-/odyssey-dictionary-2.20.0.tgz#fd7b309f52c7d04b65e7f46a76e1fb4559b1ad86"
+  integrity sha512-XpZg7+aOA1A+2R6Oqdxr377JOZl7W2M0foP6HJOH8hFOoQ1kDQ+WXNbz0RlCW9NO1cHV3lgzQo3fMmaQLbkg7w==
 
 on-finished@^2.3.0, on-finished@~2.3.0:
   version "2.3.0"

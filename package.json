@@ -52,7 +52,7 @@
 		"joi": "^17.4.1",
 		"mysql2": "^2.2.5",
 		"nodemailer": "^6.7.0",
-		"odyssey-dictionary": "2.18.0",
+		"odyssey-dictionary": "2.20.0",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"pug": "^3.0.2",
