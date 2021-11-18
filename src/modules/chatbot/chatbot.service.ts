@@ -2,6 +2,7 @@ import * as TelegramBot from 'node-telegram-bot-api';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { DialogflowService } from './dialogflow/dialogflow.service';
 import { TELEGRAM_CONFIG } from './utils/telegram.config';
+import { Dictionary } from 'odyssey-dictionary';
 
 @Injectable()
 export class ChatbotService implements OnModuleInit {
@@ -39,7 +40,7 @@ export class ChatbotService implements OnModuleInit {
 		
 					console.error(error);
 		
-					await bot.sendMessage(chatId, 'Ooops! Deu um um problema nos meus circuitos...');
+					await bot.sendMessage(chatId, Dictionary.chatbot.getMessage('chatbot_failed'));
 				});
 		
 			return true;
