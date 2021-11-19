@@ -352,7 +352,6 @@ export type MessageData = {
 };
 
 export type DialogflowResponse = {
-	intent_name: string;
 	user_message: string;
 	bot_response: string[];
 	parameters: google.protobuf.IStruct;
