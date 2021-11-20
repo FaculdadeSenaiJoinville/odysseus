@@ -19,7 +19,7 @@ export class BotIntentService {
 		const messages = await this.getMessages(body);
 		const intent = new Intent(body, messages);
 		const createdIntent = await this.dialogflowService.createIntent(intent);
-		const botIntent = new BotIntent(createdIntent);
+		const botIntent = new BotIntent(createdIntent, null, body.message);
 		const savedIntent = await this.mysqlRepository.save(BotIntent, botIntent);
 
 		return {
@@ -34,7 +34,7 @@ export class BotIntentService {
 		const messages = await this.getMessages(body);
 		const intent = new Intent(body, messages);
 		const updatedIntent = await this.dialogflowService.updateIntent(databaseIntent.dialogflow_id, intent);
-		const botIntent = new BotIntent(updatedIntent, id);
+		const botIntent = new BotIntent(updatedIntent, id, body.message);
 		const savedIntent = await this.mysqlRepository.save(BotIntent, botIntent);
 
 		return {

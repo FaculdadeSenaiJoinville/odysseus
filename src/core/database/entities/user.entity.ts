@@ -1,5 +1,5 @@
-import { Entity, Column, Index, JoinTable, ManyToMany } from 'typeorm';
-import { CoreEntity, Group } from '.';
+import { Entity, Column, Index, JoinTable, ManyToMany, OneToMany, JoinColumn } from 'typeorm';
+import { BotIntent, CoreEntity, Group } from '.';
 import { UserType } from '../../../modules/user/utils/users.type';
 
 @Entity('users')
@@ -20,6 +20,10 @@ export class User extends CoreEntity {
 
 	@Column()
 	public type: UserType;
+
+	@OneToMany(() => BotIntent, botIntent => botIntent.creator)
+	@JoinColumn({ name: 'id' })
+	public bot_intents: BotIntent[];
 
 	@ManyToMany(() => Group, (group: Group) => group.members)
 	@JoinTable({
