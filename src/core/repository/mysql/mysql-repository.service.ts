@@ -24,9 +24,9 @@ export class MySQLRepositoryService {
 
 	public async findOneOrFail<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
 
-		return this.get(target).findOneOrFail(value).catch(error => {
+		return this.get(target).findOneOrFail(value).catch(() => {
 
-			this.errorService.throwMySQLError(error);
+			this.errorService.throwNotFoundError();
 		});
 	}
 
