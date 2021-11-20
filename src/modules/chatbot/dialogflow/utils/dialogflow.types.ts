@@ -250,23 +250,6 @@ export type IntentFollowupIntentInfo = {
 	parentFollowupIntentName: string;
 }
 
-export class Content {
-	public name?: string;
-
-	public explanation?: string;
-
-	public link?: string;
-
-	constructor(body: UpsertContentDTO) {
-
-		const { name, explanation, link } = body;
-
-		this.name = name;
-		this.explanation = explanation;
-		this.link = link;
-	}
-}
-
 export class Intent {
 	public name?: string;
 

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { BaseMessage, SuccessSaveMessage } from '../../../common/types';
 import { BotContent } from '../../../core/database/entities';
 import { MySQLRepositoryService } from '../../../core/repository';
-import { Content } from '../dialogflow/utils/dialogflow.types';
 import { UpsertContentDTO } from './dto/create-content.dto';
 
 @Injectable()
@@ -14,8 +13,7 @@ export class BotContentService {
 
 	public async create(body: UpsertContentDTO): Promise<SuccessSaveMessage> {
 
-		const content = new Content(body);
-		const botContent = new BotContent(content);
+		const botContent = new BotContent(body);
 		const savedContent = await this.mysqlRepository.save(BotContent, botContent);
 
 		return {
