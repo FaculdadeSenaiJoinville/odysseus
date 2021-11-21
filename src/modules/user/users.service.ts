@@ -38,16 +38,16 @@ export class UsersService {
 
 		if (groups) {
 
-			for (const groupId of groups) {
+			for (const group of groups) {
 
-				const group = await this.mysqlRepository.findOne(Group, {
+				const dbGroup = await this.mysqlRepository.findOne(Group, {
 					relations: ['members'],
-					where: { id: groupId }
+					where: { id: group.id }
 				});
 	
-				if (group && !this.groupPolicies.hasUserInGroup(createdUser.id, group)) {
+				if (dbGroup && !this.groupPolicies.hasUserInGroup(createdUser.id, dbGroup)) {
 	
-					await this.groupHelper.addUserToGroup(groupId, createdUser.id);
+					await this.groupHelper.addUserToGroup(group.id, createdUser.id);
 				}
 			}
 		}
@@ -80,8 +80,6 @@ export class UsersService {
 		const groups = user_payload.groups;
 		const groupsToLeave = user_payload.groups_to_leave;
 
-		this.usersPolicies.ensurePayloadHasDiferences(user_payload, user);
-
 		user.name = user_payload.name;
 		user.email = user_payload.email;
 		user.type = user_payload.type;
@@ -91,32 +89,32 @@ export class UsersService {
 
 		if (groups) {
 
-			for (const groupId of groups) {
+			for (const group of groups) {
 
-				const group = await this.mysqlRepository.findOne(Group, {
+				const dbGroup = await this.mysqlRepository.findOne(Group, {
 					relations: ['members'],
-					where: { id: groupId }
+					where: { id: group.id }
 				});
 	
-				if (group && !this.groupPolicies.hasUserInGroup(id, group)) {
+				if (dbGroup && !this.groupPolicies.hasUserInGroup(id, dbGroup)) {
 	
-					await this.groupHelper.addUserToGroup(groupId, id);
+					await this.groupHelper.addUserToGroup(group.id, id);
 				}
 			}
 		}
 
 		if (groupsToLeave) {
 
-			for (const groupId of groupsToLeave) {
+			for (const group of groupsToLeave) {
 
-				const group = await this.mysqlRepository.findOne(Group, {
+				const dbGroup = await this.mysqlRepository.findOne(Group, {
 					relations: ['members'],
-					where: { id: groupId }
+					where: { id: group.id }
 				});
 	
-				if (this.groupPolicies.hasUserInGroup(id, group)) {
+				if (this.groupPolicies.hasUserInGroup(id, dbGroup)) {
 	
-					await this.groupHelper.removeUserFromGroup(id, groupId);
+					await this.groupHelper.removeUserFromGroup(group.id, id);
 				}
 			}
 		}
