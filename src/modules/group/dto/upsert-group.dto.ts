@@ -1,4 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../../core/database/entities';
+
+const membersExample = [
+	{
+		id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
+		name: 'Usuário de teste 1'
+	},
+	{
+		id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9',
+		name: 'Usuário de teste 2'
+	}
+];
+
+const membersToRemoveExample = [
+	{
+		id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
+		name: 'Usuário de teste 1'
+	},
+	{
+		id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9',
+		name: 'Usuário de teste 2'
+	}
+];
 
 export class UpsertGroupDTO {
 
@@ -8,10 +31,10 @@ export class UpsertGroupDTO {
 	@ApiProperty({ example: 'Turma de ADS do primeiro semestre de 2019', description: 'Descrição do grupo.' })
 	description?: string;
 
-	@ApiProperty({ example: ['6803f79e-ccb9-45fb-9aca-0135bf86a485', '5903f79o-ggb9-78cd-9aki-0135bf86b328'], description: 'Lista com IDs dos membros do grupo.' })
-	members?: string[];
+	@ApiProperty({ example: membersExample, description: 'Lista com IDs dos membros do grupo.' })
+	members?: User[];
 
-	@ApiProperty({ example: ['6803f79e-ccb9-45fb-9aca-0135bf86a485', '5903f79o-ggb9-78cd-9aki-0135bf86b328'], description: 'Lista com IDs dos membros que serão removidos do grupo.' })
-	members_to_remove?: string[];
+	@ApiProperty({ example: membersToRemoveExample, description: 'Lista com IDs dos membros que serão removidos do grupo.' })
+	members_to_remove?: User[];
 
 }
