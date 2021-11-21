@@ -76,6 +76,7 @@ export class UsersService {
 
 	public async update(id: string, user_payload: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
+		this.usersPolicies.mustHaveLastName(user_payload.name);
 		const user = await this.mysqlRepository.findOneOrFail(User, id);
 		const groups = user_payload.groups;
 		const groupsToLeave = user_payload.groups_to_leave;

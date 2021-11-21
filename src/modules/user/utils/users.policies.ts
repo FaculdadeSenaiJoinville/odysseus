@@ -1,7 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
-import { UpdateUserDTO } from '../dtos';
-import { User } from 'src/core/database/entities';
 
 @Injectable()
 export class UsersPolicies {
