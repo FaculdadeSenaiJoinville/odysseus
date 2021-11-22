@@ -13,17 +13,6 @@ const groupsExample = [
 	}
 ];
 
-const groupsToLeaveExample = [
-	{
-		id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
-		name: 'Grupo de teste 1'
-	},
-	{
-		id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9',
-		name: 'Grupo de teste 2'
-	}
-];
-
 export class UpdateUserDTO {
 
 	@ApiProperty({ example: 'Gabriel Borges', description: 'Nome do usuário.' })
@@ -41,7 +30,7 @@ export class UpdateUserDTO {
 	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos aos quais o usuário será adicionado.' })
 	groups?: Group[];
 
-	@ApiProperty({ example: groupsToLeaveExample, description: 'Lista com IDs dos grupos dos quais o usuário será removido.' })
+	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos dos quais o usuário será removido.' })
 	groups_to_leave?: Group[];
 
 }

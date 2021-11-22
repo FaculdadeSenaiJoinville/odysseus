@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { BaseMessage, SuccessSaveMessage } from '../../../common/types';
-import { BotContent, BotIntent } from '../../../core/database/entities';
+import { BotContent, BotIntent, BotIntentContents } from '../../../core/database/entities';
 import { MySQLRepositoryService } from '../../../core/repository';
 import { DialogflowService } from '../dialogflow/dialogflow.service';
 import { Intent, IntentMessage } from '../dialogflow/utils/dialogflow.types';
-import { UpsertIntentDTO } from './dto/create-intent.dto';
+import { UpsertIntentDTO } from './dto/upsert-intent.dto';
 
 @Injectable()
 export class BotIntentService {
@@ -16,11 +16,31 @@ export class BotIntentService {
 
 	public async create(body: UpsertIntentDTO): Promise<SuccessSaveMessage> {
 
+		const contents = body.contents;
 		const messages = await this.getMessages(body);
 		const intent = new Intent(body, messages);
 		const createdIntent = await this.dialogflowService.createIntent(intent);
 		const botIntent = new BotIntent(createdIntent, null, body.message);
 		const savedIntent = await this.mysqlRepository.save(BotIntent, botIntent);
+
+		if (contents) {
+
+			for (const content of contents) {
+
+				const dbBotContent = await this.mysqlRepository.findOne(BotContent, {
+					relations: ['intents'],
+					where: { id: content.id }
+				});
+				const hasContentInIntent = dbBotContent.intents.find(bot_intent => bot_intent.id === savedIntent.id);
+
+				if (dbBotContent && !hasContentInIntent) {
+
+					const data = { content_id: dbBotContent.id, intent_id: savedIntent.id } as BotIntentContents;
+
+					await this.mysqlRepository.save(BotIntentContents, data);
+				}
+			}
+		}
 
 		return {
 			id: savedIntent.id,
@@ -30,12 +50,50 @@ export class BotIntentService {
 
 	public async update(id: string, body: UpsertIntentDTO): Promise<SuccessSaveMessage> {
 
+		const contents = body.contents;
+		const contentsToRemove = body.contents_to_remove;
 		const databaseIntent = await this.mysqlRepository.findOne(BotIntent, id);
 		const messages = await this.getMessages(body);
 		const intent = new Intent(body, messages);
 		const updatedIntent = await this.dialogflowService.updateIntent(databaseIntent.dialogflow_id, intent);
 		const botIntent = new BotIntent(updatedIntent, id, body.message);
 		const savedIntent = await this.mysqlRepository.save(BotIntent, botIntent);
+
+		if (contents) {
+
+			for (const content of contents) {
+
+				const dbBotContent = await this.mysqlRepository.findOne(BotContent, {
+					relations: ['intents'],
+					where: { id: content.id }
+				});
+				const hasContentInIntent = dbBotContent.intents.find(bot_intent => bot_intent.id === savedIntent.id);
+
+				if (dbBotContent && !hasContentInIntent) {
+
+					const data = { content_id: dbBotContent.id, intent_id: savedIntent.id } as BotIntentContents;
+
+					await this.mysqlRepository.save(BotIntentContents, data);
+				}
+			}
+		}
+
+		if (contentsToRemove) {
+
+			for (const content of contentsToRemove) {
+
+				const dbBotContent = await this.mysqlRepository.findOne(BotContent, {
+					relations: ['intents'],
+					where: { id: content.id }
+				});
+				const hasContentInIntent = dbBotContent.intents.find(bot_intent => bot_intent.id === savedIntent.id);
+
+				if (dbBotContent && hasContentInIntent) {
+
+					await this.mysqlRepository.delete(BotIntentContents, { content_id: dbBotContent.id, intent_id: savedIntent.id });
+				}
+			}
+		}
 
 		return {
 			id: savedIntent.id,
@@ -47,6 +105,7 @@ export class BotIntentService {
 
 		const intent = await this.mysqlRepository.findOne(BotIntent, id);
 
+		await this.mysqlRepository.delete(BotIntentContents, { intent_id: id });
 		await this.dialogflowService.deleteIntent(intent.dialogflow_id);
 		await this.mysqlRepository.delete(BotIntent, id);
 
@@ -72,9 +131,9 @@ export class BotIntentService {
 
 		if (contents) {
 
-			for (const id of contents) {
+			for (const content of contents) {
 
-				const { explanation, link } = await this.mysqlRepository.findOne(BotContent, id);
+				const { explanation, link } = await this.mysqlRepository.findOne(BotContent, content.id);
 
 				if (explanation) {
 
