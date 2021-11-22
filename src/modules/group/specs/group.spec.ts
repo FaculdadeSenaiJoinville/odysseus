@@ -35,7 +35,7 @@ describe('Groups', () => {
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('groups');
 			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
-			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'users.id', 'users.name', 'users.type']);
+			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'members.id', 'members.name', 'members.type']);
 		});
 
 		it('should receive an nonexistent id and return an error', async () => {
@@ -50,7 +50,7 @@ describe('Groups', () => {
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('groups');
 			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
-			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'users.id', 'users.name', 'users.type']);
+			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'members.id', 'members.name', 'members.type']);
 		});
 	});
 
