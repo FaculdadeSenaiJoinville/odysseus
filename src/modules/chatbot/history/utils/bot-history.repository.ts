@@ -11,7 +11,7 @@ export class BotHistoryRepository {
 	public list(options: ListOptions<BotHistory>): Promise<[BotHistory[], number]> {
 
 		const queryBuilder = this.mysqlRepository.get(BotHistory).createQueryBuilder('bot_histories')
-			.select(['bot_histories.id', 'bot_histories.user_name', 'bot_histories.user_message', 'bot_histories.bot_response', 'bot_histories.chat_id'])
+			.select(['bot_histories.id', 'bot_histories.user_name', 'bot_histories.user_message', 'bot_histories.bot_response', 'bot_histories.chat_id', 'bot_histories.created_at'])
 
 		return this.mysqlRepository
 			.setFindOptions(queryBuilder, options)
@@ -22,7 +22,7 @@ export class BotHistoryRepository {
 
 		return this.mysqlRepository.get(BotHistory).createQueryBuilder('bot_histories')
 			.where({ id })
-			.select(['bot_histories.id', 'bot_histories.user_name', 'bot_histories.user_message', 'bot_histories.bot_response', 'bot_histories.chat_id'])
+			.select(['bot_histories.id', 'bot_histories.user_name', 'bot_histories.user_message', 'bot_histories.bot_response', 'bot_histories.chat_id', 'bot_histories.created_at'])
 			.getOneOrFail();
 	}
 
