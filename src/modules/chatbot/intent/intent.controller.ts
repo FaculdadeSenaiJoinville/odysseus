@@ -4,7 +4,7 @@ import { ApiController, AuthProtection } from '../../../common/decorators';
 import { ValidateBodyPipe } from '../../../common/pipes';
 import { ListOptions } from '../../../common/types';
 import { BotIntent } from '../../../core/database/entities';
-import { UpsertIntentDTO } from './dto/create-intent.dto';
+import { UpsertIntentDTO } from './dto/upsert-intent.dto';
 import { BotIntentService } from './intent.service';
 import { BotIntentPaginationPipe } from './utils/bot-intent-pagination.pipe';
 import { BotIntentRepository } from './utils/bot-intent.repository';

@@ -1,7 +1,7 @@
 import { google } from '@google-cloud/dialogflow/build/protos/protos';
 import { GenericObject } from '../../../../common/types'
 import { UpsertContentDTO } from '../../content/dto/create-content.dto'
-import { UpsertIntentDTO } from '../../intent/dto/create-intent.dto'
+import { UpsertIntentDTO } from '../../intent/dto/upsert-intent.dto'
 
 export enum TrainingPhraseType {
 	EXAMPLE = 'EXAMPLE'
@@ -352,7 +352,6 @@ export type MessageData = {
 };
 
 export type DialogflowResponse = {
-	intent_name: string;
 	user_message: string;
 	bot_response: string[];
 	parameters: google.protobuf.IStruct;

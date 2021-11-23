@@ -112,7 +112,6 @@ export class DialogflowService {
 		const responses = await sessionClient.detectIntent(request);
 
 		return {
-			intent_name: responses[0].queryResult.intent.displayName,
 			user_message: responses[0].queryResult.queryText,
 			bot_response: responses[0].queryResult.fulfillmentMessages.map(message => message.text.text[0]),
 			parameters: responses[0].queryResult.parameters

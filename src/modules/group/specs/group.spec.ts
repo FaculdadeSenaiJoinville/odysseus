@@ -1,7 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { ListOptions } from '../../../common/types';
-import { Group, GroupMember } from '../../../core/database/entities';
+import { Group, GroupMember, User } from '../../../core/database/entities';
 import { mockedMySQLRepository, mockedQueryBuilder } from '../../../tests/generate-repository-service';
 import { GroupController } from '../group.controller';
 import { GroupService } from '../group.service';
@@ -35,7 +35,7 @@ describe('Groups', () => {
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('groups');
 			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
-			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'users.id', 'users.name', 'users.type']);
+			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'members.id', 'members.name', 'members.type']);
 		});
 
 		it('should receive an nonexistent id and return an error', async () => {
@@ -50,7 +50,7 @@ describe('Groups', () => {
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('groups');
 			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
-			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'users.id', 'users.name', 'users.type']);
+			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['groups.id', 'groups.name', 'groups.description', 'members.id', 'members.name', 'members.type']);
 		});
 	});
 
@@ -103,10 +103,10 @@ describe('Groups', () => {
 				name: 'Grupo de Teste',
 				description: 'Teste de função',
 				members: [
-					'aasas5as54a4',
-					'sdsdsdsd54s5d54',
-					'sdsdsdsd54s5d54'
-				]
+					{ id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' }
+				] as User[]
 			};
 			const createdGroup = {
 				id: 'ssdsds5d45sd',
@@ -114,19 +114,19 @@ describe('Groups', () => {
 			}
 			const group1 = {
 				...createdGroup,
-				users: []
+				members: []
 			};
 			const group2 = {
 				...createdGroup,
-				users: [{
-					id: 'aasas5as54a4'
+				members: [{
+					id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0'
 				}]
 			};
 			const group3 = {
 				...createdGroup,
-				users: [
-					{ id: 'aasas5as54a4' },
-					{ id: 'sdsdsdsd54s5d54' }
+				members: [
+					{ id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' }
 				]
 			};
 			const expected = {
@@ -166,25 +166,25 @@ describe('Groups', () => {
 			const input = {
 				name: 'Nome Atualizado',
 				members: [
-					'dsdsdsd45sd45sd',
-					'ds5d4s5d4s5d4sd'
-				],
+					{ id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' }
+				] as User[],
 				members_to_remove: [
-					'sdsd56sd4e23w2e6',
-					'sdsd45sd45s4d541'
-				]
+					{ id: '675e4ed9-2758-4ba1-b596-e10fb81e2df0' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' }
+				] as User[]
 			};
 			const id = 'ssdsds5d45sd';
 			const group1 = {
 				id,
 				members: [{
-					id: 'dsdsdsd45sd45sd'
+					id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0'
 				}]
 			};
 			const group2 = {
 				id,
 				members: [{
-					id: 'sdsd56sd4e23w2e6'
+					id: '675e4ed9-2758-4ba1-b596-e10fb81e2df0'
 				}]
 			};
 			const updatedGroup = { id } as Group;

@@ -1,4 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { BotContent } from '../../../../core/database/entities';
+
+const contentsExample = [
+	{
+		id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
+		name: 'Conteúdo de teste 1'
+	},
+	{
+		id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9',
+		name: 'Conteúdo de teste 2'
+	}
+];
 
 export class UpsertIntentDTO {
 
@@ -11,8 +23,11 @@ export class UpsertIntentDTO {
 	@ApiProperty({ example: 'Olá, seja bem vindo!', description: 'Resposta simples da intent.' })
 	message?: string;
 
-	@ApiProperty({ example: ['25ac432a-8fd0-414b-8044-bd6bdb51bfebOlá', '15e7ce88-ea87-4b6d-a342-7a071297ff1a'], description: 'Lista de IDs dos conteúdos que a intent retornará na resposta.' })
-	contents?: string[];
+	@ApiProperty({ example: contentsExample, description: 'Lista de IDs dos conteúdos que a intent retornará na resposta.' })
+	contents?: BotContent[];
+
+	@ApiProperty({ example: contentsExample, description: 'Lista de IDs dos conteúdos que a intent retornará na resposta.' })
+	contents_to_remove?: BotContent[];
 
 	@ApiProperty({ example: 1000, description: 'Nível de prioridade da intent.' })
 	priority?: number;

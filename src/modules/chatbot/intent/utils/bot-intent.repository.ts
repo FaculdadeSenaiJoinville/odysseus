@@ -11,7 +11,8 @@ export class BotIntentRepository {
 	public list(options: ListOptions<BotIntent>): Promise<[BotIntent[], number]> {
 
 		const queryBuilder = this.mysqlRepository.get(BotIntent).createQueryBuilder('bot_intents')
-			.select(['bot_intents.id', 'bot_intents.dialogflow_id', 'bot_intents.name']);
+			.innerJoin('bot_intents.creator', 'creator')
+			.select(['bot_intents.id', 'bot_intents.name', 'creator.name', 'bot_intents.created_at']);
 
 		return this.mysqlRepository
 			.setFindOptions(queryBuilder, options)
@@ -22,7 +23,9 @@ export class BotIntentRepository {
 
 		return this.mysqlRepository.get(BotIntent).createQueryBuilder('bot_intents')
 			.where({ id })
-			.select(['bot_intents.id', 'bot_intents.dialogflow_id', 'bot_intents.name', 'bot_intents.training_phrases', 'bot_intents.priority', 'bot_intents.end_interaction'])
+			.leftJoin('bot_intents.contents', 'contents')
+			.innerJoin('bot_intents.creator', 'creator')
+			.select(['bot_intents.id', 'bot_intents.name', 'bot_intents.training_phrases', 'contents.id', 'contents.name', 'bot_intents.message', 'creator.name', 'bot_intents.created_at'])
 			.getOneOrFail();
 	}
 
