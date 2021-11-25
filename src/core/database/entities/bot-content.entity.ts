@@ -1,4 +1,4 @@
-import { Content } from 'src/modules/chatbot/dialogflow/utils/dialogflow.types';
+import { UpsertContentDTO } from 'src/modules/chatbot/content/dto/create-content.dto';
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { BotIntent, CoreEntity } from '.';
 
@@ -25,7 +25,7 @@ export class BotContent extends CoreEntity {
 	})
 	public intents?: BotIntent[];
 
-	constructor(body?: Content, id?: string) {
+	constructor(body?: UpsertContentDTO, id?: string) {
 
 		super();
 
