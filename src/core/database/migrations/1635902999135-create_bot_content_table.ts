@@ -14,11 +14,13 @@ export class createBotContentTable1635902999135 implements MigrationInterface {
   		},
   		{
   			name: 'explanation',
-  			type: 'longtext'
+  			type: 'longtext',
+  			isNullable: true
   		},
   		{
   			name: 'link',
-  			type: 'longtext'
+  			type: 'longtext',
+  			isNullable: true
   		},
   		{
   			name: 'name',
