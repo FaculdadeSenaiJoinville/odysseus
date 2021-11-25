@@ -22,8 +22,8 @@ export class GroupRepository {
 
 		return this.mysqlRepository.get(Group).createQueryBuilder('groups')
 			.where({ id })
-			.select(['groups.id', 'groups.name', 'groups.description', 'users.id', 'users.name', 'users.type'])
-			.leftJoin('groups.members', 'users')
+			.select(['groups.id', 'groups.name', 'groups.description', 'members.id', 'members.name', 'members.type'])
+			.leftJoin('groups.members', 'members')
 			.getOneOrFail();
 	}
 

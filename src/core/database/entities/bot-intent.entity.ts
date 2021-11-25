@@ -1,5 +1,5 @@
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
-import { CoreEntity } from '.';
+import { Entity, Column, ManyToMany, JoinTable, ManyToOne, JoinColumn } from 'typeorm';
+import { CoreEntity, User } from '.';
 import { DIALOGFLOW_CREDENTIALS } from '../../../modules/chatbot/dialogflow/utils/dialogflow.config';
 import { Intent, IntentMessage } from '../../../modules/chatbot/dialogflow/utils/dialogflow.types';
 import { BotContent } from './bot-content.entity';
@@ -17,10 +17,17 @@ export class BotIntent extends CoreEntity {
 	public messages: IntentMessage[];
 
 	@Column()
+	public message: string;
+
+	@Column()
 	public priority: number;
 
 	@Column()
 	public end_interaction: boolean;
+
+	@ManyToOne(() => User, user => user.bot_intents)
+	@JoinColumn({ name: 'created_by' })
+	public creator: User;
 
 	@ManyToMany(() => BotContent, (content: BotContent) => content.intents)
 	@JoinTable({
@@ -30,13 +37,13 @@ export class BotIntent extends CoreEntity {
 			referencedColumnName: 'id'
 		},
 		inverseJoinColumn: {
-			name: 'bot_contents',
+			name: 'content_id',
 			referencedColumnName: 'id'
 		}
 	})
 	public contents?: BotContent[];
 
-	constructor(body?: Intent, id?: string) {
+	constructor(body?: Intent, id?: string, message?: string) {
 
 		super();
 
@@ -56,6 +63,7 @@ export class BotIntent extends CoreEntity {
 	
 				return trainingPhrase.parts[0].text;
 			});
+			this.message = message;
 			this.messages = messages;
 			this.priority = priority;
 			this.end_interaction = endInteraction;

@@ -11,12 +11,4 @@ export class GroupPolicies {
 		return Boolean(group.members.find(user => user.id === user_id));
 	}
 
-	public ensurePayloadHasDiferences(group_payload: UpsertGroupDTO, group: Group): void {
-
-		if (!(group_payload.name !== group.name || group_payload.description !== group.description)) {
-
-			throw new BadRequestException(Dictionary.groups.getMessage('update_payload_must_have_diferences'));
-	  	}
-	}
-
 }

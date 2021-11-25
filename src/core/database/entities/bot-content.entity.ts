@@ -19,7 +19,7 @@ export class BotContent extends CoreEntity {
 			referencedColumnName: 'id'
 		},
 		inverseJoinColumn: {
-			name: 'bot_intents',
+			name: 'intent_id',
 			referencedColumnName: 'id'
 		}
 	})

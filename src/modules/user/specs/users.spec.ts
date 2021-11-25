@@ -160,10 +160,9 @@ describe('Users', () => {
 				confirm_password: 'João@123',
 				type: UserType.ADMIN,
 				groups: [
-					's4s5a4s5as',
-					's8a4s8a4s84as',
-					's8a4s8a4s84as'
-				]
+					{ id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' }
+				] as Group[]
 			};
 			const createdUser = {
 				id: 's45as45a4ss5as1s2',
@@ -173,19 +172,19 @@ describe('Users', () => {
 				type: UserType.ADMIN
 			};
 			const groupToInsert1 = {
-				id: 's4s5a4s5as',
+				id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
 				name: 'Grupo de Teste 1',
 				description: 'Teste de função',
 				members: []
 			} as Group;
 			const groupToInsert2 = {
-				id: 's4s5a4s5as',
+				id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
 				name: 'Grupo de Teste 2',
 				description: 'Teste de função',
 				members: []
 			} as Group;
 			const groupToInsert3 = {
-				id: 's4s5a4s5as',
+				id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
 				name: 'Grupo de Teste 3',
 				description: 'Teste de função',
 				members: [{
@@ -304,23 +303,23 @@ describe('Users', () => {
 				email: 'joao.teste@gmail.com',
 				type: UserType.ADMIN,
 				groups: [
-					'dsd4s5d4',
-					'sdsdsdsd541'
+					{ id: '675e4ed9-2758-4ba1-b596-e00fb81e2dv9' },
+					{ id: '875e4ej9-9858-4ba1-d606-e00fb81a6dj9' }
 				],
 				groups_to_leave: [
-					'asasas45as4',
-					'sd4s6d1wwesd'
-				]
+					{ id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0' },
+					{ id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9' }
+				] as Group[]
 			} as UpdateUserDTO;
 			const id = 's45as45a4ss5as1s2';
 			const groupToInsert1 = {
-				id: 'dsd4s5d4',
+				id: '675e4ed9-2758-4ba1-b596-e00fb81e2dv9',
 				name: 'Grupo de Teste 1',
 				description: 'Teste de função',
 				members: []
 			} as Group;
 			const groupToInsert2 = {
-				id: 'sdsdsdsd541',
+				id: '875e4ej9-9858-4ba1-d606-e00fb81a6dj9',
 				name: 'Grupo de Teste 2',
 				description: 'Teste de função',
 				members: [{
@@ -328,7 +327,7 @@ describe('Users', () => {
 				}]
 			} as Group;
 			const groupToLeave1 = {
-				id: 'asasas45as4',
+				id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
 				name: 'Grupo de Teste 3',
 				description: 'Teste de função',
 				members: [{
@@ -336,7 +335,7 @@ describe('Users', () => {
 				}]
 			} as Group;
 			const groupToLeave2 = {
-				id: 'sd4s6d1wwesd',
+				id: '875e4ej9-9858-4ba1-c506-e00fb81a6dj9',
 				name: 'Grupo de Teste 4',
 				description: 'Teste de função',
 				members: []
@@ -362,13 +361,13 @@ describe('Users', () => {
 		it('should receive an invalid payload and return an error', async () => {
 			
 			const input = {
-				name: 'João da Silva Teste',
+				name: 'João',
 				email: 'joao.teste@gmail.com',
 				type: UserType.ADMIN,
 				active: false
 			};
 			const id = 's45as45a4ss5as1s2';
-			const expected = new BadRequestException(Dictionary.users.getMessage('update_payload_must_have_diferences'));
+			const expected = new BadRequestException(Dictionary.users.getMessage('must_have_last_name'));
 
 			mockedMySQLRepository.findOneOrFail.mockResolvedValue(input);
 
