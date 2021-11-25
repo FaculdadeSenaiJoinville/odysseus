@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { BaseMessage, SuccessSaveMessage } from '../../../common/types';
 import { BotContent } from '../../../core/database/entities';
 import { MySQLRepositoryService } from '../../../core/repository';
+import { BotIntentRepository } from '../intent/utils/bot-intent.repository';
 import { UpsertContentDTO } from './dto/create-content.dto';
 
 @Injectable()
 export class BotContentService {
 
 	constructor(
-		private readonly mysqlRepository: MySQLRepositoryService
+		private readonly mysqlRepository: MySQLRepositoryService,
+		private readonly botIntentRepository: BotIntentRepository
 	) {}
 
 	public async create(body: UpsertContentDTO): Promise<SuccessSaveMessage> {
@@ -39,6 +41,12 @@ export class BotContentService {
 	}
 
 	public async remove(id: string): Promise<BaseMessage> {
+
+		const intentsQuantity = await this.botIntentRepository.countByContentId(id);
+
+		if (intentsQuantity > 0) {
+			throw new InternalServerErrorException('Não é possível deletar um conteúdo que está em uso!')
+		}
 
 		const content = await this.mysqlRepository.findOneOrFail(BotContent, id);
 
