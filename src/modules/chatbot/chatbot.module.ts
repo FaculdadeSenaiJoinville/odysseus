@@ -14,7 +14,6 @@ import { BotHistoryModule } from './history/history.module';
 		BotIntentModule,
 		BotContentModule,
 		BotHistoryModule
-		
 	],
 	providers: [
 		ChatbotService

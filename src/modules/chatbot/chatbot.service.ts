@@ -26,7 +26,7 @@ export class ChatbotService implements OnModuleInit {
 		bot.on('message', async message => {
 
 			const chatId = message.chat.id;
-			const userName = `${message.chat.first_name} ${message.chat.last_name}`  
+			const userName = `${message.chat.first_name} ${message.chat.last_name}`;
 			const data = {
 				session_id: String(chatId),
 				message: message.text || ''
@@ -42,13 +42,14 @@ export class ChatbotService implements OnModuleInit {
 						await bot.sendMessage(chatId, message);
 					}
 
-					await this.botHistoryService.create(
-						{
-							user_name: userName,
-							user_message: response.user_message,
-							bot_response: JSON.stringify(bot_response),
-							chat_id: chatId
-						} as UpsertHistoryDTO)
+					const historyBody = {
+						user_name: userName,
+						user_message: response.user_message,
+						bot_response: JSON.stringify(bot_response),
+						chat_id: chatId
+					} as UpsertHistoryDTO
+
+					await this.botHistoryService.create(historyBody)
 				})
 				.catch(async (error) => {
 		
