@@ -1,6 +1,6 @@
 
 import { Body, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { ApiController, AuthProtection } from '../../../common/decorators';
+import { AdminProfessorProtection, ApiController, AuthProtection } from '../../../common/decorators';
 import { ValidateBodyPipe } from '../../../common/pipes';
 import { ListOptions } from '../../../common/types';
 import { BotIntent } from '../../../core/database/entities';
@@ -20,6 +20,7 @@ export class BotIntentController {
 
 	@Get('/details/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public details(@Param('id') id: string): Promise<BotIntent> {
 
 		return this.botIntentRepository.details(id);
@@ -27,6 +28,7 @@ export class BotIntentController {
 
 	@Get('/list')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public list(@Query(new BotIntentPaginationPipe()) options: ListOptions<BotIntent>) {
 
 		return this.botIntentRepository.list(options);
@@ -34,6 +36,7 @@ export class BotIntentController {
 
 	@Post('/create')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public create(@Body(new ValidateBodyPipe(UPSERT_INTENT_VALIDATION)) body: UpsertIntentDTO) {
 
 		return this.botIntentService.create(body);
@@ -41,6 +44,7 @@ export class BotIntentController {
 
 	@Put('/update/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPSERT_INTENT_VALIDATION)) body: UpsertIntentDTO) {
 
 		return this.botIntentService.update(id, body);
@@ -48,6 +52,7 @@ export class BotIntentController {
 
 	@Delete('/remove/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public remove(@Param('id') id: string) {
 
 		return this.botIntentService.remove(id);
