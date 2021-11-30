@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './utils/users.validation';
 import { User } from 'src/core/database/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
-import { ApiController, AuthProtection } from 'src/common/decorators';
+import { AdminProfessorProtection, ApiController, AuthProtection } from 'src/common/decorators';
 import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { UsersPaginationPipe } from './utils/users-pagination.pipe';
@@ -19,6 +19,7 @@ export class UsersController {
 
 	@Get('list')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public list(@Query(new UsersPaginationPipe()) options: ListOptions<User>): Promise<[User[], number]> {
 
 		return this.usersRepository.list(options);
@@ -26,6 +27,7 @@ export class UsersController {
 
 	@Get('details/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public details(@Param('id') id: string): Promise<User> {
 
 		return this.usersRepository.details(id);
@@ -40,6 +42,7 @@ export class UsersController {
 
 	@Post('create')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.create(user);
@@ -54,6 +57,7 @@ export class UsersController {
 	
 	@Put('update/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) user: UpdateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.update(id, user);
