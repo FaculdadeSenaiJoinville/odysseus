@@ -1,14 +1,16 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../../../core/database/entities';
+import { User } from 'src/core/database/entities';
 import { TokenPayload } from '../token/utils/token.type';
 import * as dotenv from 'dotenv';
-import { UserType } from '../../user/utils/users.type';
+import { UserType } from 'src/modules/user/utils/users.type';
 
 dotenv.config();
 
 @Injectable()
 export class AdminGuard implements CanActivate {
+
+	private UserTypeEnum = UserType;
 
 	public async canActivate(context: ExecutionContext): Promise<boolean> {
 
@@ -16,7 +18,12 @@ export class AdminGuard implements CanActivate {
 		const token = (request.headers.authorization).replace('Bearer ', '');
 		const userData = await this.getUserData(token);
 
-		return userData.type === UserType.ADMIN;
+		if (userData.type === this.UserTypeEnum.ADMIN) {
+
+			return true;
+		}
+
+		throw new UnauthorizedException();
 	}
 
 	private async getUserData(token: string): Promise<User> {

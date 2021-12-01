@@ -1,11 +1,22 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../../../core/database/entities';
-import { UserType } from '../../user/utils/users.type';
-import { TokenPayload } from '../token/utils/token.type';
+import { User } from 'src/core/database/entities';
+import { TokenPayload } from 'src/modules/auth/token/utils/token.type';
+import * as dotenv from 'dotenv';
+import { UserType } from 'src/modules/user/utils/users.type';
+
+dotenv.config();
+
+// enum UserType {
+//     ADMIN = 'ADMIN',
+//     PROFESSOR = 'ADMIN',
+//     STUDENT = 'ADMIN'
+// }
 
 @Injectable()
 export class AdminProfessorGuard implements CanActivate {
+
+	private UserTypeEnum = UserType;
 
 	public async canActivate(context: ExecutionContext): Promise<boolean> {
 
@@ -13,7 +24,12 @@ export class AdminProfessorGuard implements CanActivate {
 		const token = (request.headers.authorization).replace('Bearer ', '');
 		const userData = await this.getUserData(token);
 
-		return userData.type === UserType.ADMIN || userData.type === UserType.PROFESSOR;
+		if (userData.type === this.UserTypeEnum.ADMIN || userData.type === this.UserTypeEnum.PROFESSOR) {
+
+			return true;
+		}
+
+		throw new UnauthorizedException();
 	}
 
 	private async getUserData(token: string): Promise<User> {
