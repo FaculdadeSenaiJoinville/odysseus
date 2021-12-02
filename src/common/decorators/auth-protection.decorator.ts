@@ -1,6 +1,6 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
-import { AuthGuard } from '../../modules/auth';
+import { AuthGuard } from '../../modules/auth/guards';
 
 export function AuthProtection() {
 

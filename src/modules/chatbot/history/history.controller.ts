@@ -1,5 +1,5 @@
 import { Get, Param, Query } from '@nestjs/common';
-import { ApiController, AuthProtection } from '../../../common/decorators';
+import { AdminProfessorProtection, ApiController, AuthProtection } from '../../../common/decorators';
 import { ListOptions } from '../../../common/types';
 import { BotHistory } from '../../../core/database/entities';
 import { BotHistoryService } from './history.service';
@@ -16,6 +16,7 @@ export class BotHistoryController {
 
 	@Get('/details/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public details(@Param('id') id: string): Promise<BotHistory> {
 
 		return this.botHistoryRepository.details(id);
@@ -23,6 +24,7 @@ export class BotHistoryController {
 
 	@Get('/list')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public list(@Query(new BotHistoryPaginationPipe()) options: ListOptions<BotHistory>) {
 
 		return this.botHistoryRepository.list(options);

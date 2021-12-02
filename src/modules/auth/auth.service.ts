@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { TokenService } from './token/token.service';
 import { AuthPolicies } from './utils/auth.policies';
 import { LoginOutput, LogoutOutput } from './utils/auth.type';
-import { LoginDTO } from './dtos/login.dto';
+import { LoginDTO } from './dto/login.dto';
 import { User } from 'src/core/database/entities';
 import { Dictionary } from 'odyssey-dictionary';
 import { FindOneOptions } from 'typeorm';
 import { MySQLRepositoryService } from '../../core/repository';
+import { RequestPasswordResetDTO } from './dto/request-password-reset.dto';
+import { EmailService } from 'src/core/email/email.service';
+import { BaseMessage } from '../../common/types';
+import { Base64Helper } from '../../common/helpers';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +18,9 @@ export class AuthService {
 	constructor(
 		private readonly mysqlRepository: MySQLRepositoryService,
 		private readonly tokenService: TokenService,
-		private readonly authPolicies: AuthPolicies
+		private readonly authPolicies: AuthPolicies,
+		private readonly emailService: EmailService,
+		private readonly base64Helper: Base64Helper
 	) {}
 
 	public async login({ email, password, expiresIn }: LoginDTO): Promise<LoginOutput> {
@@ -43,6 +49,27 @@ export class AuthService {
 		return {
 			message: Dictionary.auth.getMessage('successfully_logged_in'),
 			token
+		};
+	}
+
+	public async requestPasswordReset({ email }: RequestPasswordResetDTO): Promise<BaseMessage> {
+
+		const user = await this.mysqlRepository.findOneOrFail(User, { email });
+		const token = await this.tokenService.create(user, 600);
+		const base64Token = this.base64Helper.encode(token);
+		const base64Id = this.base64Helper.encode(user.id);
+
+		await this.emailService.sendEmail({
+			to: [email],
+			template: 'reset_password',
+			locals: {
+				name: user.name,
+				link: `http://localhost:8080/auth/change_password?token=${base64Token}&id=${base64Id}`
+			}
+		});
+
+		return {
+			message: Dictionary.auth.getMessage('reset_password_email_sent')
 		};
 	}
 

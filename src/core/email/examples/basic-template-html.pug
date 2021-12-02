@@ -12,7 +12,7 @@ html(lang="pt-BR")
 			.o-email-container {
 				font-family: 'Nunito', sans-serif;
 				font-size: 1rem;
-				background: #EBF2F5;
+				background: #FFFFFF;
 			}
 
 			.o-email-header {
@@ -46,5 +46,29 @@ html(lang="pt-BR")
 				font-size: 1.5rem;
 			}
 
+			.o-link-button {
+				text-decoration: none;
+				height: 2.2rem;
+				padding: 1.1rem;
+				margin: 0 auto;
+				font-size: 1rem;
+				font-weight: 800;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 0;
+				border-radius: 10px;
+				color: #FFFFFF;
+				background: #4ED1B3;
+			}
+
 	body
-		//- montar corpo do email
+		section(class="o-email-container")
+			div(class="o-email-header")
+				spam ODYSSEY
+
+			div(class="o-text-container")
+				p Aqui vai o corpo do email. Você pode inserir variáveis assim: #{variavel}
+
+			div(class="o-email-footer")
+				spam Aqui vai o footer do email.
