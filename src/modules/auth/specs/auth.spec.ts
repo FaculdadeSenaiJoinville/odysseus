@@ -11,14 +11,22 @@ const tokenService = {
 	create: jest.fn(),
 	delete: jest.fn()
 };
+const emailService = {
+	sendEmail: jest.fn()
+}
 const bcryptHelper = {
 	compareStringToHash: jest.fn()
 };
+const base64Helper = {
+	encode: jest.fn().mockReturnValue('encoded_value')
+}
 const authPolicies = new AuthPolicies(bcryptHelper as any);
 const authService = new AuthService(
 	mockedMySQLRepository as any,
 	tokenService as any,
-	authPolicies as any
+	authPolicies as any,
+	emailService as any, 
+	base64Helper as any
 );
 const authController = new AuthController(authService);
 
@@ -76,6 +84,24 @@ describe('Token', () => {
 			bcryptHelper.compareStringToHash.mockResolvedValue(false);
 
 			await expect(authController.login(input)).rejects.toEqual(expected);
+		});
+	});
+
+	describe('RequestPasswordReset', () => {
+
+		it('should receive an input and return a message', async () => {
+			
+			const input = {
+				email: 'teste.user@gmail.com'
+			};
+			const expected = {
+				message: Dictionary.auth.getMessage('reset_password_email_sent')
+			};
+
+			tokenService.create.mockResolvedValue('generated_token');
+			mockedMySQLRepository.findOneOrFail.mockResolvedValue(new User());
+
+			await expect(authController.requestPasswordReset(input)).resolves.toEqual(expected);
 		});
 	});
 
