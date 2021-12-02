@@ -57,13 +57,14 @@ export class AuthService {
 		const user = await this.mysqlRepository.findOneOrFail(User, { email });
 		const token = await this.tokenService.create(user, 600);
 		const base64Token = this.base64Helper.encode(token);
+		const base64Id = this.base64Helper.encode(user.id);
 
 		await this.emailService.sendEmail({
 			to: [email],
 			template: 'reset_password',
 			locals: {
 				name: user.name,
-				link: `http://localhost:8080/auth/reset_password?token=${base64Token}}`
+				link: `http://localhost:8080/auth/change_password?token=${base64Token}&id=${base64Id}`
 			}
 		});
 
