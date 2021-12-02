@@ -1,7 +1,7 @@
 
 import { Body, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { GroupService } from './group.service';
-import { ApiController, AuthProtection } from 'src/common/decorators';
+import { AdminProfessorProtection, ApiController, AuthProtection } from 'src/common/decorators';
 import { BaseMessage, ListOptions, SuccessSaveMessage } from '../../common/types';
 import { ValidateBodyPipe } from '../../common/pipes';
 import { UpsertGroupDTO } from './dto/upsert-group.dto';
@@ -34,6 +34,7 @@ export class GroupController {
 
 	@Post('create')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public create(@Body(new ValidateBodyPipe(UPSERT_GROUP_VALIDATION)) group: UpsertGroupDTO): Promise<SuccessSaveMessage> {
 
 		return this.groupService.create(group);
@@ -41,6 +42,7 @@ export class GroupController {
 
 	@Put('update/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPSERT_GROUP_VALIDATION)) group: UpsertGroupDTO): Promise<SuccessSaveMessage> {
 
 		return this.groupService.update(id, group);
@@ -48,6 +50,7 @@ export class GroupController {
 
 	@Delete('remove/:id')
 	@AuthProtection()
+	@AdminProfessorProtection()
 	public remove(@Param('id') id: string): Promise<BaseMessage> {
 
 		return this.groupService.remove(id);
