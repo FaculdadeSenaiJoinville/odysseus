@@ -6,3 +6,7 @@ export const LOGIN_VALIDATION = buildValidation('auth', {
 	password: Joi.string().min(8).required(),
 	expiresIn: Joi.number().min(84000).required()
 });
+
+export const REQUEST_PASSWORD_RESET_VALIDATION = buildValidation('auth', {
+	email: Joi.string().email().required()
+});
