@@ -34,6 +34,7 @@ const config: Config.InitialOptions = {
 		'./*.module.ts',
 		'/node_modules/',
 		'/dist/',
+		'src/modules/auth/guards',
 		'/src/common/decorators',
 		'/src/core/database',
 		'/src/core/error',
