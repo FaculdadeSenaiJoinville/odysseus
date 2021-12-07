@@ -1,7 +1,6 @@
 import { google } from '@google-cloud/dialogflow/build/protos/protos';
-import { GenericObject } from '../../../../common/types'
-import { UpsertContentDTO } from '../../content/dto/create-content.dto'
-import { UpsertIntentDTO } from '../../intent/dto/upsert-intent.dto'
+import { GenericObject } from '../../../../common/types';
+import { UpsertIntentDTO } from '../../intent/dto/upsert-intent.dto';
 
 export enum TrainingPhraseType {
 	EXAMPLE = 'EXAMPLE'
