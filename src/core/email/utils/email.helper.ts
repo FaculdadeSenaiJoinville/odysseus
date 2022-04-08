@@ -8,9 +8,10 @@ export class EmailHelper {
 
 	public getTransporterConfig(): EmailTemplate {
 
-		const { host, user, pass, from } = SMTP_CONFIG;
+		const { host, port, user, pass, from } = SMTP_CONFIG;
 		const transport = nodemailer.createTransport({
 			host,
+			port: Number(port),
 			auth: {
 				user,
 				pass
