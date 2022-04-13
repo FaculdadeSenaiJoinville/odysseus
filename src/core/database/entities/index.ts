@@ -7,3 +7,4 @@ export * from './bot-intent.entity';
 export * from './bot-intent-contents.entity';
 export * from './bot-content.entity';
 export * from './bot-history.entity';
+export * from './trail.entity';
