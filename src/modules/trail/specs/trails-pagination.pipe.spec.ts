@@ -5,7 +5,7 @@ jest.mock('../../../core/repository/pagination/pagination.pipe');
 
 describe('TrailPaginationPipe test', () => {
 
-	const usersPaginationPipe = new TrailsPaginationPipe();
+	const trailsPaginationPipe = new TrailsPaginationPipe();
 
 	it('should call for validateAndFormatSchema from PaginationPipe', () => {
 
@@ -16,7 +16,7 @@ describe('TrailPaginationPipe test', () => {
 			perPage: '5'
 		};
 
-		usersPaginationPipe.transform(pagination as any);
+		trailsPaginationPipe.transform(pagination as any);
 
 		expect(PaginationPipe.prototype.validateAndFormatSchema).toHaveBeenCalledWith(pagination);
 	});

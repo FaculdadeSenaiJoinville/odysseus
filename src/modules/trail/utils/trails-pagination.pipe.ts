@@ -14,11 +14,12 @@ export class TrailsPaginationPipe implements IPaginationPipe {
 
     public readonly sortOrderValues = [
     	'name',
-    	'email'
+        'description',
+        'status'
     ];
 
     public transform(pagination: IPagination) {
 
-    	return new PaginationPipe('users', this.schema, this.sortOrderValues).validateAndFormatSchema(pagination);
+    	return new PaginationPipe('trails', this.schema, this.sortOrderValues).validateAndFormatSchema(pagination);
     }
 }

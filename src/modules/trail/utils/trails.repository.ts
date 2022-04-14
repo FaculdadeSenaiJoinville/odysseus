@@ -12,7 +12,7 @@ export class TrailsRepository {
 	public list(options: ListOptions<Trail>): Promise<[Trail[], number]> {
 
 		const queryBuilder = this.mysqlRepository.get(Trail).createQueryBuilder('trails')
-			.select(['trails.id', 'trails.name', 'trails.email', 'trails.type', 'trails.active']);
+			.select(['trails.id', 'trails.name', 'trails.description','trails.status']);
 
 		return this.mysqlRepository
 			.setFindOptions(queryBuilder, options)
@@ -23,7 +23,7 @@ export class TrailsRepository {
 
 		return this.mysqlRepository.get(Trail).createQueryBuilder('trails')
 			.where({ id })
-			.select(['trails.id', 'trails.name', 'trails.email', 'trails.type', 'trails.active'])
+			.select(['trails.id', 'trails.name', 'trails.description','trails.status'])
 			.getOneOrFail();
 	}
 
@@ -33,7 +33,7 @@ export class TrailsRepository {
 
 		return this.mysqlRepository.get(Trail).createQueryBuilder('trails')
 			.where({ id })
-			.select(['trails.name', 'trails.email', 'trails.type'])
+			.select(['trails.name', 'trails.description','trails.status'])
 			.getOneOrFail();
 	}
 

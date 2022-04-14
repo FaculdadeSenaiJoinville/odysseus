@@ -82,7 +82,7 @@ describe('Trails', () => {
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('trails');
 			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: loggedTrail.id });
-			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['trails.id', 'trails.name', 'trails.email', 'trails.type', 'trails.active', 'groups.id', 'groups.name']);
+			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['trails.id', 'trails.name', 'trails.description']);
 		});
 
 		it('should receive an nonexistent id and return an error', async () => {
@@ -97,7 +97,7 @@ describe('Trails', () => {
 
 			expect(mockedMySQLRepository.repository.createQueryBuilder).toBeCalledWith('trails');
 			expect(mockedMySQLRepository.repository.queryBuilder.where).toBeCalledWith({ id: input });
-			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['trails.id', 'trails.name', 'trails.email', 'trails.type', 'trails.active', 'groups.id', 'groups.name']);
+			expect(mockedMySQLRepository.repository.queryBuilder.select).toBeCalledWith(['trails.id', 'trails.name', 'trails.description']);
 		});
 	});
 
