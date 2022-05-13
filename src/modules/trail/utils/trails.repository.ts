@@ -23,7 +23,7 @@ export class TrailsRepository {
 
 		return this.mysqlRepository.get(Trail).createQueryBuilder('trails')
 			.where({ id })
-			.select(['trails.id', 'trails.name', 'trails.description','trails.status'])
+			.select(['trails.id', 'trails.icon', 'trails.color', 'trails.name', 'trails.description','trails.status', 'trails.active'])
 			.getOneOrFail();
 	}
 

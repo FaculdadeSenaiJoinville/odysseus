@@ -1,6 +1,6 @@
 import { Body, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { TrailsService } from './trails.service';
-import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './utils/trails.validation';
+import { CREATE_TRAIL_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './utils/trails.validation';
 import { Trail } from 'src/core/database/entities';
 import { User } from 'src/core/database/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
@@ -44,8 +44,8 @@ export class TrailsController {
 	@Post('create')
 	@AuthProtection()
 	@AdminProfessorProtection()
-	public create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) trail: CreateTrailDTO): Promise<SuccessSaveMessage> {
-
+	public create(@Body() trail: CreateTrailDTO): Promise<SuccessSaveMessage> {
+		
 		return this.trailService.create(trail);
 	}
 

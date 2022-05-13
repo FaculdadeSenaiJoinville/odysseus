@@ -1,12 +1,8 @@
-import { Entity, Column, Index} from 'typeorm';
+import { Entity, Column, Index, Binary} from 'typeorm';
 import { CoreEntity } from '.';
 
 @Entity('trails')
 export class Trail extends CoreEntity {
-
-	@Column({ length: 100 })
-	@Index()
-	public name: string;
 
 	@Column({ length: 400 })
 	public description: string;
@@ -18,7 +14,7 @@ export class Trail extends CoreEntity {
 	public icon: string;
 
 	@Column()
-	public color: number;
+	public color: string;
 
 	@Column()
 	public active: boolean;

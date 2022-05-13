@@ -14,19 +14,16 @@ const groupsExample = [
 
 export class CreateTrailDTO {
 
-	@ApiProperty({ example: 'Gabriel Borges', description: 'Nome do usuário.' })
+	@ApiProperty({ example: 'Lógica de Programação', description: 'Nome da trilha.' })
 	name: string;
 
-	@ApiProperty({ example: 'gabriel@gmail.com', description: 'E-mail do usuário.' })
-	email: string;
+	@ApiProperty({ example: 'Conceitos básicos de uma aplicação WEB', description: 'Descrição da trilha.' })
+	description: string;
 
-	@ApiProperty({ example: 'Teste@123', description: 'Senha do usuário.' })
-	password: string;
+	@ApiProperty({ example: 'Ícone da trilha', description: 'Ícone da trilha.' })
+	icon: string;
 
-	@ApiProperty({ example: 'Teste@123', description: 'Confirmação da senha do usuário.' })
-	confirm_password: string;
-
-	@ApiProperty({ example: groupsExample, description: 'Lista com grupos aos quais o usuário será adicionado.' })
-	groups?: Group[];
+	@ApiProperty({ example: 'Cor do Ícone', description: 'Cor do Ícone.' })
+	color: string;
 
 }

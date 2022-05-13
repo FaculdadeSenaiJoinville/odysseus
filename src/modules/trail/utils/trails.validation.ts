@@ -1,13 +1,10 @@
 import * as Joi from 'joi';
 import buildValidation from '../../../common/helpers/validation.helper';
 
-export const CREATE_USER_VALIDATION = buildValidation('users', {
+export const CREATE_TRAIL_VALIDATION = buildValidation('trails', {
 	name: Joi.string().required(),
-	email: Joi.string().email().required(),
-	password: Joi.string().min(8).required(),
-	confirm_password: Joi.string().min(8).required(),
-	type: Joi.string().required(),
-	groups: Joi.array().items(Joi.object()).allow(null)
+	description: Joi.string().required(),
+	icon: Joi.string().required()
 });
 
 export const UPDATE_PASSWORD_VALIDATION = buildValidation('users', {

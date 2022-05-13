@@ -28,7 +28,7 @@
 		"run:script": "ts-node -r tsconfig-paths/register ./scripts/dml/run_mysql_dml.script.ts",
 		"new:migration": "yarn typeorm migration:create -c mysqlConnection -n",
 		"run:migration": "yarn typeorm migration:run -c mysqlConnection",
-		"ormconfig:generate": "(rm -rf ormconfig.json) && ts-node -r tsconfig-paths/register ./scripts/ormconfig.script.ts",
+		"ormconfig:generate": " ts-node -r tsconfig-paths/register ./scripts/ormconfig.script.ts",
 		"refresh:project": "yarn cache clean && rm -rf node_modules && yarn install",
 		"db:magic": "yarn ormconfig:generate && yarn run:migration"
 	},
@@ -53,7 +53,7 @@
 		"mysql2": "^2.2.5",
 		"node-telegram-bot-api": "^0.54.0",
 		"nodemailer": "^6.7.0",
-		"odyssey-dictionary": "2.31.0",
+		"odyssey-dictionary": "file:../odyssey-dictionary",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"pug": "^3.0.2",

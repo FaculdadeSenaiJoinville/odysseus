@@ -22,14 +22,14 @@ export class TrailsService {
 	) {}
 
 	public async create(trail: CreateTrailDTO): Promise<SuccessSaveMessage> {
-
-		this.trailsPolicies.mustHaveLastName(trail.name);
-		this.trailsPolicies.passwordsMustBeTheSame(trail.password, trail.confirm_password);
-
 		const newTrail = new Trail();
-		const groups = trail.groups;
 
+		
 		newTrail.name = trail.name;
+		newTrail.description = trail.description;
+		newTrail.icon = trail.icon;
+		newTrail.status = 'PUBLISHED';
+		newTrail.color = trail.color.substring(1);
 
 		const createdTrail = await this.mysqlRepository.save(Trail, newTrail);
 
@@ -40,8 +40,6 @@ export class TrailsService {
 	}
 
 	public async updatePassword(id: string, { password, confirm_password }: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
-
-		this.trailsPolicies.passwordsMustBeTheSame(password, confirm_password);
 
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
 
@@ -55,7 +53,6 @@ export class TrailsService {
 
 	public async update(id: string, trail_payload: UpdateTrailDTO): Promise<SuccessSaveMessage> {
 
-		this.trailsPolicies.mustHaveLastName(trail_payload.name);
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
 		const groups = trail_payload.groups;
 		const groupsToLeave = trail_payload.groups_to_leave;
