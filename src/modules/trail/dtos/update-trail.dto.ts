@@ -14,19 +14,24 @@ const groupsExample = [
 
 export class UpdateTrailDTO {
 
-	@ApiProperty({ example: 'Gabriel Borges', description: 'Nome do usuário.' })
+	@ApiProperty({ example: 'Trilha de Lógica de Programação', description: 'Nome da trilha.' })
 	name: string;
 
-	@ApiProperty({ example: 'gabriel@gmail.com', description: 'E-mail do usuário.' })
-	email: string;
+	@ApiProperty({ example: 'Trilha de Lógica de Programação', description: 'Descrição da trilha.' })
+	description: string;
 
-	@ApiProperty({ example: true, description: 'Status do usuário' })
+	@ApiProperty({ example: 'bone-off', description: 'Ícone da trilha.' })
+	icon: string;
+
+	@ApiProperty({ example: '8FA7B2', description: 'Cor da trilha.' })
+	color: string;
+
+	@ApiProperty({ example: 'PUBLISHED', description: 'Status da trilha.' })
+	status: string;
+	
+	@ApiProperty({ example: true, description: 'Status da trilha.' })
 	active: boolean;
 
-	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos aos quais o usuário será adicionado.' })
-	groups?: Group[];
 
-	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos dos quais o usuário será removido.' })
-	groups_to_leave?: Group[];
 
 }

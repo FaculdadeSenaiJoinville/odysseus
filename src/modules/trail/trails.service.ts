@@ -54,10 +54,12 @@ export class TrailsService {
 	public async update(id: string, trail_payload: UpdateTrailDTO): Promise<SuccessSaveMessage> {
 
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
-		const groups = trail_payload.groups;
-		const groupsToLeave = trail_payload.groups_to_leave;
 
 		trail.name = trail_payload.name;
+		trail.description = trail_payload.description;
+		trail.icon = trail_payload.icon;
+		trail.status = trail_payload.status;
+		trail.color = trail_payload.color.substring(1);
 		trail.active = trail_payload.active;
 
 		await this.mysqlRepository.save(Trail, trail);
