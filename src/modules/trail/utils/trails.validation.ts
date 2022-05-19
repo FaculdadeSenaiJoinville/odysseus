@@ -12,11 +12,8 @@ export const UPDATE_PASSWORD_VALIDATION = buildValidation('users', {
 	confirm_password: Joi.string().min(8).required()
 });
 
-export const UPDATE_USER_VALIDATION = buildValidation('users', {
+export const UPDATE_USER_VALIDATION = buildValidation('trails', {
 	name: Joi.string().required(),
-	email: Joi.string().email().required(),
-	type: Joi.string().required(),
-	active: Joi.boolean().required(),
-	groups: Joi.array().items(Joi.object()).allow(null),
-	groups_to_leave: Joi.array().items(Joi.object()).allow(null)
+	description: Joi.string().required(),
+	icon: Joi.string().required()
 });
