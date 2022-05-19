@@ -59,7 +59,7 @@ export class TrailsController {
 	@Put('update/:id')
 	@AuthProtection()
 	@AdminProfessorProtection()
-	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
+	public update(@Param('id') id: string, @Body() trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
 
 		return this.trailService.update(id, trail);
 	}
