@@ -9,6 +9,7 @@ import { CreateTrailDTO, UpdatePasswordDTO, UpdateTrailDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { TrailsPaginationPipe } from './utils/trails-pagination.pipe';
 import { TrailsRepository } from './utils/trails.repository';
+import { TrailsType } from './utils/trails.type';
 
 @ApiController('trails')
 export class TrailsController {
@@ -62,6 +63,14 @@ export class TrailsController {
 	public update(@Param('id') id: string, @Body() trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
 
 		return this.trailService.update(id, trail);
+	}
+
+	@Put('status/:status/:id')
+	@AuthProtection()
+	@AdminProfessorProtection()
+	public updateStatus(@Param('status') status: TrailsType,@Param('id') id: string, @Body() trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
+
+		return this.trailService.changeStatus(status,id);
 	}
 
 }

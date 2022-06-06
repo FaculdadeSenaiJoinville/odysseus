@@ -8,7 +8,7 @@ export class TrailsPaginationPipe implements IPaginationPipe {
 
     public readonly schema = {
     	...PAGINATION_SCHEMA,
-    	type: Joi.string(),
+    	status: Joi.string(),
     	active: Joi.boolean()
     };
 

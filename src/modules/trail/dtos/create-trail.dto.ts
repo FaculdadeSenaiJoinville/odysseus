@@ -20,10 +20,13 @@ export class CreateTrailDTO {
 	@ApiProperty({ example: 'Conceitos básicos de uma aplicação WEB', description: 'Descrição da trilha.' })
 	description: string;
 
-	@ApiProperty({ example: 'Ícone da trilha', description: 'Ícone da trilha.' })
+	@ApiProperty({ example: 'bone-off', description: 'Ícone da trilha.' })
 	icon: string;
 
-	@ApiProperty({ example: 'Cor do Ícone', description: 'Cor do Ícone.' })
+	@ApiProperty({ example: '#FFFFFF', description: 'Cor do Ícone.' })
 	color: string;
+
+	@ApiProperty({ example: 'PUBLISHED', description: 'Status da trilha.' })
+	status: string;
 
 }

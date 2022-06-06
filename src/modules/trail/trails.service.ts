@@ -9,6 +9,7 @@ import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
 import { MySQLRepositoryService } from '../../core/repository';
 import { Group, Trail } from '../../core/database/entities';
+import { TrailsType } from './utils/trails.type';
 
 @Injectable()
 export class TrailsService {
@@ -28,7 +29,7 @@ export class TrailsService {
 		newTrail.name = trail.name;
 		newTrail.description = trail.description;
 		newTrail.icon = trail.icon;
-		newTrail.status = 'PUBLISHED';
+		newTrail.status = TrailsType.ONEDIT;
 		newTrail.color = trail.color.substring(1);
 
 		const createdTrail = await this.mysqlRepository.save(Trail, newTrail);
@@ -58,9 +59,23 @@ export class TrailsService {
 		trail.name = trail_payload.name;
 		trail.description = trail_payload.description;
 		trail.icon = trail_payload.icon;
-		trail.status = trail_payload.status;
+		trail.status = TrailsType.ONEDIT;
 		trail.color = trail_payload.color.substring(1);
 		trail.active = trail_payload.active;
+
+		await this.mysqlRepository.save(Trail, trail);
+
+		return {
+			id,
+			message: Dictionary.trails.getMessage('successfully_updated')
+		}
+	}
+
+	public async changeStatus(status: TrailsType,id: string): Promise<SuccessSaveMessage> {
+
+		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
+
+		trail.status = status;
 
 		await this.mysqlRepository.save(Trail, trail);
 

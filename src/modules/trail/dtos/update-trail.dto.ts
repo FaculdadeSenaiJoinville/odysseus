@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TrailsType } from '../utils/trails.type';
 
 export class UpdateTrailDTO {
 
@@ -15,7 +16,7 @@ export class UpdateTrailDTO {
 	color: string;
 
 	@ApiProperty({ example: 'PUBLISHED', description: 'Status da trilha.' })
-	status: string;
+	status: TrailsType;
 	
 	@ApiProperty({ example: true, description: 'Status da trilha.' })
 	active: boolean;
