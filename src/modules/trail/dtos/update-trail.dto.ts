@@ -14,9 +14,6 @@ export class UpdateTrailDTO {
 
 	@ApiProperty({ example: '8FA7B2', description: 'Cor da trilha.' })
 	color: string;
-
-	@ApiProperty({ example: 'PUBLISHED', description: 'Status da trilha.' })
-	status: TrailsType;
 	
 	@ApiProperty({ example: true, description: 'Status da trilha.' })
 	active: boolean;

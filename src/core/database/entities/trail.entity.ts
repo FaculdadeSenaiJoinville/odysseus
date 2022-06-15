@@ -1,4 +1,4 @@
-import { Entity, Column, Index, Binary} from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { CoreEntity } from '.';
 import { TrailsType } from '../../../modules/trail/utils/trails.type';
 

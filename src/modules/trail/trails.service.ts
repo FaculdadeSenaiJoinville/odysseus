@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTrailDTO } from './dtos/create-trail.dto';
 import { BcryptHelper } from 'src/common/helpers';
-import { UpdatePasswordDTO, UpdateTrailDTO } from './dtos';
+import { UpdateTrailDTO, CreateTrailDTO } from './dtos';
 import { TrailsPolicies } from './utils/trails.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
 import { MySQLRepositoryService } from '../../core/repository';
-import { Group, Trail } from '../../core/database/entities';
+import { Trail } from '../../core/database/entities';
 import { TrailsType } from './utils/trails.type';
 
 @Injectable()
@@ -37,18 +36,6 @@ export class TrailsService {
 		return {
 			message: Dictionary.trails.getMessage('successfully_created'),
 			id: createdTrail.id
-		};
-	}
-
-	public async updatePassword(id: string, { password, confirm_password }: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
-
-		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
-
-		await this.mysqlRepository.save(Trail, trail);
-
-		return {
-			message: Dictionary.trails.getMessage('password_successfully_updated'),
-			id
 		};
 	}
 
