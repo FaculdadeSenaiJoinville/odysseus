@@ -12,8 +12,8 @@ export class TrailsRepository {
 	public list(options: ListOptions<Trail>): Promise<[Trail[], number]> {
 
 		const queryBuilder = this.mysqlRepository.get(Trail).createQueryBuilder('trails')
-			.select(['trails.id', 'trails.name', 'trails.description','trails.status']);
-
+			.select(['trails.id', 'trails.name', 'trails.description','trails.status','trails.updated_by']);
+			
 		return this.mysqlRepository
 			.setFindOptions(queryBuilder, options)
 			.getManyAndCount();
@@ -23,7 +23,7 @@ export class TrailsRepository {
 
 		return this.mysqlRepository.get(Trail).createQueryBuilder('trails')
 			.where({ id })
-			.select(['trails.id', 'trails.name', 'trails.description','trails.status'])
+			.select(['trails.id', 'trails.icon', 'trails.color', 'trails.name', 'trails.description','trails.status', 'trails.active'])
 			.getOneOrFail();
 	}
 

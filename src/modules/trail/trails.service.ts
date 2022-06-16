@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTrailDTO } from './dtos/create-trail.dto';
 import { BcryptHelper } from 'src/common/helpers';
-import { UpdatePasswordDTO, UpdateTrailDTO } from './dtos';
+import { UpdateTrailDTO, CreateTrailDTO } from './dtos';
 import { TrailsPolicies } from './utils/trails.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
 import { MySQLRepositoryService } from '../../core/repository';
-import { Group, Trail } from '../../core/database/entities';
+import { Trail } from '../../core/database/entities';
+import { TrailsType } from './utils/trails.type';
 
 @Injectable()
 export class TrailsService {
@@ -22,14 +22,14 @@ export class TrailsService {
 	) {}
 
 	public async create(trail: CreateTrailDTO): Promise<SuccessSaveMessage> {
-
-		this.trailsPolicies.mustHaveLastName(trail.name);
-		this.trailsPolicies.passwordsMustBeTheSame(trail.password, trail.confirm_password);
-
 		const newTrail = new Trail();
-		const groups = trail.groups;
 
+		
 		newTrail.name = trail.name;
+		newTrail.description = trail.description;
+		newTrail.icon = trail.icon;
+		newTrail.status = TrailsType.ONEDIT;
+		newTrail.color = trail.color.substring(1);
 
 		const createdTrail = await this.mysqlRepository.save(Trail, newTrail);
 
@@ -39,29 +39,30 @@ export class TrailsService {
 		};
 	}
 
-	public async updatePassword(id: string, { password, confirm_password }: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
-
-		this.trailsPolicies.passwordsMustBeTheSame(password, confirm_password);
+	public async update(id: string, trail_payload: UpdateTrailDTO): Promise<SuccessSaveMessage> {
 
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
+
+		trail.name = trail_payload.name;
+		trail.description = trail_payload.description;
+		trail.icon = trail_payload.icon;
+		trail.status = TrailsType.ONEDIT;
+		trail.color = trail_payload.color.substring(1);
+		trail.active = trail_payload.active;
 
 		await this.mysqlRepository.save(Trail, trail);
 
 		return {
-			message: Dictionary.trails.getMessage('password_successfully_updated'),
-			id
-		};
+			id,
+			message: Dictionary.trails.getMessage('successfully_updated')
+		}
 	}
 
-	public async update(id: string, trail_payload: UpdateTrailDTO): Promise<SuccessSaveMessage> {
+	public async changeStatus(status: TrailsType,id: string): Promise<SuccessSaveMessage> {
 
-		this.trailsPolicies.mustHaveLastName(trail_payload.name);
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, id);
-		const groups = trail_payload.groups;
-		const groupsToLeave = trail_payload.groups_to_leave;
 
-		trail.name = trail_payload.name;
-		trail.active = trail_payload.active;
+		trail.status = status;
 
 		await this.mysqlRepository.save(Trail, trail);
 

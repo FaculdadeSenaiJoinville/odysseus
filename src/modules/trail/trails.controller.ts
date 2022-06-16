@@ -1,14 +1,14 @@
 import { Body, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { TrailsService } from './trails.service';
-import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './utils/trails.validation';
+import { TRAIL_VALIDATION } from './utils/trails.validation';
 import { Trail } from 'src/core/database/entities';
-import { User } from 'src/core/database/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
 import { AdminProfessorProtection, ApiController, AuthProtection } from 'src/common/decorators';
-import { CreateTrailDTO, UpdatePasswordDTO, UpdateTrailDTO } from './dtos';
+import { CreateTrailDTO, UpdateTrailDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { TrailsPaginationPipe } from './utils/trails-pagination.pipe';
 import { TrailsRepository } from './utils/trails.repository';
+import { TrailsType } from './utils/trails.type';
 
 @ApiController('trails')
 export class TrailsController {
@@ -16,7 +16,7 @@ export class TrailsController {
 	constructor(
 		private readonly trailService: TrailsService,
 		private readonly trailsRepository: TrailsRepository
-	) {}
+	) { }
 
 	@Get('list')
 	@AuthProtection()
@@ -44,24 +44,25 @@ export class TrailsController {
 	@Post('create')
 	@AuthProtection()
 	@AdminProfessorProtection()
-	public create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) trail: CreateTrailDTO): Promise<SuccessSaveMessage> {
-
+	public create(@Body(new ValidateBodyPipe(TRAIL_VALIDATION)) trail: CreateTrailDTO): Promise<SuccessSaveMessage> {
+		
 		return this.trailService.create(trail);
 	}
 
-	@Put('update-password/:id')
-	@AuthProtection()
-	public updatePassword(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_PASSWORD_VALIDATION)) password_payload: UpdatePasswordDTO): Promise<SuccessSaveMessage> {
-
-		return this.trailService.updatePassword(id, password_payload);
-	}
-	
 	@Put('update/:id')
 	@AuthProtection()
 	@AdminProfessorProtection()
-	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(UPDATE_USER_VALIDATION)) trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
-
+	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(TRAIL_VALIDATION)) trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
+		
 		return this.trailService.update(id, trail);
+	}
+
+	@Put('status/:status/:id')
+	@AuthProtection()
+	@AdminProfessorProtection()
+	public updateStatus(@Param('status') status: TrailsType, @Param('id') id: string): Promise<SuccessSaveMessage> {
+
+		return this.trailService.changeStatus(status, id);
 	}
 
 }
