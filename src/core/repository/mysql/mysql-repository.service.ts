@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, EntityTarget, FindConditions, FindManyOptions, FindOneOptions, getConnectionManager, Repository, SelectQueryBuilder } from 'typeorm';
+import { DeepPartial, DeleteResult, EntityTarget, FindConditions, FindManyOptions, FindOneOptions, getConnectionManager, Repository, SelectQueryBuilder } from 'typeorm';
 import { ListOptions } from '../../../common/types';
 import { ErrorService } from '../../error/errors.service';
 import { Order } from '../pagination/pagination.type';
@@ -16,7 +16,7 @@ export class MySQLRepositoryService {
 
 	public async findOne<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
 
-		return this.get(target).findOne(value).catch(error => {
+		return this.get(target).findOne(value as DeepPartial<Entity>).catch(error => {
 
 			this.errorService.throwMySQLError(error);
 		});
@@ -24,7 +24,7 @@ export class MySQLRepositoryService {
 
 	public async findOneOrFail<Entity>(target: EntityTarget<Entity>, value?: string | FindOneOptions<Entity> | FindConditions<Entity>): Promise<Entity> {
 
-		return this.get(target).findOneOrFail(value).catch(() => {
+		return this.get(target).findOneOrFail(value as DeepPartial<Entity>).catch(() => {
 
 			this.errorService.throwNotFoundError();
 		});
@@ -42,9 +42,9 @@ export class MySQLRepositoryService {
 
 	public async save<Entity>(target: EntityTarget<Entity>, value: Entity): Promise<Entity> {
 
-		const payload = this.get(target).create(value);
+		const payload = this.get(target).create(value as DeepPartial<Entity>);
 
-		return this.get(target).save(payload).catch(error => {
+		return this.get(target).save(payload as DeepPartial<Entity>).catch(error => {
 			
 			this.errorService.throwMySQLError(error);
 		});
