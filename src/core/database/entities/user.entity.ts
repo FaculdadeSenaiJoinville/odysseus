@@ -1,5 +1,5 @@
 import { Entity, Column, Index, JoinTable, ManyToMany, OneToMany, JoinColumn } from 'typeorm';
-import { BotIntent, CoreEntity, Group } from '.';
+import { BotIntent, CoreEntity, Group, Trail } from '.';
 import { UserType } from '../../../modules/user/utils/users.type';
 
 @Entity('users')
@@ -38,6 +38,30 @@ export class User extends CoreEntity {
 		}
 	})
 	public groups?: Group[];
+
+	@ManyToMany(() => Trail, (trail: Trail) => trail.users)
+	@JoinTable({
+		name: 'available_trails',
+		joinColumn: {
+			name: 'user_id',
+			referencedColumnName: 'id'
+		},
+		inverseJoinColumn: {
+			name: 'trail_id',
+			referencedColumnName: 'id'
+		}
+	})
+	public trails?: Trail[];
+
+	addTrails(trail: Trail) {
+
+		if (!this.trails) {
+
+			this.trails = new Array<Trail>();
+		}
+
+		this.trails.push(trail);
+	}
 
 	addGroup(group: Group) {
 

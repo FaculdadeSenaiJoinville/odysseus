@@ -34,8 +34,10 @@ export class UsersRepository {
 
 		return this.mysqlRepository.get(User).createQueryBuilder('users')
 			.where({ id })
-			.select(['users.name', 'users.email', 'users.type', 'groups.name', 'groups.description'])
+			.select(['users.name', 'users.email', 'users.type', 'groups.name', 'groups.description',
+				'trails.name', 'trails.description', 'trails.icon', 'trails.color'])
 			.leftJoin('users.groups', 'groups')
+			.leftJoin('users.trails', 'trails')
 			.getOneOrFail();
 	}
 

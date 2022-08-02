@@ -4,7 +4,7 @@ import { TRAIL_VALIDATION } from './utils/trails.validation';
 import { Trail } from 'src/core/database/entities';
 import { ValidateBodyPipe } from 'src/common/pipes';
 import { AdminProfessorProtection, ApiController, AuthProtection } from 'src/common/decorators';
-import { CreateTrailDTO, UpdateTrailDTO } from './dtos';
+import { CreateTrailDTO,UpdateAccessTrailDTO, UpdateTrailDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { TrailsPaginationPipe } from './utils/trails-pagination.pipe';
 import { TrailsRepository } from './utils/trails.repository';
@@ -55,6 +55,14 @@ export class TrailsController {
 	public update(@Param('id') id: string, @Body(new ValidateBodyPipe(TRAIL_VALIDATION)) trail: UpdateTrailDTO): Promise<SuccessSaveMessage> {
 		
 		return this.trailService.update(id, trail);
+	}
+
+	@Put('updateAccess/:id')
+	@AuthProtection()
+	@AdminProfessorProtection()
+	public updateAccess(@Param('id') id: string, @Body() trail: UpdateAccessTrailDTO): Promise<SuccessSaveMessage> {
+		
+		return this.trailService.updateAccess(id, trail);
 	}
 
 	@Put('status/:status/:id')

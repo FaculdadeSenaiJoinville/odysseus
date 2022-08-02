@@ -1,5 +1,5 @@
-import { Entity, Column } from 'typeorm';
-import { CoreEntity } from '.';
+import { Entity, Column, JoinTable, ManyToMany, OneToMany, JoinColumn } from 'typeorm';
+import { CoreEntity, User } from '.';
 import { TrailsType } from '../../../modules/trail/utils/trails.type';
 
 @Entity('trails')
@@ -19,5 +19,31 @@ export class Trail extends CoreEntity {
 
 	@Column()
 	public active: boolean;
+
+
+	@ManyToMany(() => User, (user: User) => user.trails)
+	@JoinTable({
+		name: 'available_trails',
+		joinColumn: {
+			name: 'trail_id',
+			referencedColumnName: 'id'
+		},
+		inverseJoinColumn: {
+			name: 'user_id',
+			referencedColumnName: 'id'
+		}
+	})
+	public users? : User[];
+
+	
+	addUserAccess(user: User) {
+
+		if (!this.users) {
+
+			this.users = new Array<User>();
+		}
+
+		this.users.push(user);
+	}
 
 }

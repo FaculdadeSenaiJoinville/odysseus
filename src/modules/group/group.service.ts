@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { Dictionary } from 'odyssey-dictionary';
 import { BaseMessage, SuccessSaveMessage } from '../../common/types';
-import { Group, GroupMember } from '../../core/database/entities';
+import { Trail, Group, GroupMember } from '../../core/database/entities';
 import { MySQLRepositoryService } from '../../core/repository';
 import { UpsertGroupDTO } from './dto/upsert-group.dto';
 import { GroupHelper } from './utils/group.helper';
@@ -47,6 +47,11 @@ export class GroupService {
 	}
 
 	public async update(id: string, group_payload: UpsertGroupDTO): Promise<SuccessSaveMessage> {
+
+		const trail = await this.mysqlRepository.findOneOrFail(Trail, {
+			relations: ['users'],
+			where: { id: '15ce0bb6-9bb6-490a-b4df-a225992cf4fe' }
+		});
 
 		const group = await this.mysqlRepository.findOneOrFail(Group, {
 			relations: ['members'],

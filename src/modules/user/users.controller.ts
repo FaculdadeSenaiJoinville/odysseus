@@ -25,6 +25,17 @@ export class UsersController {
 		return this.usersRepository.list(options);
 	}
 
+	@Get('userTrails/:id')
+	@AuthProtection()
+	@AdminProfessorProtection()
+	public userTrails(): Promise<User> {
+
+
+		
+		return this.usersRepository.profile();
+	}
+
+
 	@Get('details/:id')
 	@AuthProtection()
 	@AdminProfessorProtection()

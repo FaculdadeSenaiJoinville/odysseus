@@ -8,6 +8,7 @@ import { TrailsPolicies } from './utils/trails.policies';
 import { TrailsRepository } from './utils/trails.repository';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
+import { TrailHelper } from './utils/trail.helper';
 
 @Module({
 	imports: [
@@ -19,6 +20,7 @@ import { GroupPolicies } from '../group/utils/group.policies';
 	],
 	providers: [
 		TrailsService,
+		TrailHelper,
 		TrailsPolicies,
 		TrailsRepository,
 		GroupHelper,
