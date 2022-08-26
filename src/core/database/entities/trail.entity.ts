@@ -1,6 +1,7 @@
-import { Entity, Column, JoinTable, ManyToMany, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, JoinTable, ManyToMany, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { CoreEntity, User } from '.';
 import { TrailsType } from '../../../modules/trail/utils/trails.type';
+import { AvailableTrail } from './available-trail.entity';
 
 @Entity('trails')
 export class Trail extends CoreEntity {
@@ -34,6 +35,10 @@ export class Trail extends CoreEntity {
 		}
 	})
 	public users? : User[];
+
+	@OneToMany(() => AvailableTrail, availableTrail => availableTrail.trails)
+	@JoinColumn({ name: 'id' })
+	public availableTrail: AvailableTrail[];
 
 	
 	addUserAccess(user: User) {

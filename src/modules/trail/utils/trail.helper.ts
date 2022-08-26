@@ -1,24 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { GroupMember } from 'src/core/database/entities';
+import { GroupMember, Trail } from 'src/core/database/entities';
 import { AvailableTrail } from 'src/core/database/entities/available-trail.entity';
 import { MySQLRepositoryService } from 'src/core/repository';
 import { DeleteResult } from 'typeorm';
+import { Type } from './trailAccessType';
 
 @Injectable()
 export class TrailHelper {
 
 	constructor(private readonly mysqlRepository: MySQLRepositoryService) {}
 
-	public addUserToTrail(trail_id: string, user_id: string): Promise<AvailableTrail> {
+	public addTrailEntity(availableTrail: AvailableTrail): Promise<AvailableTrail> {
 
-		const payload = { trail_id, user_id } as AvailableTrail;
+		console.log(availableTrail);
+		return this.mysqlRepository.save(AvailableTrail, availableTrail);
 
-		return this.mysqlRepository.save(AvailableTrail, payload);
 	}
 
-	public removeUserFromTrail(trail_id: string, user_id: string): Promise<DeleteResult> {
+	public removeUserFromTrail(trails: Trail, entity_id: string): Promise<DeleteResult> {
 
-		return this.mysqlRepository.delete(AvailableTrail, { trail_id, user_id });
+		return this.mysqlRepository.delete(AvailableTrail, { trails_id: trails.id, entity_id });
 	}
 
 }

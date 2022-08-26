@@ -20,7 +20,6 @@ export class UsersRepository {
 	}
 
 	public async details(id: string): Promise<User> {
-
 		return this.mysqlRepository.get(User).createQueryBuilder('users')
 			.where({ id })
 			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])

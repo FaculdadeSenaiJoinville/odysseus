@@ -9,6 +9,8 @@ import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { TrailsPaginationPipe } from './utils/trails-pagination.pipe';
 import { TrailsRepository } from './utils/trails.repository';
 import { TrailsType } from './utils/trails.type';
+import { AvailableTrail } from 'src/core/database/entities/available-trail.entity';
+import { EntityTrailAccess } from 'src/core/database/entities/vo/entity-trail-access.entity';
 
 @ApiController('trails')
 export class TrailsController {
@@ -57,20 +59,29 @@ export class TrailsController {
 		return this.trailService.update(id, trail);
 	}
 
-	@Put('updateAccess/:id')
-	@AuthProtection()
-	@AdminProfessorProtection()
-	public updateAccess(@Param('id') id: string, @Body() trail: UpdateAccessTrailDTO): Promise<SuccessSaveMessage> {
-		
-		return this.trailService.updateAccess(id, trail);
-	}
-
 	@Put('status/:status/:id')
 	@AuthProtection()
 	@AdminProfessorProtection()
 	public updateStatus(@Param('status') status: TrailsType, @Param('id') id: string): Promise<SuccessSaveMessage> {
 
 		return this.trailService.changeStatus(status, id);
+	}
+
+	@Get('access/find/:id')
+	@AuthProtection()
+	@AdminProfessorProtection()
+	public access(@Param('id') id: string): Promise<any> {
+
+		return this.trailsRepository.access(id);
+	}
+
+	
+	@Put('access/update/:id')
+	@AuthProtection()
+	@AdminProfessorProtection()
+	public updateAccess(@Param('id') id: string, @Body() trailAccess: UpdateAccessTrailDTO): Promise<SuccessSaveMessage> {
+		
+		return this.trailService.updateAccess(id, trailAccess);
 	}
 
 }

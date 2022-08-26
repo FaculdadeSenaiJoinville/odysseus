@@ -1,4 +1,4 @@
-export enum AddedBy {
+export enum Type {
     USER = 'USER',
     GROUP = 'GROUP',
 }

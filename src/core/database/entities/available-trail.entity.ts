@@ -1,35 +1,42 @@
-import { AddedBy } from 'src/modules/trail/utils/added-by.type';
-import { Entity, ManyToOne, JoinColumn, PrimaryColumn, CreateDateColumn, Column, ManyToMany } from 'typeorm';
+import { session } from 'src/core/session';
+import { Type } from 'src/modules/trail/utils/trailAccessType';
+import { Entity, ManyToOne, JoinColumn, PrimaryColumn, CreateDateColumn, Column, ManyToMany, BeforeInsert, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { Trail, User } from '.';
 
 @Entity('available_trails')
 export class AvailableTrail {
 
-	@PrimaryColumn()
-	public trail_id: string;
+	@PrimaryGeneratedColumn('uuid')
+	@Column()
+	public id?: string;
 
 	@PrimaryColumn()
-	public user_id: string;
+	public trails_id: string;
+	
+  @PrimaryColumn()
+	public entity_id: string;
+
+	//type => User, user=> user.photo,
+	@ManyToOne(() => Trail, trail => trail.availableTrail)
+	@JoinColumn({ name: 'trails_id' })
+	public trails: Promise<Trail>;
 
   @Column()
-	public added_by: AddedBy;
+	public type: Type;
 	
-  @CreateDateColumn()
-  public released_at: Date;
+	@Column()
+	public created_by?: string;
 
+	@BeforeInsert()
+	protected setInsertProperties() {
 
-	@ManyToOne(() => Trail, (trail: Trail) => trail.users, { primary: true })
-	@JoinColumn({ name: 'trail_id' })
-	public trail: Promise<Trail>;
+		this.created_by = session.getUser()?.id;
+	}
 
-	@ManyToOne(() => User, (user: User) => user.trails, { primary: true })
-	@JoinColumn({ name: 'user_id' })
-	public user: Promise<User>;
+	constructor(trails_id?: string, entity_id?: string) {
 
-	constructor(trail_id?: string, user_id?: string) {
-
-		this.trail_id = trail_id;
-		this.user_id = user_id;
+		this.trails_id = trails_id;
+		this.entity_id = entity_id;
 	}
 
 }

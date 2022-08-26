@@ -11,6 +11,8 @@ import { MySQLRepositoryService } from '../../core/repository';
 import { Trail } from '../../core/database/entities';
 import { AvailableTrail} from '../../core/database/entities/available-trail.entity';
 import { TrailsType } from './utils/trails.type';
+import { getManager } from 'typeorm';
+import { Type } from './utils/trailAccessType';
 
 @Injectable()
 export class TrailsService {
@@ -63,53 +65,101 @@ export class TrailsService {
 
 	public async updateAccess(id: string, trail_payload: UpdateAccessTrailDTO): Promise<SuccessSaveMessage> {
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, {
-			relations: ['users'],
+			relations: ['availableTrail'],
 			where: { id }
 		});
-		trail.users = trail_payload.members;
 
-		const members = trail_payload.members;
-		const membersToRemove = trail_payload.members_to_remove;
+		const users = trail_payload.users;
+		const usersToRemove = trail_payload.users_to_remove;
 
-		const groupMembers = trail_payload.groups;
-		const groupMembersToRemove = trail_payload.groups_to_remove;
+		const groupusers = trail_payload.groups;
+		const groupusersToRemove = trail_payload.groups_to_remove;
 
+		if (users) {
+			
+			for (const user of users) {
 
-		const updatedGroup = await this.mysqlRepository.save(Trail, trail);
-
-		if (members) {
-
-			for (const user of members) {
-
-				const trailAccessUsers = await this.mysqlRepository.findOne(Trail, {
-					relations: ['users'],
-					where: { id: user.id }
-				});
-
-				if (trailAccessUsers && !this.trailsPolicies.hasUserInTrail(user.id, trailAccessUsers)) {
+				if (trail && !this.trailsPolicies.hasUserInTrail(user.id, trail.availableTrail)) {
 	
-					await this.trailHelper.addUserToTrail(updatedGroup.id, user.id);
+					this.saveTrailAccessEntity(trail.id, user.id, Type.USER);
 				}
 			}
 		}
 
-		if (membersToRemove) {
+		if (usersToRemove) {
 
-			for (const user of membersToRemove) {
+			for (const user of usersToRemove) {
 
 				const trailWithUsers = await this.mysqlRepository.findOne(Trail, {
-					relations: ['users'],
-					where: { id: user.id }
+					where: { id }
 				});
 
-				if (trailWithUsers && this.trailsPolicies.hasUserInTrail(user.id, trailWithUsers)) {
-					await this.trailHelper.removeUserFromTrail(updatedGroup.id, user.id);
+				if (trailWithUsers && this.trailsPolicies.hasUserInTrail(user.id, trail.availableTrail)) {
+					await this.trailHelper.removeUserFromTrail(trail, user.id);
 				}
 			}
 		}
+
+
+		if (groupusers) {
+
+			for (const group of groupusers) {
+
+				const trailAccessUsers = await this.mysqlRepository.findOne(Trail, {
+					where: { id }
+				});
+
+				if (trailAccessUsers && !this.trailsPolicies.hasUserInTrail(group.id, trail.availableTrail)) {
+	
+					this.saveTrailAccessEntity(trail.id, group.id, Type.GROUP);
+				}
+			}
+		}
+
+		if (groupusersToRemove) {
+
+			for (const group of groupusersToRemove) {
+
+				const trailWithUsers = await this.mysqlRepository.findOne(Trail, {
+					where: { id }
+				});
+
+				if (trailWithUsers && this.trailsPolicies.hasUserInTrail(group.id, trail.availableTrail)) {
+					await this.trailHelper.removeUserFromTrail(trail, group.id);
+				}
+			}
+		}
+
+
+
+
+
 		return {
 			id,
 			message: Dictionary.trails.getMessage('successfully_updated')
+		}
+	}
+
+	private async saveTrailAccessEntity(trails_id: string, entity_id: string, type: Type){
+	
+		const payload = { trails_id, entity_id, type } as AvailableTrail;
+		
+		await this.trailHelper.addTrailEntity(payload);
+	}
+
+	private async deleteTrailAccessEntity(trails_id: string, entity_id: string, type: Type){
+	
+		const payload = { trails_id, entity_id, type } as AvailableTrail;
+		
+		await this.trailHelper.addTrailEntity(payload);
+	}
+
+	
+	private async saveTrailAccessEntities(availableTrailList: AvailableTrail[]){
+			
+		for (let avTrail of availableTrailList)
+		{
+			await this.trailHelper.addTrailEntity(avTrail);
 		}
 	}
 

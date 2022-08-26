@@ -1,50 +1,59 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
-export class createAvailableTrailsTable1657065698249 implements MigrationInterface {
+export class createAvailableTrailsTable1660004242917 implements MigrationInterface {
 
 	private table = new Table({
 		name: 'available_trails',
 		columns: [
 			{
-				name: 'trail_id',
+				
+				name: 'id',
 				type: 'varchar',
 				length: '64',
-				isNullable: false
+				isGenerated: true,
+				isUnique: true,
+				generationStrategy: 'uuid'           
 
 			},
 			{
-				name: 'user_id',
+				name: 'trails_id',
+				type: 'varchar',
+				length: '64',
+        isPrimary: true,
+				isNullable: false
+			},
+			{
+				name: 'entity_id',
+				type: 'varchar',
+				length: '64',
+				isPrimary: true,
+				isNullable: false
+			},
+			{
+				name: 'type',
 				type: 'varchar',
 				length: '64',
 				isNullable: false
 			},
 			{
-				name: 'added_by',
+				name: 'created_by',
 				type: 'varchar',
-				length: '64',
-				isNullable: false
-			},
-			{
-				name: 'released_at',
-				type: 'timestamp',
-				isNullable: false,
-				default: 'NOW()'
+				length: '64'
 			}
 		]
 	});
 
 	private foreinKeys = [
 		new TableForeignKey({
-			columnNames: ['trail_id'],
+			columnNames: ['trails_id'],
 			referencedColumnNames: ['id'],
 			referencedTableName: 'trails',
 			onDelete: 'CASCADE'
 		}),
-		new TableForeignKey({
-			columnNames: ['user_id'],
+        new TableForeignKey({
+			columnNames: ['created_by'],
 			referencedColumnNames: ['id'],
-			referencedTableName: 'users',
-			onDelete: 'CASCADE'
+			referencedTableName: 'users'
 		})
 	];
 
@@ -59,4 +68,6 @@ export class createAvailableTrailsTable1657065698249 implements MigrationInterfa
 		await queryRunner.dropTable(this.table, true);
 		await queryRunner.dropForeignKeys(this.table, this.foreinKeys);
 	}
+
+
 }

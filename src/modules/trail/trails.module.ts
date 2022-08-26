@@ -5,10 +5,10 @@ import { BcryptHelper } from 'src/common/helpers';
 import { ErrorModule } from 'src/core/error/errors.module';
 import { MySQLRepositoryModule } from 'src/core/repository';
 import { TrailsPolicies } from './utils/trails.policies';
-import { TrailsRepository } from './utils/trails.repository';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
 import { TrailHelper } from './utils/trail.helper';
+import { TrailsRepository } from './utils/trails.repository';
 
 @Module({
 	imports: [

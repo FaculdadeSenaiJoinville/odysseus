@@ -3,3 +3,8 @@ export enum TrailsType {
     ONTEST = 'ONTEST',
     PUBLISHED = 'PUBLISHED'
 }
+
+export enum AddedByType {
+    USER = 'USER',
+    GROUP = 'GROUP'
+}

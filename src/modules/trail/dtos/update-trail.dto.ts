@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Group, User } from 'src/core/database/entities';
 import { TrailsType } from '../utils/trails.type';
 
-const membersExample = [
+const usersExample = [
 	{
 		id: '675e4ed9-2758-4ba1-b596-e00fb81e2df0',
 		name: 'Usuário de teste 1'
@@ -24,11 +24,11 @@ const groupsExample = [
 ];
 export class UpdateAccessTrailDTO {
 	
-	@ApiProperty({ example: membersExample, description: 'Lista com IDs dos membros da trilha.' })
-	members?: User[];
+	@ApiProperty({ example: usersExample, description: 'Lista com IDs dos membros da trilha.' })
+	users?: User[];
 
-	@ApiProperty({ example: membersExample, description: 'Lista com IDs dos membros que serão removidos da trilha.' })
-	members_to_remove?: User[];
+	@ApiProperty({ example: usersExample, description: 'Lista com IDs dos membros que serão removidos da trilha.' })
+	users_to_remove?: User[];
 
 	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos da trilha.' })
 	groups?: Group[];
