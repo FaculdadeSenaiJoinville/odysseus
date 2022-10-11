@@ -1,7 +1,7 @@
 import { session } from 'src/core/session';
-import { Type } from 'src/modules/trail/utils/trailAccessType';
+import { TrailType } from 'src/modules/trail/utils/trailsAccessType';
 import { Entity, ManyToOne, JoinColumn, PrimaryColumn, CreateDateColumn, Column, ManyToMany, BeforeInsert, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { Trail, User } from '.';
+import { Group, Trail, User } from '.';
 
 @Entity('available_trails')
 export class AvailableTrail {
@@ -17,12 +17,20 @@ export class AvailableTrail {
 	public entity_id: string;
 
 	//type => User, user=> user.photo,
-	@ManyToOne(() => Trail, trail => trail.availableTrail)
+	@ManyToOne(() => Trail, trail => trail.users || trail.groups)
 	@JoinColumn({ name: 'trails_id' })
 	public trails: Promise<Trail>;
+	
+	@ManyToOne(() => User, user => user.trails)
+	@JoinColumn({ name: 'entity_id' })
+	public users: Promise<User>;
+	
+	@ManyToOne(() => Group, group => group.trails)
+	@JoinColumn({ name: 'entity_id' })
+	public groups: Promise<Group>;
 
   @Column()
-	public type: Type;
+	public type: TrailType;
 	
 	@Column()
 	public created_by?: string;

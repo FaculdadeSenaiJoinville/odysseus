@@ -7,5 +7,7 @@ export const TRAIL_VALIDATION = buildValidation('trails', {
 	icon: Joi.string().required(),
 	status: Joi.string().allow(null, ''),
 	color: Joi.string().required(),
-	active: Joi.boolean().allow(true, false)
+	active: Joi.boolean().allow(true, false),
+	users: Joi.array().items(Joi.object()),
+	groups: Joi.array().items(Joi.object()),
 });

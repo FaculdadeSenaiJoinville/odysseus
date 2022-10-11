@@ -1,11 +1,29 @@
 import { Entity, Column, JoinTable, ManyToMany } from 'typeorm';
-import { CoreEntity, User } from '.';
+import { CoreEntity, Trail, User } from '.';
 
 @Entity('groups')
 export class Group extends CoreEntity {
 
 	@Column()
 	public description?: string;
+
+
+
+	@ManyToMany(() => Trail, (trail: Trail) => trail.groups)
+	@JoinTable({
+		name: 'available_trails',
+		joinColumn: {
+			name: 'entity_id',
+			referencedColumnName: 'id'
+		},
+		inverseJoinColumn: {
+			name: 'trails_id',
+			referencedColumnName: 'id'
+		}
+	})
+	public trails?: Trail[];
+
+
 
 	@ManyToMany(() => User, (user: User) => user.groups)
 	@JoinTable({

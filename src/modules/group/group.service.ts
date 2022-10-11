@@ -9,6 +9,9 @@ import { GroupHelper } from './utils/group.helper';
 import { GroupPolicies } from './utils/group.policies';
 import { Repository, EntityManager } from 'typeorm';
 import { getManager } from "typeorm";
+import { TrailsPolicies } from '../trail/utils/trails.policies';
+import { TrailHelper } from '../trail/utils/trails.helper';
+import { TrailType } from '../trail/utils/trailsAccessType';
 
 @Injectable()
 export class GroupService {
@@ -16,13 +19,17 @@ export class GroupService {
 	constructor(
 		private readonly mysqlRepository: MySQLRepositoryService,
 		private readonly groupPolicies: GroupPolicies,
-		private readonly groupHelper: GroupHelper
+		private readonly groupHelper: GroupHelper,
+		private readonly trailPolicies: TrailsPolicies,
+		private readonly trailHelper: TrailHelper
+
 	) {}
 
 	public async create(payload: UpsertGroupDTO): Promise<SuccessSaveMessage> {
 
 		const group = new Group(payload.name, payload.description);
 		const groupMembers = payload.members;
+		const groupTrails = payload.trails;
 
 		const createdGroup = await this.mysqlRepository.save(Group, group);
 
@@ -38,6 +45,22 @@ export class GroupService {
 				if (groupWithUsers && !this.groupPolicies.hasUserInGroup(user.id, groupWithUsers)) {
 	
 					await this.groupHelper.addUserToGroup(createdGroup.id, user.id);
+				}
+			}
+		}
+
+		if (groupTrails) {
+
+			for (const trail of groupTrails) {
+
+				const groupWithTrails = await this.mysqlRepository.findOne(Group, {
+					relations: ['trails'],
+					where: { id: createdGroup.id }
+				});
+
+				if (groupWithTrails && !this.groupPolicies.hasTrailInGroup(trail.id, groupWithTrails)) {
+	
+					await this.trailHelper.addToTrail(trail.id, createdGroup.id, TrailType.GROUP);
 				}
 			}
 		}
@@ -59,6 +82,9 @@ export class GroupService {
 
 		group.name = group_payload.name;
 		group.description = group_payload.description;
+		
+		const trails = group_payload.trails;
+		const trailsToLeave = group_payload.trails_to_remove;
 
 		const updatedGroup = await this.mysqlRepository.save(Group, group);
 
@@ -93,6 +119,39 @@ export class GroupService {
 				}
 			}
 		}
+
+
+		if (trails) {
+
+			for (const trail of trails) {
+
+				const groupWithTrails = await this.mysqlRepository.findOne(Group, {
+					relations: ['trails'],
+					where: { id: group.id }
+				});
+	
+				if (groupWithTrails && !this.groupPolicies.hasTrailInGroup(id, groupWithTrails)) {
+	
+					await this.trailHelper.addToTrail(trail.id, id, TrailType.USER);
+				}
+			}
+		}
+
+		if (trailsToLeave) {
+
+			for (const trailToLeave of trailsToLeave) {
+
+				const dbTrailAccess = await this.mysqlRepository.findOne(Trail, {
+					relations: ['groups'],
+					where: { id: trailToLeave.id }
+				});
+				if (this.trailPolicies.hasTrailInGroup(id, dbTrailAccess)) {
+	
+					await this.trailHelper.removeUserFromTrail(trailToLeave, id);
+				}
+			}
+		}
+
 
 		return {
 			message: Dictionary.groups.getMessage('successfully_updated'),

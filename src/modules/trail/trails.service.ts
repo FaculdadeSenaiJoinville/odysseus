@@ -5,14 +5,14 @@ import { TrailsPolicies } from './utils/trails.policies';
 import { Dictionary } from 'odyssey-dictionary';
 import { SuccessSaveMessage } from '../../common/types';
 import { GroupHelper } from '../group/utils/group.helper';
-import { TrailHelper } from '../trail/utils/trail.helper';
+import { TrailHelper } from '../trail/utils/trails.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
 import { MySQLRepositoryService } from '../../core/repository';
 import { Trail } from '../../core/database/entities';
 import { AvailableTrail} from '../../core/database/entities/available-trail.entity';
 import { TrailsType } from './utils/trails.type';
 import { getManager } from 'typeorm';
-import { Type } from './utils/trailAccessType';
+import { TrailType } from './utils/trailsAccessType';
 
 @Injectable()
 export class TrailsService {
@@ -65,7 +65,7 @@ export class TrailsService {
 
 	public async updateAccess(id: string, trail_payload: UpdateAccessTrailDTO): Promise<SuccessSaveMessage> {
 		const trail = await this.mysqlRepository.findOneOrFail(Trail, {
-			relations: ['availableTrail'],
+			relations: ['users', 'groups'],
 			where: { id }
 		});
 
@@ -79,39 +79,31 @@ export class TrailsService {
 			
 			for (const user of users) {
 
-				if (trail && !this.trailsPolicies.hasUserInTrail(user.id, trail.availableTrail)) {
+
+				if (trail && !this.trailsPolicies.hasTrailInUser(user.id, trail)) {
 	
-					this.saveTrailAccessEntity(trail.id, user.id, Type.USER);
+					this.saveTrailAccessEntity(trail.id, user.id, TrailType.USER);
 				}
 			}
 		}
-
 		if (usersToRemove) {
 
 			for (const user of usersToRemove) {
 
-				const trailWithUsers = await this.mysqlRepository.findOne(Trail, {
-					where: { id }
-				});
-
-				if (trailWithUsers && this.trailsPolicies.hasUserInTrail(user.id, trail.availableTrail)) {
-					await this.trailHelper.removeUserFromTrail(trail, user.id);
+				if (trail && this.trailsPolicies.hasTrailInUser(user.id, trail)) {
+					await this.trailHelper.removeFromTrail(trail, user.id);
 				}
 			}
 		}
-
+	
 
 		if (groupusers) {
 
 			for (const group of groupusers) {
 
-				const trailAccessUsers = await this.mysqlRepository.findOne(Trail, {
-					where: { id }
-				});
-
-				if (trailAccessUsers && !this.trailsPolicies.hasUserInTrail(group.id, trail.availableTrail)) {
+				if (trail && !this.trailsPolicies.hasTrailInGroup(group.id, trail)) {
 	
-					this.saveTrailAccessEntity(trail.id, group.id, Type.GROUP);
+					this.trailHelper.addToTrail(trail.id, group.id, TrailType.GROUP);
 				}
 			}
 		}
@@ -120,19 +112,11 @@ export class TrailsService {
 
 			for (const group of groupusersToRemove) {
 
-				const trailWithUsers = await this.mysqlRepository.findOne(Trail, {
-					where: { id }
-				});
-
-				if (trailWithUsers && this.trailsPolicies.hasUserInTrail(group.id, trail.availableTrail)) {
-					await this.trailHelper.removeUserFromTrail(trail, group.id);
+				if (trail && this.trailsPolicies.hasTrailInGroup(group.id, trail)) {
+					await this.trailHelper.removeFromTrail(trail, group.id);
 				}
 			}
 		}
-
-
-
-
 
 		return {
 			id,
@@ -140,14 +124,14 @@ export class TrailsService {
 		}
 	}
 
-	private async saveTrailAccessEntity(trails_id: string, entity_id: string, type: Type){
+	private async saveTrailAccessEntity(trails_id: string, entity_id: string, type: TrailType){
 	
 		const payload = { trails_id, entity_id, type } as AvailableTrail;
 		
 		await this.trailHelper.addTrailEntity(payload);
 	}
 
-	private async deleteTrailAccessEntity(trails_id: string, entity_id: string, type: Type){
+	private async deleteTrailAccessEntity(trails_id: string, entity_id: string, type: TrailType){
 	
 		const payload = { trails_id, entity_id, type } as AvailableTrail;
 		

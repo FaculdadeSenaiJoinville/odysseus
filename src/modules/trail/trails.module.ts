@@ -7,7 +7,7 @@ import { MySQLRepositoryModule } from 'src/core/repository';
 import { TrailsPolicies } from './utils/trails.policies';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
-import { TrailHelper } from './utils/trail.helper';
+import { TrailHelper } from './utils/trails.helper';
 import { TrailsRepository } from './utils/trails.repository';
 
 @Module({

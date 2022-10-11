@@ -25,30 +25,12 @@ export class UsersController {
 		return this.usersRepository.list(options);
 	}
 
-	@Get('userTrails/:id')
-	@AuthProtection()
-	@AdminProfessorProtection()
-	public userTrails(): Promise<User> {
-
-
-		
-		return this.usersRepository.profile();
-	}
-
 
 	@Get('details/:id')
 	@AuthProtection()
-	@AdminProfessorProtection()
 	public details(@Param('id') id: string): Promise<User> {
 
 		return this.usersRepository.details(id);
-	}
-
-	@Get('profile')
-	@AuthProtection()
-	public profile(): Promise<User> {
-
-		return this.usersRepository.profile();
 	}
 
 	@Post('create')

@@ -43,11 +43,11 @@ export class User extends CoreEntity {
 	@JoinTable({
 		name: 'available_trails',
 		joinColumn: {
-			name: 'user_id',
+			name: 'entity_id',
 			referencedColumnName: 'id'
 		},
 		inverseJoinColumn: {
-			name: 'trail_id',
+			name: 'trails_id',
 			referencedColumnName: 'id'
 		}
 	})

@@ -7,7 +7,8 @@ export const CREATE_USER_VALIDATION = buildValidation('users', {
 	password: Joi.string().min(8).required(),
 	confirm_password: Joi.string().min(8).required(),
 	type: Joi.string().required(),
-	groups: Joi.array().items(Joi.object()).allow(null)
+	groups: Joi.array().items(Joi.object()).allow(null),
+	trails: Joi.array().items(Joi.object()).allow(null)
 });
 
 export const UPDATE_PASSWORD_VALIDATION = buildValidation('users', {
@@ -21,5 +22,7 @@ export const UPDATE_USER_VALIDATION = buildValidation('users', {
 	type: Joi.string().required(),
 	active: Joi.boolean().required(),
 	groups: Joi.array().items(Joi.object()).allow(null),
-	groups_to_leave: Joi.array().items(Joi.object()).allow(null)
+	groups_to_leave: Joi.array().items(Joi.object()).allow(null),
+	trails: Joi.array().items(Joi.object()).allow(null),
+	trails_to_leave: Joi.array().items(Joi.object()).allow(null)
 });

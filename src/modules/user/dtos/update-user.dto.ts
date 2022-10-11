@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Group } from '../../../core/database/entities';
+import { Group , Trail} from '../../../core/database/entities';
 import { UserType } from '../utils/users.type';
 
 const groupsExample = [
@@ -32,5 +32,11 @@ export class UpdateUserDTO {
 
 	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos dos quais o usuário será removido.' })
 	groups_to_leave?: Group[];
+
+	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos aos quais o usuário será adicionado.' })
+	trails?: Trail[];
+
+	@ApiProperty({ example: groupsExample, description: 'Lista com IDs dos grupos dos quais o usuário será removido.' })
+	trails_to_leave?: Trail[];
 
 }

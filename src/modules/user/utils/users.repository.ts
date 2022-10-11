@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { AvailableTrail } from 'src/core/database/entities/available-trail.entity';
 import { MySQLRepositoryService } from 'src/core/repository';
 import { ListOptions } from '../../../common/types';
-import { User } from '../../../core/database/entities';
+import { Group, Trail, User } from '../../../core/database/entities';
 import { session } from '../../../core/session';
 
 @Injectable()
@@ -20,21 +21,10 @@ export class UsersRepository {
 	}
 
 	public async details(id: string): Promise<User> {
+		
 		return this.mysqlRepository.get(User).createQueryBuilder('users')
 			.where({ id })
-			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.id', 'groups.name'])
-			.leftJoin('users.groups', 'groups')
-			.getOneOrFail();
-	}
-
-	public async profile(): Promise<User> {
-
-		const id = session.getUser().id;
-
-		return this.mysqlRepository.get(User).createQueryBuilder('users')
-			.where({ id })
-			.select(['users.name', 'users.email', 'users.type', 'groups.name', 'groups.description',
-				'trails.name', 'trails.description', 'trails.icon', 'trails.color'])
+			.select(['users.id', 'users.name', 'users.email', 'users.type', 'users.active', 'groups.name', 'groups.id', 'trails.id', 'trails.name'])
 			.leftJoin('users.groups', 'groups')
 			.leftJoin('users.trails', 'trails')
 			.getOneOrFail();

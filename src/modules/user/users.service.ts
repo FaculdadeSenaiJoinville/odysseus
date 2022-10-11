@@ -8,7 +8,10 @@ import { SuccessSaveMessage } from '../../common/types';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
 import { MySQLRepositoryService } from '../../core/repository';
-import { Group, User } from '../../core/database/entities';
+import { Group, User, Trail } from '../../core/database/entities';
+import { TrailsPolicies } from '../trail/utils/trails.policies';
+import { TrailHelper } from '../trail/utils/trails.helper';
+import { TrailType } from '../trail/utils/trailsAccessType';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +21,9 @@ export class UsersService {
 		private readonly bcryptHelper: BcryptHelper,
 		private readonly usersPolicies: UsersPolicies,
 		private readonly groupPolicies: GroupPolicies,
-		private readonly groupHelper: GroupHelper
+		private readonly trailPolicies: TrailsPolicies,
+		private readonly groupHelper: GroupHelper,
+		private readonly trailHelper: TrailHelper
 	) {}
 
 	public async create(user: CreateUserDTO): Promise<SuccessSaveMessage> {
@@ -28,6 +33,7 @@ export class UsersService {
 
 		const newUser = new User();
 		const groups = user.groups;
+		const trails = user.trails;
 
 		newUser.name = user.name;
 		newUser.email = user.email;
@@ -48,6 +54,22 @@ export class UsersService {
 				if (dbGroup && !this.groupPolicies.hasUserInGroup(createdUser.id, dbGroup)) {
 	
 					await this.groupHelper.addUserToGroup(group.id, createdUser.id);
+				}
+			}
+		}
+
+		if (trails) {
+
+			for (const trail of trails) {
+
+				const dbTrail = await this.mysqlRepository.findOne(Trail, {
+					relations: ['users'],
+					where: { id: trail.id }
+				});
+	
+				if (dbTrail && !this.trailPolicies.hasTrailInUser(createdUser.id, dbTrail)) {
+	
+					await this.trailHelper.addToTrail(trail.id, createdUser.id, TrailType.USER);
 				}
 			}
 		}
@@ -80,6 +102,9 @@ export class UsersService {
 		const user = await this.mysqlRepository.findOneOrFail(User, id);
 		const groups = user_payload.groups;
 		const groupsToLeave = user_payload.groups_to_leave;
+
+		const trails = user_payload.trails;
+		const trailsToLeave = user_payload.trails_to_leave;
 
 		user.name = user_payload.name;
 		user.email = user_payload.email;
@@ -120,6 +145,39 @@ export class UsersService {
 			}
 		}
 
+
+		if (trails) {
+
+			for (const trail of trails) {
+
+				const dbTrailAccess = await this.mysqlRepository.findOne(Trail, {
+					relations: ['users'],
+					where: { id: trail.id }
+				});
+	
+				if (dbTrailAccess && !this.trailPolicies.hasTrailInUser(id, dbTrailAccess)) {
+	
+					await this.trailHelper.addToTrail(trail.id, id, TrailType.USER);
+				}
+			}
+		}
+
+		if (trailsToLeave) {
+
+			for (const trailToLeave of trailsToLeave) {
+
+				const dbTrailAccess = await this.mysqlRepository.findOne(Trail, {
+					relations: ['users'],
+					where: { id: trailToLeave.id }
+				});
+	
+				if (this.trailPolicies.hasTrailInUser(id, dbTrailAccess)) {
+					await this.trailHelper.removeUserFromTrail(trailToLeave, id);
+				}
+			}
+		}
+
+	
 		return {
 			id,
 			message: Dictionary.users.getMessage('successfully_updated')

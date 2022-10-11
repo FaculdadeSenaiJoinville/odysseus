@@ -5,10 +5,19 @@ import { Trail } from '../../../core/database/entities';
 @Injectable()
 export class TrailsPolicies {
 	
-  public hasUserInTrail(user_id: string, availableTrails: AvailableTrail[]): boolean {
+  public hasUserInTrail(user_id: string, trails: Trail[]): boolean {
 
-  
-    return Boolean(availableTrails.some(availableTrail => availableTrail.entity_id === user_id));
+    return Boolean(trails.some(trail => trail.users.some(user => user.id === user_id)));
+  }
+
+  public hasTrailInUser(user_id: string, trail: Trail ): boolean {
+
+    return Boolean(trail.users.some(user => user.id === user_id));
+  }
+
+  public hasTrailInGroup(group_id: string, trail: Trail ): boolean {
+
+    return Boolean(trail.groups.some(group => group.id === group_id));
   }
 
 }

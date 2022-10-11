@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Group } from '../../../core/database/entities';
+import { Group, Trail } from '../../../core/database/entities';
 import { UserType } from '../utils/users.type';
 
 const groupsExample = [
@@ -32,5 +32,8 @@ export class CreateUserDTO {
 
 	@ApiProperty({ example: groupsExample, description: 'Lista com grupos aos quais o usuário será adicionado.' })
 	groups?: Group[];
+
+	@ApiProperty({ example: groupsExample, description: 'Lista com grupos aos quais o usuário será adicionado.' })
+	trails?: Trail[];
 
 }

@@ -9,4 +9,9 @@ export class GroupPolicies {
 		return Boolean(group.members.find(user => user.id === user_id));
 	}
 
+	public hasTrailInGroup(trail_id: string, group: Group): boolean {
+
+		return Boolean(group.trails.find(trail => trail.id === trail_id));
+	}
+
 }

@@ -6,6 +6,8 @@ import { GroupService } from './group.service';
 import { GroupHelper } from './utils/group.helper';
 import { GroupPolicies } from './utils/group.policies';
 import { GroupRepository } from './utils/group.repository';
+import { TrailHelper } from '../trail/utils/trails.helper';
+import { TrailsPolicies } from '../trail/utils/trails.policies';
 
 @Module({
 	imports: [
@@ -18,7 +20,9 @@ import { GroupRepository } from './utils/group.repository';
 		GroupService,
 		GroupPolicies,
 		GroupRepository,
-		GroupHelper
+		GroupHelper,
+		TrailHelper,
+		TrailsPolicies
 	],
 	exports: [
 		GroupService

@@ -32,15 +32,7 @@ export class TrailsController {
 	@AuthProtection()
 	@AdminProfessorProtection()
 	public details(@Param('id') id: string): Promise<Trail> {
-
 		return this.trailsRepository.details(id);
-	}
-
-	@Get('profile')
-	@AuthProtection()
-	public profile(): Promise<Trail> {
-
-		return this.trailsRepository.profile();
 	}
 
 	@Post('create')
@@ -66,15 +58,6 @@ export class TrailsController {
 
 		return this.trailService.changeStatus(status, id);
 	}
-
-	@Get('access/find/:id')
-	@AuthProtection()
-	@AdminProfessorProtection()
-	public access(@Param('id') id: string): Promise<any> {
-
-		return this.trailsRepository.access(id);
-	}
-
 	
 	@Put('access/update/:id')
 	@AuthProtection()

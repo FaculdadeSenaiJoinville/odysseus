@@ -1,4 +1,4 @@
-export enum Type {
+export enum TrailType {
     USER = 'USER',
     GROUP = 'GROUP',
 }

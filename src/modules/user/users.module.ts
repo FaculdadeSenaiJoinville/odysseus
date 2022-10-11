@@ -8,6 +8,8 @@ import { UsersPolicies } from './utils/users.policies';
 import { UsersRepository } from './utils/users.repository';
 import { GroupHelper } from '../group/utils/group.helper';
 import { GroupPolicies } from '../group/utils/group.policies';
+import { TrailHelper } from '../trail/utils/trails.helper';
+import { TrailsPolicies } from '../trail/utils/trails.policies';
 
 @Module({
 	imports: [
@@ -23,6 +25,8 @@ import { GroupPolicies } from '../group/utils/group.policies';
 		UsersRepository,
 		GroupHelper,
 		GroupPolicies,
+		TrailHelper,
+		TrailsPolicies,
 		BcryptHelper
 	],
 	exports: [

@@ -32,6 +32,13 @@ export class GroupController {
 		return this.groupRepository.details(id);
 	}
 
+	@Get('relations/:id')
+	@AuthProtection()
+	public relations(@Param('id') id: string): Promise<Group[]> {
+
+		return this.groupRepository.relations(id);
+	}
+
 	@Post('create')
 	@AuthProtection()
 	@AdminProfessorProtection()

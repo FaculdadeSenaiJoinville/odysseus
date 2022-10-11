@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '../../../core/database/entities';
+import { User, Trail } from '../../../core/database/entities';
 
 const membersExample = [
 	{
@@ -25,5 +25,11 @@ export class UpsertGroupDTO {
 
 	@ApiProperty({ example: membersExample, description: 'Lista com IDs dos membros que serão removidos do grupo.' })
 	members_to_remove?: User[];
+
+	@ApiProperty({ example: membersExample, description: 'Lista com IDs dos membros do grupo.' })
+	trails?: Trail[];
+
+	@ApiProperty({ example: membersExample, description: 'Lista com IDs dos membros que serão removidos do grupo.' })
+	trails_to_remove?: Trail[];
 
 }
