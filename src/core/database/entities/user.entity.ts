@@ -4,14 +4,17 @@ import { UserType } from '../../../modules/user/utils/users.type';
 
 @Entity('users')
 export class User extends CoreEntity {
-
+	
 	@Column({ length: 100 })
 	@Index()
 	public email: string;
-
+	
 	@Column({ select: false })
 	public password: string;
-
+	
+	@Column()
+	public photo: string;
+	
 	@Column()
 	public active: boolean;
 
@@ -38,7 +41,7 @@ export class User extends CoreEntity {
 		}
 	})
 	public groups?: Group[];
-
+	
 	@ManyToMany(() => Trail, (trail: Trail) => trail.users)
 	@JoinTable({
 		name: 'available_trails',
@@ -52,17 +55,18 @@ export class User extends CoreEntity {
 		}
 	})
 	public trails?: Trail[];
+	
 
 	addTrails(trail: Trail) {
-
+		
 		if (!this.trails) {
-
+			
 			this.trails = new Array<Trail>();
 		}
-
+		
 		this.trails.push(trail);
 	}
-
+	
 	addGroup(group: Group) {
 
 		if (!this.groups) {

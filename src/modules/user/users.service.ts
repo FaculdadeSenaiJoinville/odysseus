@@ -95,6 +95,20 @@ export class UsersService {
 			id
 		};
 	}
+	
+	public async changePhoto(id: string, file: Express.Multer.File): Promise<SuccessSaveMessage> {
+	
+		const user = await this.mysqlRepository.findOne(User, id);
+		user.photo = file.filename;
+
+		await this.mysqlRepository.save(User, user);
+
+
+		return {
+			id,
+			message: Dictionary.users.getMessage('successfully_updated')
+		}
+	}
 
 	public async update(id: string, user_payload: UpdateUserDTO): Promise<SuccessSaveMessage> {
 

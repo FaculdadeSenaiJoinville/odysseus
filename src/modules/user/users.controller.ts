@@ -1,4 +1,4 @@
-import { Body, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Get, Param, Post, Put, Query, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CREATE_USER_VALIDATION, UPDATE_PASSWORD_VALIDATION, UPDATE_USER_VALIDATION } from './utils/users.validation';
 import { User } from 'src/core/database/entities';
@@ -8,6 +8,11 @@ import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dtos';
 import { ListOptions, SuccessSaveMessage } from '../../common/types';
 import { UsersPaginationPipe } from './utils/users-pagination.pipe';
 import { UsersRepository } from './utils/users.repository';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UPLOAD_CONFIG } from 'src/core/upload/upload.config';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import path = require('path');
 
 @ApiController('users')
 export class UsersController {
@@ -39,6 +44,22 @@ export class UsersController {
 	public create(@Body(new ValidateBodyPipe(CREATE_USER_VALIDATION)) user: CreateUserDTO): Promise<SuccessSaveMessage> {
 
 		return this.userService.create(user);
+	}
+
+	@Post('changePhoto')
+	@AuthProtection()
+	@UseInterceptors(FileInterceptor('image', {
+		storage: diskStorage({
+			destination: UPLOAD_CONFIG.destination,
+			filename: (req, file, cb) => {
+				const extension = path.parse(file.originalname).ext;
+				cb(null, `${uuidv4()}${extension}`);
+			}
+		})
+	}))
+
+	public changePhoto(@UploadedFile() file: Express.Multer.File, @Request() request): Promise<SuccessSaveMessage> {
+		return this.userService.changePhoto(request.body.id, file);
 	}
 
 	@Put('update-password/:id')
